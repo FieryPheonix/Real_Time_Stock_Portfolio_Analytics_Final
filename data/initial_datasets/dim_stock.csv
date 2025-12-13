@@ -1,0 +1,21 @@
+stock_key,stock_ticker,company_name,liquidity_tier,sector,industry
+1,STK001,STK001 Corp,Low,Energy,Utilities
+2,STK002,STK002 Corp,Low,Consumer,Retail
+3,STK003,STK003 Corp,Low,Technology,Software
+4,STK004,STK004 Corp,Low,Finance,Asset Management
+5,STK005,STK005 Corp,Low,Energy,Renewables
+6,STK006,STK006 Corp,High,Energy,Oil & Gas
+7,STK007,STK007 Corp,Mid,Energy,Oil & Gas
+8,STK008,STK008 Corp,High,Energy,Oil & Gas
+9,STK009,STK009 Corp,High,Technology,Hardware
+10,STK010,STK010 Corp,High,Consumer,Retail
+11,STK011,STK011 Corp,Mid,Finance,Asset Management
+12,STK012,STK012 Corp,High,Technology,Hardware
+13,STK013,STK013 Corp,Mid,Energy,Utilities
+14,STK014,STK014 Corp,Low,Healthcare,Pharmaceuticals
+15,STK015,STK015 Corp,Low,Energy,Utilities
+16,STK016,STK016 Corp,Low,Energy,Renewables
+17,STK017,STK017 Corp,Mid,Healthcare,Pharmaceuticals
+18,STK018,STK018 Corp,Mid,Technology,Software
+19,STK019,STK019 Corp,Mid,Energy,Oil & Gas
+20,STK020,STK020 Corp,Mid,Energy,Oil & Gas

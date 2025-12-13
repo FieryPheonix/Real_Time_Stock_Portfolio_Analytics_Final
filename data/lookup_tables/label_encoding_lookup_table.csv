@@ -1,0 +1,5 @@
+Column Name,Original Value,Encoded Value
+day_name,"['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']","[0, 1, 2, 3, 4]"
+stock_ticker,"['STK001', 'STK002', 'STK003', 'STK004', 'STK005', 'STK006', 'STK007', 'STK008', 'STK009', 'STK010', 'STK011', 'STK012', 'STK013', 'STK014', 'STK015', 'STK016', 'STK017', 'STK018', 'STK019', 'STK020']","[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]"
+is_weekend,"[False, True]","[0, 1]"
+is_holiday,"[False, True]","[0, 1]"

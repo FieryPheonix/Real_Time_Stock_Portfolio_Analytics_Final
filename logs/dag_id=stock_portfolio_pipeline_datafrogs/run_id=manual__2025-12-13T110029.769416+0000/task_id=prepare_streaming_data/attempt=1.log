@@ -1,0 +1,23 @@
+[2025-12-13T11:00:34.417+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-12-13T11:00:34.433+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.prepare_streaming_data manual__2025-12-13T11:00:29.769416+00:00 [queued]>
+[2025-12-13T11:00:34.441+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.prepare_streaming_data manual__2025-12-13T11:00:29.769416+00:00 [queued]>
+[2025-12-13T11:00:34.442+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2025-12-13T11:00:34.457+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): prepare_streaming_data> on 2025-12-13 11:00:29.769416+00:00
+[2025-12-13T11:00:34.467+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=80) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-12-13T11:00:34.470+0000] {standard_task_runner.py:72} INFO - Started process 119 to run task
+[2025-12-13T11:00:34.470+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'stock_portfolio_pipeline_datafrogs', 'prepare_streaming_data', 'manual__2025-12-13T11:00:29.769416+00:00', '--job-id', '92', '--raw', '--subdir', 'DAGS_FOLDER/***.py', '--cfg-path', '/tmp/tmpralouypu']
+[2025-12-13T11:00:34.473+0000] {standard_task_runner.py:105} INFO - Job 92: Subtask prepare_streaming_data
+[2025-12-13T11:00:34.543+0000] {task_command.py:467} INFO - Running <TaskInstance: stock_portfolio_pipeline_datafrogs.prepare_streaming_data manual__2025-12-13T11:00:29.769416+00:00 [running]> on host 4d05ecfb1fba
+[2025-12-13T11:00:34.686+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data_engineering_team' AIRFLOW_CTX_DAG_ID='stock_portfolio_pipeline_datafrogs' AIRFLOW_CTX_TASK_ID='prepare_streaming_data' AIRFLOW_CTX_EXECUTION_DATE='2025-12-13T11:00:29.769416+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-13T11:00:29.769416+00:00'
+[2025-12-13T11:00:34.689+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-12-13T11:00:34.865+0000] {logging_mixin.py:190} INFO - dataframe length 10000
+[2025-12-13T11:00:34.873+0000] {logging_mixin.py:190} INFO - streaming length 500
+[2025-12-13T11:00:34.880+0000] {logging_mixin.py:190} INFO - remaining encoded length 9500
+[2025-12-13T11:00:35.144+0000] {python.py:240} INFO - Done. Returned value was: None
+[2025-12-13T11:00:35.161+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-12-13T11:00:35.162+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=stock_portfolio_pipeline_datafrogs, task_id=prepare_streaming_data, run_id=manual__2025-12-13T11:00:29.769416+00:00, execution_date=20251213T110029, start_date=20251213T110034, end_date=20251213T110035
+[2025-12-13T11:00:35.214+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2025-12-13T11:00:35.241+0000] {taskinstance.py:3895} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-12-13T11:00:35.243+0000] {local_task_job_runner.py:245} INFO - ::endgroup::
