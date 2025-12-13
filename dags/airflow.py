@@ -19,14 +19,15 @@ from airflow import DAG
 from airflow.utils.dates import days_ago
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import col, sum as _sum, avg, count, desc
+from pyspark.sql import functions as F
 
 import os
 import sys
 
 # Initialize Spark Session
-# from pyspark.sql import SparkSession
-# from pyspark.sql.functions import col, sum as _sum, avg, count, desc
-# from pyspark.sql import functions as F
+
 
 # steps to run
 # 1. docker compose up
@@ -549,173 +550,150 @@ def save_final_to_postgres(fully_encoded_path):
 
 
 ################################ 4) Stage 4,5 & 6 ##################################################################################################
-#1) Spark
+
 def initialize_spark_session():
-    print("\n--- 1. Cleaning Daily Trade Prices (Median Imputation) ---")
-    # Create the session
-    spark = SparkSession.builder \
-        .appName("Real-Time-Stock-Portfolio-Analytics") \
-        .master("spark://spark-master:7077") \
-        .getOrCreate()
-
-    # Reduce logging
-    spark.sparkContext.setLogLevel("ERROR")
-
-
-def run_spark_analytics():
-    # Create the session
-    spark = SparkSession.builder \
-        .appName("Real-Time-Stock-Portfolio-Analytics") \
-        .master("spark://spark-master:7077") \
-        .getOrCreate()
-
-    # Reduce logging
-    spark.sparkContext.setLogLevel("ERROR")
-
-    # ==========================================
-    # FILE PATH CONFIGURATION
-    # ==========================================
-    # 1. Define the directory inside the container
-    DATA_DIR = "/home/jovyan/work/cleaned_datasets"
-    TARGET_FILE = "final_data.csv"
-
-    # 2. Construct the full path
-    FILE_PATH = os.path.join(DATA_DIR, TARGET_FILE)
-    print(f"--- Checking for file at: {FILE_PATH} ---")
-    if not os.path.exists(FILE_PATH):
-        sys.exit(1)
-    print(f"SUCCESS: File found.")
-
-    # ==========================================
-    # 3.3.1 Extracting the data
-    # ==========================================
-
-    # 1. Read the csv file
+    # Stop any existing SparkContext
     try:
-        df = spark.read.csv(FILE_PATH, header=True, inferSchema=True)
+        sc = SparkContext.getOrCreate()
+        if not sc._jsc.sc().isStopped():
+            sc.stop()
+    except:
+        pass
+
+    # Create a fresh SparkSession
+    spark = SparkSession.builder \
+        .appName("M3_SPARK_APP_TEAM_NAME") \
+        .master("spark://spark-master:7077") \
+        .getOrCreate()
+
+
+def run_spark_analytics(file_path: str):
+
+    print("=== Starting Spark Analytics Task ===")
+
+    # ==========================================
+    # SAFELY STOP ANY EXISTING SPARK CONTEXT
+    # ==========================================
+    try:
+        sc = SparkContext.getOrCreate()
+        sc.stop()
+        print("Stopped existing SparkContext (if any).")
+    except Exception:
+        print("No existing SparkContext found, continuing.")
+
+    # ==========================================
+    # SPARK SESSION
+    # ==========================================
+    try:
+        print("Attempting to create SparkSession...")
+        spark = (
+            SparkSession.builder
+            .appName("M3_SPARK_APP_TEAM_NAME")
+            .master("spark://spark-master:7077")  # Make sure hostname is correct
+            .getOrCreate()
+        )
+        print("SparkSession created successfully.")
     except Exception as e:
-        print(f"Error reading file: {e}")
+        print(f"ERROR: Failed to create SparkSession: {e}")
         sys.exit(1)
 
-    # 2. Show the first 10 records
-    print("\n--- 3.3.1 Data Preview (First 10 records) ---")
-    df.show(10)
+    try:
+        # ==========================================
+        # CHECK FILE PATH
+        # ==========================================
+        print(f"Checking for file at: {file_path}")
+        if not os.path.exists(file_path):
+            print("ERROR: File not found!")
+            sys.exit(1)
+        print("SUCCESS: File found.")
 
-    # ==========================================
-    # 3.3.2 Spark Functions Analysis
-    # ==========================================
-    print("\n" + "=" * 40)
-    print("3.3.2 ANSWERS (Spark Functions)")
-    print("=" * 40)
+        # ==========================================
+        # LOAD CSV
+        # ==========================================
+        try:
+            df = spark.read.csv(file_path, header=True, inferSchema=True)
+            print(f"CSV loaded successfully, showing first 5 rows:")
+            df.show(5)
+        except Exception as e:
+            print(f"ERROR: Failed to read CSV: {e}")
+            sys.exit(1)
 
-    # 1. Total trading volume (quantity) for each stock ticker
+        # ==========================================
+        # POSTGRES CONNECTION SETTINGS
+        # ==========================================
+        jdbc_url = "jdbc:postgresql://pgdatabase:5432/stockanalytics"
+        pg_user = "root"
+        pg_password = "root"
+        pg_driver = "org.postgresql.Driver"
 
-    df_q1 = df.groupBy("stock_ticker") \
-        .agg(F.sum("quantity").alias("total_trading_volume"))
-    print("Total trading volume (quantity) for each stock ticker")
-    df_q1.show()
+        print(f"Postgres JDBC URL: {jdbc_url}")
+        print("Attempting a dummy write test to Postgres...")
 
-    # 2. Average stock price by sector
+        try:
+            df.limit(1).write.format("jdbc") \
+                .option("url", jdbc_url) \
+                .option("dbtable", "spark_test_connection") \
+                .option("user", pg_user) \
+                .option("password", pg_password) \
+                .option("driver", pg_driver) \
+                .mode("overwrite").save()
+            print("SUCCESS: Able to write to Postgres.")
+        except Exception as e:
+            print(f"ERROR: Failed to connect/write to Postgres: {e}")
+            # Don't exit, continue to run Spark transformations for debug
 
-    df_q2 = df.groupBy("stock_sector") \
-        .agg(avg("stock_price").alias("average_price"))
-    print("Average stock price by sector")
-    df_q2.show()
+        # ==========================================
+        # SPARK DATAFRAME ANALYSIS
+        # ==========================================
+        try:
+            print("Running Spark analysis (groupBy and aggregations)...")
+            df_q1 = df.groupBy("stock_ticker").agg(F.sum("quantity").alias("total_trading_volume"))
+            df_q1.show(5)
+            print("Spark analysis step 1 completed.")
+        except Exception as e:
+            print(f"ERROR in Spark analysis step 1: {e}")
 
-    # 3. Buy vs Sell transactions on weekends
+        # Additional steps can have similar try/except and print statements
+        # For example:
+        try:
+            df_q2 = df.groupBy("stock_sector").agg(avg("stock_price").alias("average_price"))
+            df_q2.show(5)
+            print("Spark analysis step 2 completed.")
+        except Exception as e:
+            print(f"ERROR in Spark analysis step 2: {e}")
 
-    df_q3 = df.filter(col("is_weekend") == True) \
-        .groupBy("transaction_type") \
-        .count()
-    print("Buy vs Sell transactions on weekends")
-    df_q3.show()
+        # ==========================================
+        # SPARK SQL ANALYSIS
+        # ==========================================
+        try:
+            df.createOrReplaceTempView("transactions")
+            print("Temporary view 'transactions' created for Spark SQL.")
+        except Exception as e:
+            print(f"ERROR creating temp view: {e}")
 
-    # 4. Customers with more than 10 transactions
+        queries = {
+            "spark_sql_1": "SELECT stock_ticker, SUM(quantity) as total_quantity FROM transactions GROUP BY stock_ticker ORDER BY total_quantity DESC LIMIT 5"
+        }
 
-    df_q4 = df.groupBy("customer_id") \
-        .agg(count("transaction_id").alias("transaction_count")) \
-        .filter(col("transaction_count") > 10)
-    print("Customers with more than 10 transactions")
-    df_q4.show()
+        for table_name, sql_query in queries.items():
+            try:
+                print(f"Running Spark SQL query: {table_name}")
+                result = spark.sql(sql_query)
+                result.show(5)
+                print(f"Query {table_name} executed successfully.")
+            except Exception as e:
+                print(f"ERROR executing query {table_name}: {e}")
 
-    # 5. Total trade amount per day of the week, ordered from highest to lowest
+        print("=== Spark Analytics Task Completed ===")
 
-    df_q5 = df.groupBy("day_name") \
-        .agg(F.sum("total_trade_amount").alias("total_amount")) \
-        .orderBy(F.col("total_amount").desc())
-    print("Total trade amount per day of the week, ordered from highest to lowest")
-    df_q5.show()
+    finally:
+        print("Stopping SparkSession...")
+        try:
+            spark.stop()
+            print("SparkSession stopped successfully.")
+        except Exception as e:
+            print(f"ERROR stopping SparkSession: {e}")
 
-    # ==========================================
-    # 3.3.3 Spark SQL Analysis
-    # ==========================================
-
-    # Register the DataFrame as a SQL temporary view named 'transactions'
-    df.createOrReplaceTempView("transactions")
-
-    # 1. Top 5 most traded stock tickers by total quantity
-    q1_sql = """
-    SELECT stock_ticker, SUM(quantity) as total_quantity
-    FROM transactions
-    GROUP BY stock_ticker
-    ORDER BY total_quantity DESC
-    LIMIT 5
-    """
-    print("Top 5 most traded stock tickers by total quantity")
-    spark.sql(q1_sql).show()
-
-    # 2. Average trade amount by customer account type
-    q2_sql = """
-    SELECT customer_account_type, AVG(total_trade_amount) as avg_trade_amount
-    FROM transactions
-    GROUP BY customer_account_type
-    """
-    print("Average trade amount by customer account type")
-    spark.sql(q2_sql).show()
-
-    # 3. Transactions during holidays vs non-holidays
-    q3_sql = """
-    SELECT is_holiday, COUNT(*) as transaction_count
-    FROM transactions
-    GROUP BY is_holiday
-    """
-    print("Transactions during holidays vs non-holidays")
-    spark.sql(q3_sql).show()
-
-    # 4. Stock sectors with highest total trading volume on weekends
-    q4_sql = """
-    SELECT stock_sector, SUM(quantity) as total_volume
-    FROM transactions
-    WHERE is_weekend = true
-    GROUP BY stock_sector
-    ORDER BY total_volume DESC
-    """
-    print("Stock sectors with highest total trading volume on weekends")
-    spark.sql(q4_sql).show()
-
-    # 5. Total buy vs sell amount for each stock liquidity tier
-    q5_sql = """
-    SELECT stock_liquidity_tier, transaction_type, SUM(total_trade_amount) as total_amount
-    FROM transactions
-    GROUP BY stock_liquidity_tier, transaction_type
-    ORDER BY stock_liquidity_tier, transaction_type
-    """
-    print("Total buy vs sell amount for each stock liquidity tier")
-    spark.sql(q5_sql).show()
-
-    q5_clean_sql = """
-    SELECT 
-        stock_liquidity_tier, 
-        transaction_type, 
-        CAST(SUM(total_trade_amount) AS DECIMAL(20, 2)) as total_amount
-    FROM transactions
-    GROUP BY stock_liquidity_tier, transaction_type
-    ORDER BY stock_liquidity_tier, transaction_type
-    """
-    print("Total buy vs sell amount for each stock liquidity tier in decimal")
-    spark.sql(q5_clean_sql).show()
-
-    spark.stop()
 
 # 2) Visualization
 # NOTE: add its docker container first
@@ -841,15 +819,19 @@ with DAG(
     start_kafka_producer_task >> consume_and_process_stream_task >> save_final_to_postgres_task
 
     ############ Stage 4 ######################
-    # initialize_spark_session_task = PythonOperator(
-    #     task_id='initialize_spark_session',
-    #     python_callable=initialize_spark_session,
-    # )
-    #
-    # run_spark_analytics_task = PythonOperator(
-    #     task_id='run_spark_analytics',
-    #     python_callable=run_spark_analytics,
-    # )
+    initialize_spark_session_task = PythonOperator(
+        task_id='initialize_spark_session',
+        python_callable=initialize_spark_session,
+    )
+
+    run_spark_analytics_task = PythonOperator(
+        task_id='run_spark_analytics',
+        python_callable=run_spark_analytics,
+        op_kwargs={
+            'file_path': '/opt/airflow/data/streaming_dataset/full_stocks.csv'  # <-- path inside container
+        }
+    )
+
     #
     # prepare_visualization_task = PythonOperator(
     #     task_id='prepare_visualization',
@@ -872,7 +854,7 @@ with DAG(
     #     }
     # )
     #
-    # initialize_spark_session_task >> run_spark_analytics_task
+    initialize_spark_session_task >> run_spark_analytics_task
     #
     # run_spark_analytics_task >> prepare_visualization_task >> start_visualization_service_task
     # run_spark_analytics_task >> process_with_ai_agent_task

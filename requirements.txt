@@ -1,2 +1,5 @@
 scikit-learn
 kafka-python==2.3.0
+pyspark==3.5.3
+streamlit
+plotly

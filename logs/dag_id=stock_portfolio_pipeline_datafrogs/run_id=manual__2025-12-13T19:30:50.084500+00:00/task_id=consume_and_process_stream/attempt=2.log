@@ -1,0 +1,163 @@
+[2025-12-13T19:42:41.975+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-12-13T19:42:41.988+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.consume_and_process_stream manual__2025-12-13T19:30:50.084500+00:00 [queued]>
+[2025-12-13T19:42:41.995+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.consume_and_process_stream manual__2025-12-13T19:30:50.084500+00:00 [queued]>
+[2025-12-13T19:42:41.995+0000] {taskinstance.py:2866} INFO - Starting attempt 2 of 2
+[2025-12-13T19:42:42.008+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): consume_and_process_stream> on 2025-12-13 19:30:50.084500+00:00
+[2025-12-13T19:42:42.038+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=1502) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-12-13T19:42:42.043+0000] {standard_task_runner.py:72} INFO - Started process 1507 to run task
+[2025-12-13T19:42:42.043+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'stock_portfolio_pipeline_datafrogs', 'consume_and_process_stream', 'manual__2025-12-13T19:30:50.084500+00:00', '--job-id', '210', '--raw', '--subdir', 'DAGS_FOLDER/***.py', '--cfg-path', '/tmp/tmp8jd3sbch']
+[2025-12-13T19:42:42.048+0000] {standard_task_runner.py:105} INFO - Job 210: Subtask consume_and_process_stream
+[2025-12-13T19:42:42.121+0000] {task_command.py:467} INFO - Running <TaskInstance: stock_portfolio_pipeline_datafrogs.consume_and_process_stream manual__2025-12-13T19:30:50.084500+00:00 [running]> on host fc66782e0078
+[2025-12-13T19:42:42.363+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data_engineering_team' AIRFLOW_CTX_DAG_ID='stock_portfolio_pipeline_datafrogs' AIRFLOW_CTX_TASK_ID='consume_and_process_stream' AIRFLOW_CTX_EXECUTION_DATE='2025-12-13T19:30:50.084500+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-13T19:30:50.084500+00:00'
+[2025-12-13T19:42:42.368+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-12-13T19:42:42.432+0000] {conn.py:400} INFO - <BrokerConnection client_id=kafka-python-2.3.0, node_id=bootstrap-0 host=kafka:9092 <connecting> [IPv4 ('172.23.0.8', 9092)]>: connecting to kafka:9092 [('172.23.0.8', 9092) IPv4]
+[2025-12-13T19:42:42.556+0000] {conn.py:622} INFO - <BrokerConnection client_id=kafka-python-2.3.0, node_id=bootstrap-0 host=kafka:9092 <checking_api_versions_recv> [IPv4 ('172.23.0.8', 9092)]>: Broker version identified as 2.6
+[2025-12-13T19:42:42.557+0000] {conn.py:461} INFO - <BrokerConnection client_id=kafka-python-2.3.0, node_id=bootstrap-0 host=kafka:9092 <connected> [IPv4 ('172.23.0.8', 9092)]>: Connection complete.
+[2025-12-13T19:42:42.576+0000] {consumer.py:131} WARNING - group_id is None: disabling auto-commit.
+[2025-12-13T19:42:42.579+0000] {subscription_state.py:181} INFO - Updating subscribed topics to: ('55_0593_Topic',)
+[2025-12-13T19:42:42.583+0000] {logging_mixin.py:190} INFO - Listening for messages in '55_0593_Topic'...
+[2025-12-13T19:42:42.595+0000] {subscription_state.py:254} INFO - Updated partition assignment: [('55_0593_Topic', 0)]
+[2025-12-13T19:42:42.600+0000] {conn.py:400} INFO - <BrokerConnection client_id=kafka-python-2.3.0, node_id=1 host=kafka:9092 <connecting> [IPv4 ('172.23.0.8', 9092)]>: connecting to kafka:9092 [('172.23.0.8', 9092) IPv4]
+[2025-12-13T19:42:42.601+0000] {conn.py:461} INFO - <BrokerConnection client_id=kafka-python-2.3.0, node_id=1 host=kafka:9092 <connected> [IPv4 ('172.23.0.8', 9092)]>: Connection complete.
+[2025-12-13T19:42:42.602+0000] {conn.py:951} INFO - <BrokerConnection client_id=kafka-python-2.3.0, node_id=bootstrap-0 host=kafka:9092 <connected> [IPv4 ('172.23.0.8', 9092)]>: Closing connection. 
+[2025-12-13T19:42:42.607+0000] {fetcher.py:418} INFO - Resetting offset for partition ('55_0593_Topic', 0) to offset 0.
+[2025-12-13T19:42:42.675+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 6253, 'timestamp': '2024-03-14', 'customer_id': 1006, 'stock_ticker': 'STK006', 'transaction_type': 'BUY', 'quantity': 477, 'average_trade_size': 5.820082930352362, 'customer_account_type': 'Retail', 'day_name': 'Thursday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'High', 'stock_sector': 'Energy', 'stock_industry': 'Oil & Gas', 'stock_price': 71.65242981011856, 'total_trade_amount': 34178.209019426555}
+[2025-12-13T19:42:42.676+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-13T19:42:42.715+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-13T19:42:42.718+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-13T19:42:42.733+0000] {taskinstance.py:3311} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 767, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/airflow.py", line 517, in consume_and_process_stream
+    message_cleaned = process_stream(message.value)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/airflow.py", line 459, in process_stream
+    existing_df = pd.read_csv("/opt/airflow/data/streaming_dataset/full_stocks.csv")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 948, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 617, in _read
+    return parser.read(nrows)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 1748, in read
+    ) = self._engine.read(  # type: ignore[attr-defined]
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/parsers/c_parser_wrapper.py", line 234, in read
+    chunks = self._reader.read_low_memory(nrows)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "parsers.pyx", line 843, in pandas._libs.parsers.TextReader.read_low_memory
+  File "parsers.pyx", line 904, in pandas._libs.parsers.TextReader._read_rows
+  File "parsers.pyx", line 879, in pandas._libs.parsers.TextReader._tokenize_rows
+  File "parsers.pyx", line 890, in pandas._libs.parsers.TextReader._check_tokenize_status
+  File "parsers.pyx", line 2058, in pandas._libs.parsers.raise_parser_error
+pandas.errors.ParserError: Error tokenizing data. C error: Expected 29 fields in line 3427, saw 57
+
+[2025-12-13T19:42:42.763+0000] {taskinstance.py:1225} INFO - Marking task as FAILED. dag_id=stock_portfolio_pipeline_datafrogs, task_id=consume_and_process_stream, run_id=manual__2025-12-13T19:30:50.084500+00:00, execution_date=20251213T193050, start_date=20251213T194241, end_date=20251213T194242
+[2025-12-13T19:42:42.785+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-12-13T19:42:42.786+0000] {standard_task_runner.py:124} ERROR - Failed to execute job 210 for task consume_and_process_stream (Error tokenizing data. C error: Expected 29 fields in line 3427, saw 57
+; 1507)
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py", line 117, in _start_by_fork
+    ret = args.func(args, dag=self.dag)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/cli_config.py", line 49, in command
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/cli.py", line 116, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 483, in task_run
+    task_return_code = _run_task_by_selected_method(args, _dag, ti)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 256, in _run_task_by_selected_method
+    return _run_raw_task(args, ti)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 341, in _run_raw_task
+    return ti._run_raw_task(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/session.py", line 97, in wrapper
+    return func(*args, session=session, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3005, in _run_raw_task
+    return _run_raw_task(
+           ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 273, in _run_raw_task
+    TaskInstance._execute_task_with_callbacks(
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3159, in _execute_task_with_callbacks
+    result = self._execute_task(context, task_orig)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3183, in _execute_task
+    return _execute_task(self, context, task_orig)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 767, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/airflow.py", line 517, in consume_and_process_stream
+    message_cleaned = process_stream(message.value)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/airflow.py", line 459, in process_stream
+    existing_df = pd.read_csv("/opt/airflow/data/streaming_dataset/full_stocks.csv")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 948, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 617, in _read
+    return parser.read(nrows)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 1748, in read
+    ) = self._engine.read(  # type: ignore[attr-defined]
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/parsers/c_parser_wrapper.py", line 234, in read
+    chunks = self._reader.read_low_memory(nrows)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "parsers.pyx", line 843, in pandas._libs.parsers.TextReader.read_low_memory
+  File "parsers.pyx", line 904, in pandas._libs.parsers.TextReader._read_rows
+  File "parsers.pyx", line 879, in pandas._libs.parsers.TextReader._tokenize_rows
+  File "parsers.pyx", line 890, in pandas._libs.parsers.TextReader._check_tokenize_status
+  File "parsers.pyx", line 2058, in pandas._libs.parsers.raise_parser_error
+pandas.errors.ParserError: Error tokenizing data. C error: Expected 29 fields in line 3427, saw 57
+
+[2025-12-13T19:42:42.836+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 1
+[2025-12-13T19:42:42.902+0000] {taskinstance.py:3895} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-12-13T19:42:42.912+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

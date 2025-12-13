@@ -1,0 +1,27 @@
+[2025-12-13T20:00:31.306+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-12-13T20:00:31.420+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.encode_categorical_data manual__2025-12-13T19:59:33.825432+00:00 [queued]>
+[2025-12-13T20:00:31.833+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.encode_categorical_data manual__2025-12-13T19:59:33.825432+00:00 [queued]>
+[2025-12-13T20:00:31.853+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2025-12-13T20:00:32.027+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): encode_categorical_data> on 2025-12-13 19:59:33.825432+00:00
+[2025-12-13T20:00:32.127+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=3588) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-12-13T20:00:32.133+0000] {standard_task_runner.py:72} INFO - Started process 3669 to run task
+[2025-12-13T20:00:32.157+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'stock_portfolio_pipeline_datafrogs', 'encode_categorical_data', 'manual__2025-12-13T19:59:33.825432+00:00', '--job-id', '274', '--raw', '--subdir', 'DAGS_FOLDER/***.py', '--cfg-path', '/tmp/tmpdlrlz7pa']
+[2025-12-13T20:00:32.171+0000] {standard_task_runner.py:105} INFO - Job 274: Subtask encode_categorical_data
+[2025-12-13T20:00:32.621+0000] {task_command.py:467} INFO - Running <TaskInstance: stock_portfolio_pipeline_datafrogs.encode_categorical_data manual__2025-12-13T19:59:33.825432+00:00 [running]> on host fc66782e0078
+[2025-12-13T20:00:32.825+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data_engineering_team' AIRFLOW_CTX_DAG_ID='stock_portfolio_pipeline_datafrogs' AIRFLOW_CTX_TASK_ID='encode_categorical_data' AIRFLOW_CTX_EXECUTION_DATE='2025-12-13T19:59:33.825432+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-13T19:59:33.825432+00:00'
+[2025-12-13T20:00:32.833+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-12-13T20:00:33.684+0000] {logging_mixin.py:190} INFO -     Column Name  ...                                      Encoded Value
+0      day_name  ...                                    [0, 1, 2, 3, 4]
+1  stock_ticker  ...  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,...
+2    is_weekend  ...                                             [0, 1]
+3    is_holiday  ...                                             [0, 1]
+
+[4 rows x 3 columns]
+[2025-12-13T20:00:33.693+0000] {python.py:240} INFO - Done. Returned value was: None
+[2025-12-13T20:00:33.764+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-12-13T20:00:33.766+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=stock_portfolio_pipeline_datafrogs, task_id=encode_categorical_data, run_id=manual__2025-12-13T19:59:33.825432+00:00, execution_date=20251213T195933, start_date=20251213T200031, end_date=20251213T200033
+[2025-12-13T20:00:33.941+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2025-12-13T20:00:34.055+0000] {taskinstance.py:3895} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-12-13T20:00:34.061+0000] {local_task_job_runner.py:245} INFO - ::endgroup::
