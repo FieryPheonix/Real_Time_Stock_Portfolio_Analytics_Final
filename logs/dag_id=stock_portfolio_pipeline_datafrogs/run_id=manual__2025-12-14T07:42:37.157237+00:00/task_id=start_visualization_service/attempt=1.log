@@ -1,0 +1,307 @@
+[2025-12-14T07:43:06.818+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-12-14T07:43:06.825+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.start_visualization_service manual__2025-12-14T07:42:37.157237+00:00 [queued]>
+[2025-12-14T07:43:06.830+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.start_visualization_service manual__2025-12-14T07:42:37.157237+00:00 [queued]>
+[2025-12-14T07:43:06.830+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2025-12-14T07:43:06.835+0000] {taskinstance.py:2889} INFO - Executing <Task(BashOperator): start_visualization_service> on 2025-12-14 07:42:37.157237+00:00
+[2025-12-14T07:43:06.842+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=640) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-12-14T07:43:06.843+0000] {standard_task_runner.py:72} INFO - Started process 645 to run task
+[2025-12-14T07:43:06.844+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'stock_portfolio_pipeline_datafrogs', 'start_visualization_service', 'manual__2025-12-14T07:42:37.157237+00:00', '--job-id', '431', '--raw', '--subdir', 'DAGS_FOLDER/***.py', '--cfg-path', '/tmp/tmpjte5zk_q']
+[2025-12-14T07:43:06.845+0000] {standard_task_runner.py:105} INFO - Job 431: Subtask start_visualization_service
+[2025-12-14T07:43:06.868+0000] {task_command.py:467} INFO - Running <TaskInstance: stock_portfolio_pipeline_datafrogs.start_visualization_service manual__2025-12-14T07:42:37.157237+00:00 [running]> on host 57dbd9cea1cc
+[2025-12-14T07:43:06.904+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data_engineering_team' AIRFLOW_CTX_DAG_ID='stock_portfolio_pipeline_datafrogs' AIRFLOW_CTX_TASK_ID='start_visualization_service' AIRFLOW_CTX_EXECUTION_DATE='2025-12-14T07:42:37.157237+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-14T07:42:37.157237+00:00'
+[2025-12-14T07:43:06.905+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-12-14T07:43:06.912+0000] {subprocess.py:78} INFO - Tmp dir root location: /tmp
+[2025-12-14T07:43:06.912+0000] {subprocess.py:88} INFO - Running command: ['/usr/bin/bash', '-c', 'streamlit run /opt/***/scripts/dashboard.py --server.port 8501 --server.address 0.0.0.0']
+[2025-12-14T07:43:06.923+0000] {subprocess.py:99} INFO - Output:
+[2025-12-14T07:43:07.657+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:43:07.658+0000] {subprocess.py:106} INFO - Collecting usage statistics. To deactivate, set browser.gatherUsageStats to false.
+[2025-12-14T07:43:07.658+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:43:08.176+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:43:08.177+0000] {subprocess.py:106} INFO -   You can now view your Streamlit app in your browser.
+[2025-12-14T07:43:08.177+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:43:08.177+0000] {subprocess.py:106} INFO -   URL: http://0.0.0.0:8501
+[2025-12-14T07:43:08.177+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:46:32.526+0000] {subprocess.py:106} INFO - 2025-12-14 07:46:32.525 Please replace `use_container_width` with `width`.
+[2025-12-14T07:46:32.541+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:46:32.543+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:46:32.544+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:46:32.545+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:46:40.811+0000] {subprocess.py:106} INFO - 2025-12-14 07:46:40.809 Please replace `use_container_width` with `width`.
+[2025-12-14T07:46:40.818+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:46:40.819+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:46:40.822+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:46:40.823+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:46:41.016+0000] {subprocess.py:106} INFO - 2025-12-14 07:46:41.016 Please replace `use_container_width` with `width`.
+[2025-12-14T07:46:41.017+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:46:41.017+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:46:41.017+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:46:41.018+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:47:15.444+0000] {subprocess.py:106} INFO - 2025-12-14 07:47:15.429 Please replace `use_container_width` with `width`.
+[2025-12-14T07:47:15.471+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:47:15.472+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:47:15.473+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:47:15.474+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:47:23.845+0000] {subprocess.py:106} INFO - 2025-12-14 07:47:23.845 Please replace `use_container_width` with `width`.
+[2025-12-14T07:47:23.848+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:47:23.848+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:47:23.849+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:47:23.851+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:47:23.862+0000] {subprocess.py:106} INFO - 2025-12-14 07:47:23.862 Please replace `use_container_width` with `width`.
+[2025-12-14T07:47:23.863+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:47:23.863+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:47:23.863+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:47:23.864+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:48:48.399+0000] {subprocess.py:106} INFO - 2025-12-14 07:48:48.396 Please replace `use_container_width` with `width`.
+[2025-12-14T07:48:48.405+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:48:48.405+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:48:48.406+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:48:48.408+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:51:13.160+0000] {subprocess.py:106} INFO - 2025-12-14 07:51:13.157 Please replace `use_container_width` with `width`.
+[2025-12-14T07:51:13.172+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:51:13.173+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:51:13.173+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:51:13.173+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:51:13.284+0000] {subprocess.py:106} INFO - 2025-12-14 07:51:13.284 Please replace `use_container_width` with `width`.
+[2025-12-14T07:51:13.285+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:51:13.285+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:51:13.286+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:51:13.286+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:51:23.252+0000] {subprocess.py:106} INFO - 2025-12-14 07:51:23.250 Please replace `use_container_width` with `width`.
+[2025-12-14T07:51:23.258+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:51:23.258+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:51:23.259+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:51:23.259+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:51:23.343+0000] {subprocess.py:106} INFO - 2025-12-14 07:51:23.343 Please replace `use_container_width` with `width`.
+[2025-12-14T07:51:23.344+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:51:23.345+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:51:23.345+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:51:23.345+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:51:53.642+0000] {subprocess.py:106} INFO - 2025-12-14 07:51:53.641 Please replace `use_container_width` with `width`.
+[2025-12-14T07:51:53.647+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:51:53.648+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:51:53.649+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:51:53.650+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:51:53.693+0000] {subprocess.py:106} INFO - 2025-12-14 07:51:53.693 Please replace `use_container_width` with `width`.
+[2025-12-14T07:51:53.694+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:51:53.695+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:51:53.695+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:51:53.695+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:52:17.567+0000] {subprocess.py:106} INFO - 2025-12-14 07:52:17.539 Please replace `use_container_width` with `width`.
+[2025-12-14T07:52:17.581+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:52:17.583+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:52:17.583+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:52:17.586+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:52:17.744+0000] {subprocess.py:106} INFO - 2025-12-14 07:52:17.742 Please replace `use_container_width` with `width`.
+[2025-12-14T07:52:17.745+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:52:17.746+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:52:17.747+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:52:17.748+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:52:47.893+0000] {subprocess.py:106} INFO - 2025-12-14 07:52:47.887 Script compilation error
+[2025-12-14T07:52:47.897+0000] {subprocess.py:106} INFO - Traceback (most recent call last):
+[2025-12-14T07:52:47.898+0000] {subprocess.py:106} INFO -   File "/home/***/.local/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 573, in _run_script
+[2025-12-14T07:52:47.900+0000] {subprocess.py:106} INFO -     code = self._script_cache.get_bytecode(script_path)
+[2025-12-14T07:52:47.901+0000] {subprocess.py:106} INFO -            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2025-12-14T07:52:47.902+0000] {subprocess.py:106} INFO -   File "/home/***/.local/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_cache.py", line 68, in get_bytecode
+[2025-12-14T07:52:47.903+0000] {subprocess.py:106} INFO -     with open_python_file(script_path) as f:
+[2025-12-14T07:52:47.903+0000] {subprocess.py:106} INFO -          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2025-12-14T07:52:47.903+0000] {subprocess.py:106} INFO -   File "/home/***/.local/lib/python3.12/site-packages/streamlit/source_util.py", line 54, in open_python_file
+[2025-12-14T07:52:47.904+0000] {subprocess.py:106} INFO -     return tokenize.open(filename)
+[2025-12-14T07:52:47.904+0000] {subprocess.py:106} INFO -            ^^^^^^^^^^^^^^^^^^^^^^^
+[2025-12-14T07:52:47.904+0000] {subprocess.py:106} INFO -   File "/usr/local/lib/python3.12/tokenize.py", line 449, in open
+[2025-12-14T07:52:47.905+0000] {subprocess.py:106} INFO -     buffer = _builtin_open(filename, 'rb')
+[2025-12-14T07:52:47.905+0000] {subprocess.py:106} INFO -              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2025-12-14T07:52:47.906+0000] {subprocess.py:106} INFO - FileNotFoundError: [Errno 2] No such file or directory: '/opt/***/scripts/dashboard.py'
+[2025-12-14T07:52:48.059+0000] {subprocess.py:106} INFO - 2025-12-14 07:52:48.059 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[2025-12-14T07:52:51.758+0000] {subprocess.py:106} INFO - 2025-12-14 07:52:51.755 Script compilation error
+[2025-12-14T07:52:51.763+0000] {subprocess.py:106} INFO - Traceback (most recent call last):
+[2025-12-14T07:52:51.764+0000] {subprocess.py:106} INFO -   File "/home/***/.local/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 573, in _run_script
+[2025-12-14T07:52:51.766+0000] {subprocess.py:106} INFO -     code = self._script_cache.get_bytecode(script_path)
+[2025-12-14T07:52:51.766+0000] {subprocess.py:106} INFO -            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2025-12-14T07:52:51.767+0000] {subprocess.py:106} INFO -   File "/home/***/.local/lib/python3.12/site-packages/streamlit/runtime/scriptrunner/script_cache.py", line 68, in get_bytecode
+[2025-12-14T07:52:51.767+0000] {subprocess.py:106} INFO -     with open_python_file(script_path) as f:
+[2025-12-14T07:52:51.768+0000] {subprocess.py:106} INFO -          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2025-12-14T07:52:51.768+0000] {subprocess.py:106} INFO -   File "/home/***/.local/lib/python3.12/site-packages/streamlit/source_util.py", line 54, in open_python_file
+[2025-12-14T07:52:51.768+0000] {subprocess.py:106} INFO -     return tokenize.open(filename)
+[2025-12-14T07:52:51.769+0000] {subprocess.py:106} INFO -            ^^^^^^^^^^^^^^^^^^^^^^^
+[2025-12-14T07:52:51.769+0000] {subprocess.py:106} INFO -   File "/usr/local/lib/python3.12/tokenize.py", line 449, in open
+[2025-12-14T07:52:51.770+0000] {subprocess.py:106} INFO -     buffer = _builtin_open(filename, 'rb')
+[2025-12-14T07:52:51.770+0000] {subprocess.py:106} INFO -              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2025-12-14T07:52:51.771+0000] {subprocess.py:106} INFO - FileNotFoundError: [Errno 2] No such file or directory: '/opt/***/scripts/dashboard.py'
+[2025-12-14T07:52:51.771+0000] {subprocess.py:106} INFO - 2025-12-14 07:52:51.758 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[2025-12-14T07:54:47.887+0000] {subprocess.py:106} INFO - 2025-12-14 07:54:47.886 Please replace `use_container_width` with `width`.
+[2025-12-14T07:54:47.893+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:54:47.894+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:54:47.894+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:54:47.895+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:54:49.188+0000] {subprocess.py:106} INFO - 2025-12-14 07:54:49.188 Please replace `use_container_width` with `width`.
+[2025-12-14T07:54:49.189+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:54:49.190+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:54:49.190+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:54:49.191+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:54:49.208+0000] {subprocess.py:106} INFO - 2025-12-14 07:54:49.208 Please replace `use_container_width` with `width`.
+[2025-12-14T07:54:49.209+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:54:49.209+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:54:49.210+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:54:49.211+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:54:50.487+0000] {subprocess.py:106} INFO - 2025-12-14 07:54:50.486 Please replace `use_container_width` with `width`.
+[2025-12-14T07:54:50.490+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:54:50.490+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:54:50.491+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:54:50.491+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:54:58.458+0000] {subprocess.py:106} INFO - 2025-12-14 07:54:58.454 Please replace `use_container_width` with `width`.
+[2025-12-14T07:54:58.465+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:54:58.465+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:54:58.466+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:54:58.466+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:56:30.181+0000] {subprocess.py:106} INFO - 2025-12-14 07:56:30.179 Please replace `use_container_width` with `width`.
+[2025-12-14T07:56:30.185+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:56:30.186+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:56:30.186+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:56:30.186+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:56:30.207+0000] {subprocess.py:106} INFO - 2025-12-14 07:56:30.207 Please replace `use_container_width` with `width`.
+[2025-12-14T07:56:30.208+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:56:30.208+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:56:30.208+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:56:30.209+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:57:00.576+0000] {subprocess.py:106} INFO - 2025-12-14 07:57:00.573 Please replace `use_container_width` with `width`.
+[2025-12-14T07:57:00.586+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:57:00.587+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:57:00.592+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:57:00.595+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:57:00.609+0000] {subprocess.py:106} INFO - 2025-12-14 07:57:00.609 Please replace `use_container_width` with `width`.
+[2025-12-14T07:57:00.609+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:57:00.610+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:57:00.610+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:57:00.611+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:57:32.875+0000] {subprocess.py:106} INFO - 2025-12-14 07:57:32.873 Please replace `use_container_width` with `width`.
+[2025-12-14T07:57:32.880+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:57:32.880+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:57:32.881+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:57:32.881+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:57:36.597+0000] {subprocess.py:106} INFO - 2025-12-14 07:57:36.597 Please replace `use_container_width` with `width`.
+[2025-12-14T07:57:36.599+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:57:36.599+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:57:36.600+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:57:36.601+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:58:06.660+0000] {subprocess.py:106} INFO - 2025-12-14 07:58:06.659 Please replace `use_container_width` with `width`.
+[2025-12-14T07:58:06.663+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:58:06.663+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:58:06.664+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:58:06.664+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:58:36.879+0000] {subprocess.py:106} INFO - 2025-12-14 07:58:36.878 Please replace `use_container_width` with `width`.
+[2025-12-14T07:58:36.889+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:58:36.889+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:58:36.890+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:58:36.890+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:59:07.071+0000] {subprocess.py:106} INFO - 2025-12-14 07:59:07.070 Please replace `use_container_width` with `width`.
+[2025-12-14T07:59:07.078+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:59:07.078+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:59:07.079+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:59:07.079+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:59:28.890+0000] {subprocess.py:106} INFO - 2025-12-14 07:59:28.889 Please replace `use_container_width` with `width`.
+[2025-12-14T07:59:28.896+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:59:28.896+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:59:28.897+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:59:28.897+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:59:28.942+0000] {subprocess.py:106} INFO - 2025-12-14 07:59:28.942 Please replace `use_container_width` with `width`.
+[2025-12-14T07:59:28.944+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:59:28.944+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:59:28.945+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:59:28.947+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:59:32.291+0000] {subprocess.py:106} INFO - 2025-12-14 07:59:32.289 Please replace `use_container_width` with `width`.
+[2025-12-14T07:59:32.297+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:59:32.298+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:59:32.300+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:59:32.301+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T07:59:51.948+0000] {subprocess.py:106} INFO - 2025-12-14 07:59:51.947 Please replace `use_container_width` with `width`.
+[2025-12-14T07:59:51.954+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:59:51.954+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T07:59:51.955+0000] {subprocess.py:106} INFO - 
+[2025-12-14T07:59:51.955+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T08:00:22.045+0000] {subprocess.py:106} INFO - 2025-12-14 08:00:22.044 Please replace `use_container_width` with `width`.
+[2025-12-14T08:00:22.050+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:00:22.050+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T08:00:22.050+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:00:22.050+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T08:00:52.248+0000] {subprocess.py:106} INFO - 2025-12-14 08:00:52.247 Please replace `use_container_width` with `width`.
+[2025-12-14T08:00:52.253+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:00:52.254+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T08:00:52.254+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:00:52.254+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T08:01:22.459+0000] {subprocess.py:106} INFO - 2025-12-14 08:01:22.458 Please replace `use_container_width` with `width`.
+[2025-12-14T08:01:22.462+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:01:22.462+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T08:01:22.462+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:01:22.463+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T08:01:51.069+0000] {subprocess.py:106} INFO - 2025-12-14 08:01:51.068 Please replace `use_container_width` with `width`.
+[2025-12-14T08:01:51.072+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:01:51.072+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T08:01:51.073+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:01:51.073+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T08:01:51.154+0000] {subprocess.py:106} INFO - 2025-12-14 08:01:51.154 Please replace `use_container_width` with `width`.
+[2025-12-14T08:01:51.155+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:01:51.155+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T08:01:51.156+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:01:51.156+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T08:02:21.349+0000] {subprocess.py:106} INFO - 2025-12-14 08:02:21.349 Please replace `use_container_width` with `width`.
+[2025-12-14T08:02:21.352+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:02:21.353+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T08:02:21.353+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:02:21.353+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T08:02:21.406+0000] {subprocess.py:106} INFO - 2025-12-14 08:02:21.406 Please replace `use_container_width` with `width`.
+[2025-12-14T08:02:21.406+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:02:21.406+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T08:02:21.407+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:02:21.407+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T08:02:51.601+0000] {subprocess.py:106} INFO - 2025-12-14 08:02:51.600 Please replace `use_container_width` with `width`.
+[2025-12-14T08:02:51.606+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:02:51.606+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T08:02:51.607+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:02:51.607+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T08:02:51.650+0000] {subprocess.py:106} INFO - 2025-12-14 08:02:51.650 Please replace `use_container_width` with `width`.
+[2025-12-14T08:02:51.650+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:02:51.651+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T08:02:51.651+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:02:51.651+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T08:03:21.930+0000] {subprocess.py:106} INFO - 2025-12-14 08:03:21.929 Please replace `use_container_width` with `width`.
+[2025-12-14T08:03:21.939+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:03:21.939+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T08:03:21.940+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:03:21.940+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T08:03:22.048+0000] {subprocess.py:106} INFO - 2025-12-14 08:03:22.047 Please replace `use_container_width` with `width`.
+[2025-12-14T08:03:22.050+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:03:22.058+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T08:03:22.061+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:03:22.062+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T08:03:52.319+0000] {subprocess.py:106} INFO - 2025-12-14 08:03:52.318 Please replace `use_container_width` with `width`.
+[2025-12-14T08:03:52.324+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:03:52.324+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T08:03:52.333+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:03:52.333+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T08:03:52.381+0000] {subprocess.py:106} INFO - 2025-12-14 08:03:52.381 Please replace `use_container_width` with `width`.
+[2025-12-14T08:03:52.382+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:03:52.382+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T08:03:52.383+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:03:52.383+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T08:04:22.598+0000] {subprocess.py:106} INFO - 2025-12-14 08:04:22.597 Please replace `use_container_width` with `width`.
+[2025-12-14T08:04:22.603+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:04:22.603+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T08:04:22.604+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:04:22.604+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T08:04:22.651+0000] {subprocess.py:106} INFO - 2025-12-14 08:04:22.650 Please replace `use_container_width` with `width`.
+[2025-12-14T08:04:22.651+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:04:22.652+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T08:04:22.652+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:04:22.652+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T08:04:52.871+0000] {subprocess.py:106} INFO - 2025-12-14 08:04:52.870 Please replace `use_container_width` with `width`.
+[2025-12-14T08:04:52.876+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:04:52.876+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T08:04:52.876+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:04:52.876+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+[2025-12-14T08:04:52.923+0000] {subprocess.py:106} INFO - 2025-12-14 08:04:52.923 Please replace `use_container_width` with `width`.
+[2025-12-14T08:04:52.924+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:04:52.924+0000] {subprocess.py:106} INFO - `use_container_width` will be removed after 2025-12-31.
+[2025-12-14T08:04:52.924+0000] {subprocess.py:106} INFO - 
+[2025-12-14T08:04:52.925+0000] {subprocess.py:106} INFO - For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.

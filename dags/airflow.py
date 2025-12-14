@@ -26,8 +26,6 @@ from pyspark.sql import functions as F
 import os
 import sys
 
-# Initialize Spark Session
-
 
 # steps to run
 # 1. docker compose up
@@ -582,14 +580,14 @@ def run_spark_analytics(file_path: str):
         print("No existing SparkContext found, continuing.")
 
     # ==========================================
-    # SPARK SESSION
+    # CREATE SPARK SESSION
     # ==========================================
     try:
         print("Attempting to create SparkSession...")
         spark = (
             SparkSession.builder
             .appName("M3_SPARK_APP_TEAM_NAME")
-            .master("spark://spark-master:7077")  # Make sure hostname is correct
+            .master("spark://spark-master:7077")
             .getOrCreate()
         )
         print("SparkSession created successfully.")
@@ -612,7 +610,7 @@ def run_spark_analytics(file_path: str):
         # ==========================================
         try:
             df = spark.read.csv(file_path, header=True, inferSchema=True)
-            print(f"CSV loaded successfully, showing first 5 rows:")
+            print("CSV loaded successfully, showing first 5 rows:")
             df.show(5)
         except Exception as e:
             print(f"ERROR: Failed to read CSV: {e}")
@@ -621,70 +619,110 @@ def run_spark_analytics(file_path: str):
         # ==========================================
         # POSTGRES CONNECTION SETTINGS
         # ==========================================
-        jdbc_url = "jdbc:postgresql://pgdatabase:5432/stockanalytics"
-        pg_user = "root"
-        pg_password = "root"
-        pg_driver = "org.postgresql.Driver"
-
-        print(f"Postgres JDBC URL: {jdbc_url}")
-        print("Attempting a dummy write test to Postgres...")
-
-        try:
-            df.limit(1).write.format("jdbc") \
-                .option("url", jdbc_url) \
-                .option("dbtable", "spark_test_connection") \
-                .option("user", pg_user) \
-                .option("password", pg_password) \
-                .option("driver", pg_driver) \
-                .mode("overwrite").save()
-            print("SUCCESS: Able to write to Postgres.")
-        except Exception as e:
-            print(f"ERROR: Failed to connect/write to Postgres: {e}")
-            # Don't exit, continue to run Spark transformations for debug
+        def save_spark_to_postgres(spark_df, table_name):
+            print(f"Saving '{table_name}' to Postgres...")
+            pandas_df = spark_df.toPandas()  # convert Spark DataFrame to Pandas
+            engine = create_engine('postgresql://root:root@pgdatabase:5432/stockanalytics')
+            try:
+                with engine.connect() as conn:
+                    pandas_df.to_sql(table_name, con=conn, if_exists='replace', index=False)
+                    print(f"Saved '{table_name}' successfully!")
+            except Exception as e:
+                print(f"Error saving '{table_name}' to Postgres: {e}")
+            finally:
+                engine.dispose()
 
         # ==========================================
-        # SPARK DATAFRAME ANALYSIS
+        # DATA CLEANING / TRANSFORMATION
         # ==========================================
-        try:
-            print("Running Spark analysis (groupBy and aggregations)...")
-            df_q1 = df.groupBy("stock_ticker").agg(F.sum("quantity").alias("total_trading_volume"))
-            df_q1.show(5)
-            print("Spark analysis step 1 completed.")
-        except Exception as e:
-            print(f"ERROR in Spark analysis step 1: {e}")
+        df_cleaned = df.withColumn(
+            "transaction_type", 
+            F.when(F.col("transaction_type_BUY") == True, "BUY")
+             .when(F.col("transaction_type_SELL") == True, "SELL")
+             .otherwise("Unknown")
+        ).withColumn(
+            "customer_account_type",
+            F.when(F.col("customer_account_type_Institutional") == True, "Institutional")
+             .when(F.col("customer_account_type_Retail") == True, "Retail")
+             .otherwise("Unknown")
+        ).withColumn(
+            "stock_sector",
+            F.when(F.col("stock_sector_Consumer") == True, "Consumer")
+             .when(F.col("stock_sector_Energy") == True, "Energy")
+             .when(F.col("stock_sector_Finance") == True, "Finance")
+             .when(F.col("stock_sector_Healthcare") == True, "Healthcare")
+             .when(F.col("stock_sector_Technology") == True, "Technology")
+             .otherwise("Other")
+        ).withColumn(
+            "stock_ticker", 
+            F.concat(F.lit("STK"), F.lpad(F.col("stock_ticker") + 1, 3, "0"))
+        )
 
-        # Additional steps can have similar try/except and print statements
-        # For example:
-        try:
-            df_q2 = df.groupBy("stock_sector").agg(avg("stock_price").alias("average_price"))
-            df_q2.show(5)
-            print("Spark analysis step 2 completed.")
-        except Exception as e:
-            print(f"ERROR in Spark analysis step 2: {e}")
+        # ==========================================
+        # SPARK FUNCTIONS ANALYSIS
+        # ==========================================
+        df_q1 = df_cleaned.groupBy("stock_ticker").agg(F.sum("quantity").alias("total_trading_volume")).orderBy("stock_ticker")
+        df_q1.show(); save_spark_to_postgres(df_q1, "spark_analytics_1")
+
+        df_q2 = df_cleaned.groupBy("stock_sector").agg(F.avg("stock_price").alias("average_price"))
+        df_q2.show(); save_spark_to_postgres(df_q2, "spark_analytics_2")
+
+        df_q3 = df_cleaned.filter(F.col("is_weekend") == 1).groupBy("transaction_type").count()
+        df_q3.show(); save_spark_to_postgres(df_q3, "spark_analytics_3")
+
+        df_q4 = df_cleaned.groupBy("customer_id").agg(F.count("transaction_id").alias("transaction_count")).filter(F.col("transaction_count") > 10)
+        df_q4.show(); save_spark_to_postgres(df_q4, "spark_analytics_4")
+
+        df_q5 = df_cleaned.groupBy("day_name").agg(F.sum("total_trade_amount").alias("total_amount")).orderBy(F.col("total_amount").desc())
+        df_q5.show(); save_spark_to_postgres(df_q5, "spark_analytics_5")
 
         # ==========================================
         # SPARK SQL ANALYSIS
         # ==========================================
-        try:
-            df.createOrReplaceTempView("transactions")
-            print("Temporary view 'transactions' created for Spark SQL.")
-        except Exception as e:
-            print(f"ERROR creating temp view: {e}")
+        df_cleaned.createOrReplaceTempView("transactions")
 
-        queries = {
-            "spark_sql_1": "SELECT stock_ticker, SUM(quantity) as total_quantity FROM transactions GROUP BY stock_ticker ORDER BY total_quantity DESC LIMIT 5"
+        sql_queries = {
+            "spark_sql_1": """
+                SELECT stock_ticker, SUM(quantity) as total_quantity
+                FROM transactions
+                GROUP BY stock_ticker
+                ORDER BY total_quantity DESC
+                LIMIT 5
+            """,
+            "spark_sql_2": """
+                SELECT customer_account_type, AVG(total_trade_amount) as avg_trade_amount
+                FROM transactions
+                GROUP BY customer_account_type
+            """,
+            "spark_sql_3": """
+                SELECT is_holiday, COUNT(*) as transaction_count
+                FROM transactions
+                GROUP BY is_holiday
+            """,
+            "spark_sql_4": """
+                SELECT stock_sector, SUM(quantity) as total_volume
+                FROM transactions
+                WHERE is_weekend = 1
+                GROUP BY stock_sector
+                ORDER BY total_volume DESC
+            """,
+            "spark_sql_5": """
+                SELECT stock_liquidity_tier, transaction_type, CAST(SUM(total_trade_amount) AS DECIMAL(20, 2)) as total_amount
+                FROM transactions
+                GROUP BY stock_liquidity_tier, transaction_type
+                ORDER BY stock_liquidity_tier, transaction_type
+            """
         }
 
-        for table_name, sql_query in queries.items():
-            try:
-                print(f"Running Spark SQL query: {table_name}")
-                result = spark.sql(sql_query)
-                result.show(5)
-                print(f"Query {table_name} executed successfully.")
-            except Exception as e:
-                print(f"ERROR executing query {table_name}: {e}")
+        for table_name, query in sql_queries.items():
+            df_sql = spark.sql(query)
+            df_sql.show()
+            save_spark_to_postgres(df_sql, table_name)
 
         print("=== Spark Analytics Task Completed ===")
+
+    except Exception as e:
+        print(f"ERROR: An unexpected error occurred during Spark analytics: {e}")
 
     finally:
         print("Stopping SparkSession...")
@@ -692,17 +730,90 @@ def run_spark_analytics(file_path: str):
             spark.stop()
             print("SparkSession stopped successfully.")
         except Exception as e:
-            print(f"ERROR stopping SparkSession: {e}")
+            print(f"WARNING: Failed to stop SparkSession: {e}")
 
 
 # 2) Visualization
-# NOTE: add its docker container first
-def prepare_visualization(filename):
-    print("\n")
+def prepare_visualization(file_path):
+    print("=== Starting Prepare Visualization Task ===")
+    
+    output_path = '/opt/airflow/data/visualization/dashboard_data.csv'
+    
+    # Check input file
+    print(f"Reading from: {file_path}")
+    if not os.path.exists(file_path):
+        print(f"ERROR: Input file not found at {file_path}")
+        # Create empty dummy file to prevent downstream failure if spark failed to write
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        pd.DataFrame().to_csv(output_path)
+        return
 
-# Remove this if using streamlit or superset
-def start_visualization_service(filename):
-    print("\n")
+    df = pd.read_csv(file_path)
+    print(f"Loaded {len(df)} rows from {file_path}")
+
+    # ==============================
+    # 1. Reverse Label Encoding
+    # ==============================
+    try:
+        label_lookup_path = "/opt/airflow/data/lookup_tables/label_encoding_lookup_table.csv"
+        if os.path.exists(label_lookup_path):
+            label_df = pd.read_csv(label_lookup_path)
+            # Use the existing helper function
+            label_mappings = extract_label_encoded_columns(label_df)
+            # label_mappings is list of dicts: [day_map, ticker_map, weekend_map, holiday_map]
+            
+            # 0: day_name (Reverse mapping)
+            day_map = {v: k for k, v in label_mappings[0].items()}
+            # get() is safer than direct map for partial matches
+            df['day_name'] = df['day_name'].map(day_map).fillna(df['day_name'])
+            
+            # 1: stock_ticker
+            ticker_map = {v: k for k, v in label_mappings[1].items()}
+            df['stock_ticker'] = df['stock_ticker'].map(ticker_map).fillna(df['stock_ticker'])
+            
+            # 2: is_weekend
+            weekend_map = {v: k for k, v in label_mappings[2].items()}
+            df['is_weekend'] = df['is_weekend'].map(weekend_map).fillna(df['is_weekend'])
+            
+            # 3: is_holiday
+            holiday_map = {v: k for k, v in label_mappings[3].items()}
+            df['is_holiday'] = df['is_holiday'].map(holiday_map).fillna(df['is_holiday'])
+            
+            print("Reversed label encoding successfully.")
+        else:
+            print("WARNING: Label lookup table not found. Skipping label decoding.")
+            
+    except Exception as e:
+        print(f"ERROR during label decoding: {e}")
+
+    # ==============================
+    # 2. Reverse One-Hot Encoding
+    # ==============================
+    one_hot_groups = ['transaction_type', 'customer_account_type', 'stock_sector', 'stock_industry']
+    
+    for group in one_hot_groups:
+        # Find cols belonging to this group
+        group_cols = [c for c in df.columns if c.startswith(f"{group}_")]
+        if group_cols:
+            # Logic: For each row, find column where value is True/1, get its name, strip prefix
+            # We use idxmax for speed on axis 1
+            # Filter to relevant cols
+            subset = df[group_cols]
+            # idxmax returns the column name with the max value (1/True)
+            # We then strip the prefix
+            df[group] = subset.idxmax(axis=1).astype(str).str.replace(f"{group}_", "")
+            
+            # Drop the dummy cols
+            df.drop(columns=group_cols, inplace=True)
+            print(f"Reversed one-hot encoding for {group}")
+
+    # ==============================
+    # 3. Save
+    # ==============================
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    df.to_csv(output_path, index=False)
+    print(f"Saved prepared data to {output_path}")
+
 
 # 3) AI agent
 def process_with_ai_agent(filename):
@@ -832,30 +943,29 @@ with DAG(
         }
     )
 
-    #
-    # prepare_visualization_task = PythonOperator(
-    #     task_id='prepare_visualization',
-    #     python_callable=prepare_visualization,
-    #     op_kwargs={
-    #         'final_df_path':  ''#fill in its path
-    #     }
-    # )
-    #
-    # start_visualization_service_task = PythonOperator( #change this to fit which visualization task done
-    #     task_id='start_visualization_service',
-    #     python_callable=start_visualization_service,
-    # )
-    #
-    # process_with_ai_agent_task = PythonOperator(
-    #     task_id='process_with_ai_agent',
-    #     python_callable=process_with_ai_agent,
-    #     op_kwargs={
-    #         'query_path': ''#fill in its path
-    #     }
-    # )
-    #
+    prepare_visualization_task = PythonOperator(
+        task_id='prepare_visualization',
+        python_callable=prepare_visualization,
+        op_kwargs={
+            'file_path': '/opt/airflow/data/streaming_dataset/full_stocks.csv'
+        }
+    )
+
+    start_visualization_service_task = BashOperator(
+        task_id='start_visualization_service',
+        bash_command='streamlit run /opt/airflow/scripts/dashboard.py --server.port 8501 --server.address 0.0.0.0'
+    )
+    
+    process_with_ai_agent_task = PythonOperator(
+        task_id='process_with_ai_agent',
+        python_callable=process_with_ai_agent,
+        op_kwargs={
+            'filename': ''#fill in its path
+        }
+    )
+    
     initialize_spark_session_task >> run_spark_analytics_task
-    #
-    # run_spark_analytics_task >> prepare_visualization_task >> start_visualization_service_task
-    # run_spark_analytics_task >> process_with_ai_agent_task
+    
+    run_spark_analytics_task >> prepare_visualization_task >> start_visualization_service_task
+    run_spark_analytics_task >> process_with_ai_agent_task
 

@@ -14,6 +14,10 @@ ENV PATH "${JAVA_HOME}/bin:${PATH}"
 # Verify Java installation
 RUN java -version
 
+# Download the Postgres JDBC driver
+RUN mkdir -p /opt/airflow/jars && \
+    curl -o /opt/airflow/jars/postgresql-42.2.18.jar https://jdbc.postgresql.org/download/postgresql-42.2.18.jar
+
 # Copy requirements and set permissions
 COPY requirements.txt /requirements.txt
 RUN chown airflow: /requirements.txt

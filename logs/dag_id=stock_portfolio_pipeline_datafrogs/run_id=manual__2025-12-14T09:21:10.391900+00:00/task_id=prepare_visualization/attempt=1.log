@@ -1,0 +1,41 @@
+[2025-12-14T09:23:15.269+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-12-14T09:23:15.280+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.prepare_visualization manual__2025-12-14T09:21:10.391900+00:00 [queued]>
+[2025-12-14T09:23:15.284+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.prepare_visualization manual__2025-12-14T09:21:10.391900+00:00 [queued]>
+[2025-12-14T09:23:15.284+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2025-12-14T09:23:15.291+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): prepare_visualization> on 2025-12-14 09:21:10.391900+00:00
+[2025-12-14T09:23:15.302+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=2739) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-12-14T09:23:15.304+0000] {standard_task_runner.py:72} INFO - Started process 2749 to run task
+[2025-12-14T09:23:15.304+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'stock_portfolio_pipeline_datafrogs', 'prepare_visualization', 'manual__2025-12-14T09:21:10.391900+00:00', '--job-id', '63', '--raw', '--subdir', 'DAGS_FOLDER/***.py', '--cfg-path', '/tmp/tmpc_ct5fhl']
+[2025-12-14T09:23:15.308+0000] {standard_task_runner.py:105} INFO - Job 63: Subtask prepare_visualization
+[2025-12-14T09:23:15.360+0000] {task_command.py:467} INFO - Running <TaskInstance: stock_portfolio_pipeline_datafrogs.prepare_visualization manual__2025-12-14T09:21:10.391900+00:00 [running]> on host 179bab7085b3
+[2025-12-14T09:23:15.424+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data_engineering_team' AIRFLOW_CTX_DAG_ID='stock_portfolio_pipeline_datafrogs' AIRFLOW_CTX_TASK_ID='prepare_visualization' AIRFLOW_CTX_EXECUTION_DATE='2025-12-14T09:21:10.391900+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-14T09:21:10.391900+00:00'
+[2025-12-14T09:23:15.425+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-12-14T09:23:15.444+0000] {logging_mixin.py:190} INFO - === Starting Prepare Visualization Task ===
+[2025-12-14T09:23:15.445+0000] {logging_mixin.py:190} INFO - Reading from: /opt/***/data/streaming_dataset/full_stocks.csv
+[2025-12-14T09:23:15.465+0000] {logging_mixin.py:190} INFO - Loaded 2596 rows from /opt/***/data/streaming_dataset/full_stocks.csv
+[2025-12-14T09:23:15.471+0000] {logging_mixin.py:190} INFO - Reversed label encoding successfully.
+[2025-12-14T09:23:15.473+0000] {warnings.py:112} WARNING - /opt/***/dags/***.py:804: FutureWarning: The behavior of DataFrame.idxmax with all-NA values, or any-NA and skipna=False, is deprecated. In a future version this will raise ValueError
+  df[group] = subset.idxmax(axis=1).astype(str).str.replace(f"{group}_", "")
+
+[2025-12-14T09:23:15.475+0000] {logging_mixin.py:190} INFO - Reversed one-hot encoding for transaction_type
+[2025-12-14T09:23:15.476+0000] {warnings.py:112} WARNING - /opt/***/dags/***.py:804: FutureWarning: The behavior of DataFrame.idxmax with all-NA values, or any-NA and skipna=False, is deprecated. In a future version this will raise ValueError
+  df[group] = subset.idxmax(axis=1).astype(str).str.replace(f"{group}_", "")
+
+[2025-12-14T09:23:15.478+0000] {logging_mixin.py:190} INFO - Reversed one-hot encoding for customer_account_type
+[2025-12-14T09:23:15.479+0000] {warnings.py:112} WARNING - /opt/***/dags/***.py:804: FutureWarning: The behavior of DataFrame.idxmax with all-NA values, or any-NA and skipna=False, is deprecated. In a future version this will raise ValueError
+  df[group] = subset.idxmax(axis=1).astype(str).str.replace(f"{group}_", "")
+
+[2025-12-14T09:23:15.481+0000] {logging_mixin.py:190} INFO - Reversed one-hot encoding for stock_sector
+[2025-12-14T09:23:15.482+0000] {warnings.py:112} WARNING - /opt/***/dags/***.py:804: FutureWarning: The behavior of DataFrame.idxmax with all-NA values, or any-NA and skipna=False, is deprecated. In a future version this will raise ValueError
+  df[group] = subset.idxmax(axis=1).astype(str).str.replace(f"{group}_", "")
+
+[2025-12-14T09:23:15.484+0000] {logging_mixin.py:190} INFO - Reversed one-hot encoding for stock_industry
+[2025-12-14T09:23:15.503+0000] {logging_mixin.py:190} INFO - Saved prepared data to /opt/***/data/visualization/dashboard_data.csv
+[2025-12-14T09:23:15.503+0000] {python.py:240} INFO - Done. Returned value was: None
+[2025-12-14T09:23:15.510+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-12-14T09:23:15.510+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=stock_portfolio_pipeline_datafrogs, task_id=prepare_visualization, run_id=manual__2025-12-14T09:21:10.391900+00:00, execution_date=20251214T092110, start_date=20251214T092315, end_date=20251214T092315
+[2025-12-14T09:23:15.560+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2025-12-14T09:23:15.600+0000] {taskinstance.py:3895} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-12-14T09:23:15.603+0000] {local_task_job_runner.py:245} INFO - ::endgroup::
