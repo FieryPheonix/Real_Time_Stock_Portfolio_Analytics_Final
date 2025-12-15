@@ -1,1 +1,1 @@
-What was the total trading volume for technology stocks last month?
+How many rows have is_holiday set to true?

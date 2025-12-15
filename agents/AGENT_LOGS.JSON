@@ -31,5 +31,59 @@
                 "total_trading_volume": null
             }
         ]
+    },
+    {
+        "timestamp": "2025-12-15 18:31:47",
+        "user_query": "What was the total trading volume for technology stocks last month?",
+        "csv_columns": "transaction_id, timestamp, customer_id, stock_ticker, quantity, average_trade_size, day_name, is_weekend, is_holiday, stock_liquidity_tier, stock_price, total_trade_amount, transaction_type_BUY, transaction_type_SELL, customer_account_type_Institutional, customer_account_type_Retail, stock_sector_Consumer, stock_sector_Energy, stock_sector_Finance, stock_sector_Healthcare, stock_sector_Technology, stock_industry_Asset Management, stock_industry_Hardware, stock_industry_Oil & Gas, stock_industry_Pharmaceuticals, stock_industry_Renewables, stock_industry_Retail, stock_industry_Software, stock_industry_Utilities",
+        "agent_response_sql": "SELECT stock_sector, count(*) as count FROM full_stocks GROUP BY stock_sector",
+        "agent_execution_result": "SQL Execution Error: Execution failed on sql 'SELECT stock_sector, count(*) as count FROM full_stocks GROUP BY stock_sector': no such column: stock_sector"
+    },
+    {
+        "timestamp": "2025-12-15 18:35:08",
+        "user_query": "What was the total trading volume for technology stocks last month?",
+        "csv_columns": "transaction_id, timestamp, customer_id, stock_ticker, quantity, average_trade_size, day_name, is_weekend, is_holiday, stock_liquidity_tier, stock_price, total_trade_amount, transaction_type_BUY, transaction_type_SELL, customer_account_type_Institutional, customer_account_type_Retail, stock_sector_Consumer, stock_sector_Energy, stock_sector_Finance, stock_sector_Healthcare, stock_sector_Technology, stock_industry_Asset Management, stock_industry_Hardware, stock_industry_Oil & Gas, stock_industry_Pharmaceuticals, stock_industry_Renewables, stock_industry_Retail, stock_industry_Software, stock_industry_Utilities",
+        "agent_response_sql": "SELECT SUM(quantity) AS total_trading_volume\nFROM full_stocks\nWHERE \"stock_sector_Technology\" = 1 AND timestamp >= '2025-11-01' AND timestamp < '2025-12-01'",
+        "agent_execution_result": [
+            {
+                "total_trading_volume": null
+            }
+        ]
+    },
+    {
+        "timestamp": "2025-12-15 18:36:01",
+        "user_query": "What was the total trading volume for technology stocks last year?",
+        "csv_columns": "transaction_id, timestamp, customer_id, stock_ticker, quantity, average_trade_size, day_name, is_weekend, is_holiday, stock_liquidity_tier, stock_price, total_trade_amount, transaction_type_BUY, transaction_type_SELL, customer_account_type_Institutional, customer_account_type_Retail, stock_sector_Consumer, stock_sector_Energy, stock_sector_Finance, stock_sector_Healthcare, stock_sector_Technology, stock_industry_Asset Management, stock_industry_Hardware, stock_industry_Oil & Gas, stock_industry_Pharmaceuticals, stock_industry_Renewables, stock_industry_Retail, stock_industry_Software, stock_industry_Utilities",
+        "agent_response_sql": "SELECT SUM(quantity) AS total_trading_volume\nFROM full_stocks\nWHERE \"stock_sector_Technology\" = 1 AND strftime('%Y', timestamp) = '2024'",
+        "agent_execution_result": [
+            {
+                "total_trading_volume": 409437
+            }
+        ]
+    },
+    {
+        "timestamp": "2025-12-15 18:44:49",
+        "user_query": "How many rows have is_holiday set to true?",
+        "csv_columns": "transaction_id, timestamp, customer_id, stock_ticker, quantity, average_trade_size, day_name, is_weekend, is_holiday, stock_liquidity_tier, stock_price, total_trade_amount, transaction_type_BUY, transaction_type_SELL, customer_account_type_Institutional, customer_account_type_Retail, stock_sector_Consumer, stock_sector_Energy, stock_sector_Finance, stock_sector_Healthcare, stock_sector_Technology, stock_industry_Asset Management, stock_industry_Hardware, stock_industry_Oil & Gas, stock_industry_Pharmaceuticals, stock_industry_Renewables, stock_industry_Retail, stock_industry_Software, stock_industry_Utilities",
+        "agent_response_sql": "SELECT COUNT(*) FROM full_stocks WHERE \"is_holiday\" = 1",
+        "agent_execution_result": [
+            {
+                "COUNT(*)": 169
+            }
+        ]
+    },
+    {
+        "timestamp": "2025-12-15 19:08:37",
+        "query": "How many trades were made in total on days that were holidays?",
+        "sql": "SELECT COUNT(*) FROM full_stocks WHERE is_holiday = 1",
+        "result_summary": "1 rows returned",
+        "saved_file": "/opt/airflow/agents/outputs/agent_output_20251215_190837.csv"
+    },
+    {
+        "timestamp": "2025-12-15 19:12:07",
+        "query": "How many trades were made in total on days that were holidays?",
+        "sql": "SELECT COUNT(*) FROM full_stocks WHERE is_holiday = 1",
+        "result_summary": "1 rows returned",
+        "saved_file": "/opt/airflow/agents/outputs/agent_output_20251215_191207.csv"
     }
 ]

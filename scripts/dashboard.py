@@ -4,7 +4,11 @@ import plotly.express as px
 from sqlalchemy import create_engine
 import time
 from datetime import datetime, timedelta
-
+import sys
+import os
+# Add parent directory to path to import from dags
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from dags.ai_agent import StockAgent
 # ==========================================
 # CONFIGURATION & SETUP
 # ==========================================
@@ -72,7 +76,9 @@ st.sidebar.markdown("### Navigation")
 view_mode = st.sidebar.radio("Select View", [
     "Core Visualizations", 
     "Real-time Streaming Monitor",
-    "Sector Comparison Dashboard", 
+    "Sector Comparison Dashboard",
+    "Holiday Analysis",
+    "AI Analyst 🤖"
 ])
 
 # Helper function to filter data
@@ -115,7 +121,7 @@ def load_and_process_full_data():
         # Load ALL needed columns at once to handle filters and charts
         # Note: stock_sector is one-hot encoded in this CSV
         cols = [
-            'stock_ticker', 'total_trade_amount', 'day_name', 'customer_id', 'timestamp', 'stock_price',
+            'stock_ticker', 'total_trade_amount', 'day_name', 'customer_id', 'timestamp', 'stock_price', 'is_holiday',
             'transaction_type_BUY', 'transaction_type_SELL',
             'customer_account_type_Institutional', 'customer_account_type_Retail',
             'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 
@@ -271,9 +277,26 @@ if view_mode == "Core Visualizations":
         st.subheader("5. Customer Transaction Distribution")
         
         if not df_full_filtered.empty:
-             # Chart 5: Distribution of Trade Amounts
-             fig5 = px.box(df_full_filtered, x='customer_account_type', y='total_trade_amount', 
-                           title="Trade Amount Distribution", points="outliers")
+             # Chart 5: Transactions per Customer (Bar Chart / Histogram style)
+             # Use size() to count rows (transactions) since 'transaction_id' might not be loaded
+             df_cust_count = df_full_filtered.groupby('customer_id').size().reset_index(name='transaction_count')
+             
+             # Sort Customer IDs Numerically (so 2 comes before 10)
+             try:
+                 df_cust_count['customer_id'] = df_cust_count['customer_id'].astype(int)
+                 df_cust_count.sort_values('customer_id', inplace=True)
+             except:
+                 df_cust_count.sort_values('customer_id', inplace=True) # Fallback to string sort if non-numeric IDs exist
+             
+             # Convert ID to string/category for plotting
+             df_cust_count['customer_id'] = df_cust_count['customer_id'].astype(str)
+             
+             fig5 = px.bar(df_cust_count, x='customer_id', y='transaction_count', 
+                           title="Transactions per Customer",
+                           labels={'customer_id': 'Customer ID', 'transaction_count': 'Number of Transactions'})
+             
+             # Force categorical axis to avoid number line issues if many IDs
+             fig5.update_layout(xaxis={'type': 'category'})
              st.plotly_chart(fig5, use_container_width=True)
         else:
              st.info("No customer data available.")
@@ -284,7 +307,8 @@ if view_mode == "Core Visualizations":
         if not df_full_filtered.empty:
              # Group by Customer ID and Sum Trade Amount
              df_top_10 = df_full_filtered.groupby('customer_id')['total_trade_amount'].sum().reset_index()
-             # Sort descending for vertical bar (largest on left)
+             
+             # Get Top 10 (Sort Descending: Largest on Left)
              df_top_10.sort_values('total_trade_amount', ascending=False, inplace=True)
              df_top_10 = df_top_10.head(10)
              
@@ -294,7 +318,13 @@ if view_mode == "Core Visualizations":
              fig6 = px.bar(df_top_10, x='customer_id', y='total_trade_amount',
                            title="Top 10 Customers (Volume)",
                            text_auto='.2s')
-             fig6.update_layout(xaxis_title="Customer ID", yaxis_title="Total Trade Amount")
+             
+             # Force X-axis to be categorical so IDs are distinct labels, not a number line
+             fig6.update_layout(
+                 xaxis_title="Customer ID", 
+                 yaxis_title="Total Trade Amount",
+                 xaxis={'type': 'category'}
+             )
              st.plotly_chart(fig6, use_container_width=True)
         else:
              st.info("Customer data not available.")
@@ -373,27 +403,175 @@ elif view_mode == "Sector Comparison Dashboard":
     
     # Calculate Sector Metrics from Filtered Global Data
     if not df_full_filtered.empty:
-        df_price_sector = df_full_filtered.groupby('stock_sector')['stock_price'].mean().reset_index()
-        df_price_sector.columns = ['stock_sector', 'average_price']
+        # Funnel Chart Data (Overall Average)
+        df_price_funnel = df_full_filtered.groupby('stock_sector')['stock_price'].mean().reset_index()
+        df_price_funnel.columns = ['stock_sector', 'average_price']
+        
+        # Grouped Bar Chart Data (Split by Transaction Type)
+        df_price_grouped = df_full_filtered.groupby(['stock_sector', 'transaction_type'])['stock_price'].mean().reset_index()
+        df_price_grouped.columns = ['stock_sector', 'transaction_type', 'average_price']
     else:
-        df_price_sector = pd.DataFrame()
+        df_price_funnel = pd.DataFrame()
+        df_price_grouped = pd.DataFrame()
     
-    if not df_price_sector.empty:
+    if not df_price_funnel.empty:
         col1, col2 = st.columns(2)
         with col1:
             st.subheader("Sector Price Hierarchy")
-            fig7 = px.funnel(df_price_sector, x='average_price', y='stock_sector', 
-                             title="Avg Price by Sector", template="plotly_white")
+            fig7 = px.funnel(df_price_funnel, x='average_price', y='stock_sector', 
+                             title="Avg Price by Sector (Overall)", template="plotly_white")
             st.plotly_chart(fig7, use_container_width=True)
         
         with col2:
             st.subheader("Sector Comparison Bar")
-            fig_sec = px.bar(df_price_sector, x='average_price', y='stock_sector', orientation='h',
-                             title="Sector Average Price Comparison", color='stock_sector')
-            st.plotly_chart(fig_sec, use_container_width=True)
+            if not df_price_grouped.empty:
+                fig_sec = px.bar(df_price_grouped, x='average_price', y='stock_sector', 
+                                 color='transaction_type', barmode='group', orientation='h',
+                                 title="Avg Price: Buy vs Sell per Sector",
+                                 text_auto='.2f')
+                st.plotly_chart(fig_sec, use_container_width=True)
+            else:
+                st.info("No grouped data available.")
     else:
         st.info("No Sector data available.")
 
+
+# ==========================================
+# 3. HOLIDAY vs NON-HOLIDAY ANALYSIS
+# ==========================================
+elif view_mode == "Holiday Analysis":
+    st.header("🎄 Holiday vs Non-Holiday Trading Patterns")
+    st.markdown("---")
+    
+    if not df_full_filtered.empty:
+        # Create a readable label column
+        df_holiday = df_full_filtered.copy()
+        
+        # Helper to classify safely
+        def get_day_type(val):
+            # Check for True/1/'True'
+            if val == 1 or val == True or str(val).lower() == 'true':
+                return "Holiday"
+            return "Regular Day"
+            
+        df_holiday['Day Type'] = df_holiday['is_holiday'].apply(get_day_type)
+        
+        # 1. Comparative Metrics (Avg Trade Size & Total Volume)
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.subheader("Average Trade Amount")
+            df_avg = df_holiday.groupby('Day Type')['total_trade_amount'].mean().reset_index()
+            
+            if not df_avg.empty:
+                fig_avg = px.bar(df_avg, x='Day Type', y='total_trade_amount', 
+                                 title="Avg Trade Amount: Holiday vs Regular", color='Day Type',
+                                 color_discrete_map={'Holiday': '#FF4B4B', 'Regular Day': '#1F77B4'},
+                                 text_auto='.2s')
+                st.plotly_chart(fig_avg, use_container_width=True)
+            else:
+                st.info("No average data.")
+            
+        with col2:
+            st.subheader("Total Trading Volume")
+            df_vol = df_holiday.groupby('Day Type')['total_trade_amount'].sum().reset_index()
+            
+            if not df_vol.empty:
+                fig_vol = px.pie(df_vol, values='total_trade_amount', names='Day Type', 
+                                 title="Volume Share", 
+                                 color='Day Type',
+                                 color_discrete_map={'Holiday': '#FF4B4B', 'Regular Day': '#1F77B4'},
+                                 hole=0.4)
+                st.plotly_chart(fig_vol, use_container_width=True)
+            else:
+                st.info("No volume data.")
+            
+        # 2. Sector Performance Split
+        st.subheader("Sector Performance by Day Type")
+        df_sector_hol = df_holiday.groupby(['stock_sector', 'Day Type'])['total_trade_amount'].sum().reset_index()
+        
+        if not df_sector_hol.empty:
+            fig_sec_hol = px.bar(df_sector_hol, x='stock_sector', y='total_trade_amount', color='Day Type',
+                                 barmode='group', title="Sector Volume: Holiday vs Regular",
+                                 color_discrete_map={'Holiday': '#FF4B4B', 'Regular Day': '#1F77B4'},
+                                 text_auto='.2s')
+            st.plotly_chart(fig_sec_hol, use_container_width=True)
+        else:
+            st.info("No sector data available.")
+        
+    else:
+        st.info("No data available for the selected filters.")
+
+# ==========================================
+# 4. AI ANALYST (Interactive Agent)
+# ==========================================
+elif view_mode == "AI Analyst 🤖":
+    st.header("🤖 AI Financial Analyst")
+    st.markdown("Ask questions about your portfolio in plain English. The AI will generate SQL, execute it, and show you the results.")
+    st.markdown("---")
+    
+    # Initialize Session State for Chat History
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+        
+    # Display previous messages
+    for msg in st.session_state.messages:
+        with st.chat_message(msg["role"]):
+            st.markdown(msg["content"])
+            if "data" in msg and msg["data"] is not None:
+                st.dataframe(msg["data"])
+
+    # Input
+    user_input = st.chat_input("Ex: What is the total volume for Technology stocks today?")
+    
+    if user_input:
+        # Show User Message
+        st.session_state.messages.append({"role": "user", "content": user_input})
+        with st.chat_message("user"):
+            st.markdown(user_input)
+            
+        # Run Agent
+        with st.chat_message("assistant"):
+            status_placeholder = st.empty()
+            status_placeholder.markdown("🧠 *Thinking and querying data...*")
+            
+            try:
+                agent = StockAgent()
+                response = agent.run(input_query=user_input)
+                
+                status_placeholder.empty() # Clear loading status
+                
+                if "sql" in response:
+                    st.markdown(f"**Generated SQL:**")
+                    st.code(response["sql"], language="sql")
+                
+                if "data" in response and not response["data"].empty:
+                    st.markdown(f"**Result:**")
+                    st.dataframe(response["data"])
+                    
+                    # CSV Download
+                    csv = response["data"].to_csv(index=False).encode('utf-8')
+                    st.download_button(
+                        label="📥 Download Result as CSV",
+                        data=csv,
+                        file_name=f"ai_analysis_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                        mime="text/csv"
+                    )
+                    
+                    # Save to history with data
+                    st.session_state.messages.append({
+                        "role": "assistant", 
+                        "content": f"Executed Query: `{response['sql']}`",
+                        "data": response["data"]
+                    })
+                else:
+                    msg = "No data returned or query failed."
+                    st.error(msg)
+                    st.session_state.messages.append({"role": "assistant", "content": msg})
+                    
+            except Exception as e:
+                status_placeholder.empty()
+                st.error(f"Agent Error: {e}")
 
 # ==========================================
 # DETAILED ANALYSIS
@@ -402,6 +580,6 @@ elif view_mode == "Detailed Analysis":
     st.header("Deep Dive Analysis")
     st.dataframe(load_data("spark_sql_1"), use_container_width=True)
 
-if auto_refresh:
+if auto_refresh and view_mode == "Real-time Streaming Monitor":
     time.sleep(refresh_rate)
     st.rerun()
