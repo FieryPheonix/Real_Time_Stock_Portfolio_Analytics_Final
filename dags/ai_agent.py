@@ -5,6 +5,9 @@ import pandas as pd
 import sqlite3
 from datetime import datetime
 from huggingface_hub import InferenceClient
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Constants for Paths
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,7 +25,7 @@ class StockAgent:
     def __init__(self):
         self.api_key = os.getenv("HUGGINGFACEHUB_API_TOKEN")
         if not self.api_key:
-            print("WARNING: HUGGINGFACEHUB_API_TOKEN not found.")
+            raise ValueError("HUGGINGFACEHUB_API_TOKEN not found in environment variables. Please check your .env file.")
         self.client = InferenceClient(token=self.api_key)
         self.models = [
             "Qwen/Qwen2.5-Coder-32B-Instruct",
@@ -99,9 +102,18 @@ class StockAgent:
         2. Schema: table 'full_stocks' with columns: {schema}
         3. Context: Today is {current_date}.
         4. task: Generate a SQL (SQLite) query to answer the question.
-        5. Specifics:
-           - Use 'stock_sector_Technology' form for boolean encoding if present.
-           - Return ONLY valid SQL. No markdown.
+        5. CRITICAL: The data is One-Hot Encoded.
+           - There is NO 'stock_sector' column. 
+           - Columns are 'stock_sector_Technology', 'stock_sector_Energy', etc. (values 0 or 1).
+           - To filter: WHERE stock_sector_Technology = 1
+           - To GROUP BY SECTOR: You MUST use a CASE statement:
+             CASE 
+               WHEN stock_sector_Technology = 1 THEN 'Technology'
+               WHEN stock_sector_Energy = 1 THEN 'Energy'
+               ...
+             END AS sector
+        6. Return ONLY valid SQL. No markdown.
+        7. If you are asked something irrelevant, say that this is out of scope
         
         SQL:
         """
@@ -109,13 +121,18 @@ class StockAgent:
             try:
                 response = self.client.chat_completion(
                     messages=[{"role": "user", "content": prompt}],
-                    model=model, max_tokens=200, temperature=0.1
+                    model=model, max_tokens=300, temperature=0.1
                 )
-                sql = response.choices[0].message.content.replace("```sql", "").replace("```", "").strip()
+                raw_content = response.choices[0].message.content
+                print(f"[DEBUG] Model {model} raw response: {raw_content}")
+                
+                sql = raw_content.replace("```sql", "").replace("```", "").strip()
                 if "SELECT" in sql.upper():
                     return sql
+                else:
+                    print(f"[DEBUG] Model {model} response did not contain SELECT. Retrying...")
             except Exception as e:
-                print(f"Model {model} failed: {e}")
+                print(f"[DEBUG] Model {model} failed: {e}")
                 continue
         return None
 
@@ -141,6 +158,15 @@ class StockAgent:
         sql_query = self._generate_sql(query, schema)
         
         if not sql_query:
+            # LOG FAILURE
+            failure_log = {
+                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "query": query,
+                "error": "Failed to generate SQL",
+                "schema_used": schema
+            }
+            self._log_transaction(failure_log)
+            print("[Agent] Failed to generate SQL. See logs.")
             return {"status": "Failed to generate SQL"}
 
         # 3. Execute Tool
@@ -153,8 +179,8 @@ class StockAgent:
         # 5. Log
         log_entry = {
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "query": query,
-            "sql": sql_query,
+            "user_query": query,
+            "agent_response": sql_query,
             "result_summary": f"{len(result_list)} rows returned",
             "saved_file": saved_path
         }
@@ -181,6 +207,9 @@ class StockAgent:
 
 # Maintain backward compatibility for Airflow
 def process_with_ai_agent(filename=None):
+    # We ignore filename here because the class uses the constant CSV_FILE, 
+    # which points to the same location (/opt/airflow/data/streaming_dataset/full_stocks.csv)
+    # If the filename passed is different, we should technically update it, but for now strict consistency is fine.
     agent = StockAgent()
     agent.run()
 

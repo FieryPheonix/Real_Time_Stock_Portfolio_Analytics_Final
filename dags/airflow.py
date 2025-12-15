@@ -935,7 +935,7 @@ with DAG(
         }
     )
 
-    prepare_streaming_data_task >> encode_categorical_data_task
+    load_to_postgres_task>> prepare_streaming_data_task >> encode_categorical_data_task
 
     ############ Stage 3 ######################
 
@@ -959,7 +959,7 @@ with DAG(
             'fully_encoded_path': '/opt/airflow/data/streaming_dataset/full_stocks.csv'
         }
     )
-    start_kafka_producer_task >> consume_and_process_stream_task >> save_final_to_postgres_task
+    encode_categorical_data_task >> start_kafka_producer_task >> consume_and_process_stream_task >> save_final_to_postgres_task
 
     ############ Stage 4 ######################
     initialize_spark_session_task = PythonOperator(
@@ -996,7 +996,7 @@ with DAG(
         }
     )
     
-    initialize_spark_session_task >> run_spark_analytics_task
+    save_final_to_postgres_task>> initialize_spark_session_task >> run_spark_analytics_task
     
     run_spark_analytics_task >> prepare_visualization_task >> start_visualization_service_task
     run_spark_analytics_task >> process_with_ai_agent_task

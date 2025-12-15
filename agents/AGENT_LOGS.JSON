@@ -85,5 +85,33 @@
         "sql": "SELECT COUNT(*) FROM full_stocks WHERE is_holiday = 1",
         "result_summary": "1 rows returned",
         "saved_file": "/opt/airflow/agents/outputs/agent_output_20251215_191207.csv"
+    },
+    {
+        "timestamp": "2025-12-15 22:14:30",
+        "user_query": "How many trades were made in total on days that were holidays?",
+        "agent_response": "SELECT COUNT(transaction_id) AS total_trades\nFROM full_stocks\nWHERE is_holiday = 1;",
+        "result_summary": "1 rows returned",
+        "saved_file": "/Users/salmamahmoud/Desktop/projects/DE-M3/Real_Time_Stock_Portfolio_Analytics_Final/agents/outputs/agent_output_20251215_221430.csv"
+    },
+    {
+        "timestamp": "2025-12-15 20:22:35",
+        "user_query": "How many rows have is_holiday set to true?",
+        "agent_response": "SELECT COUNT(*) FROM full_stocks WHERE is_holiday = 1",
+        "result_summary": "1 rows returned",
+        "saved_file": "/opt/airflow/agents/outputs/agent_output_20251215_202235.csv"
+    },
+    {
+        "timestamp": "2025-12-15 20:23:39",
+        "user_query": "How many trades were made in total on days that were holidays?",
+        "agent_response": "SELECT COUNT(transaction_id) AS total_trades\nFROM full_stocks\nWHERE is_holiday = 1;",
+        "result_summary": "1 rows returned",
+        "saved_file": "/opt/airflow/agents/outputs/agent_output_20251215_202339.csv"
+    },
+    {
+        "timestamp": "2025-12-15 20:24:16",
+        "user_query": "what is the weather like today ",
+        "agent_response": "SELECT 'This query is not applicable to answer the question about the weather.'",
+        "result_summary": "1 rows returned",
+        "saved_file": "/opt/airflow/agents/outputs/agent_output_20251215_202416.csv"
     }
 ]

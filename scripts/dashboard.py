@@ -6,6 +6,11 @@ import time
 from datetime import datetime, timedelta
 import sys
 import os
+from dotenv import load_dotenv
+
+# Load env vars
+load_dotenv()
+
 # Add parent directory to path to import from dags
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from dags.ai_agent import StockAgent
@@ -546,24 +551,33 @@ elif view_mode == "AI Analyst 🤖":
                     st.code(response["sql"], language="sql")
                 
                 if "data" in response and not response["data"].empty:
-                    st.markdown(f"**Result:**")
-                    st.dataframe(response["data"])
-                    
-                    # CSV Download
-                    csv = response["data"].to_csv(index=False).encode('utf-8')
-                    st.download_button(
-                        label="📥 Download Result as CSV",
-                        data=csv,
-                        file_name=f"ai_analysis_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
-                        mime="text/csv"
-                    )
-                    
-                    # Save to history with data
-                    st.session_state.messages.append({
-                        "role": "assistant", 
-                        "content": f"Executed Query: `{response['sql']}`",
-                        "data": response["data"]
-                    })
+                    # Check for execution error returned as dataframe
+                    if "error" in response["data"].columns:
+                         st.error(f"SQL Execution Error: {response['data']['error'][0]}")
+                         st.session_state.messages.append({"role": "assistant", "content": f"Error: {response['data']['error'][0]}"})
+                    else:
+                        st.markdown(f"**Result:**")
+                        st.dataframe(response["data"])
+                        
+                        # CSV Download
+                        csv = response["data"].to_csv(index=False).encode('utf-8')
+                        st.download_button(
+                            label="📥 Download Result as CSV",
+                            data=csv,
+                            file_name=f"ai_analysis_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                            mime="text/csv"
+                        )
+                        
+                        # Save to history with data
+                        st.session_state.messages.append({
+                            "role": "assistant", 
+                            "content": f"Executed Query: `{response.get('sql', 'N/A')}`",
+                            "data": response["data"]
+                        })
+                elif "status" in response:
+                    msg = f"Agent Status: {response['status']}"
+                    st.warning(msg)
+                    st.session_state.messages.append({"role": "assistant", "content": msg})
                 else:
                     msg = "No data returned or query failed."
                     st.error(msg)
