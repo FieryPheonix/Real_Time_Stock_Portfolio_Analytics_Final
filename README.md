@@ -71,3 +71,15 @@ You can interact with the AI Agent in two ways:
 - **`scripts/`**: Contains the Streamlit Dashboard (`dashboard.py`) and Kafka Producer.
 - **`data/`**: Source datasets.
 - **`agents/`**: Logs and inputs for the AI Agent.
+
+---
+
+## Pipeline
+![alt text](<images/Screenshot 2025-12-15 at 22.26.24.png>)
+
+---
+
+## Dashboard Visualizations
+![Visualization 1](<images/Screenshot 2025-12-16 at 00.37.12.png>)
+![Visualization 2](<images/Screenshot 2025-12-16 at 00.37.01.png>)
+![Visualization 3](<images/Screenshot 2025-12-16 at 00.37.08.png>)

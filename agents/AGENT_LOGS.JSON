@@ -113,5 +113,80 @@
         "agent_response": "SELECT 'This query is not applicable to answer the question about the weather.'",
         "result_summary": "1 rows returned",
         "saved_file": "/opt/airflow/agents/outputs/agent_output_20251215_202416.csv"
+    },
+    {
+        "timestamp": "2025-12-15 22:36:24",
+        "query": "How many trades were made in total on days that were holidays?",
+        "error": "Failed to generate SQL",
+        "schema_used": "transaction_id, timestamp, customer_id, stock_ticker, quantity, average_trade_size, day_name, is_weekend, is_holiday, stock_liquidity_tier, stock_price, total_trade_amount, transaction_type_BUY, transaction_type_SELL, customer_account_type_Institutional, customer_account_type_Retail, stock_sector_Consumer, stock_sector_Energy, stock_sector_Finance, stock_sector_Healthcare, stock_sector_Technology, stock_industry_Asset_Management, stock_industry_Hardware, stock_industry_Oil_&_Gas, stock_industry_Pharmaceuticals, stock_industry_Renewables, stock_industry_Retail, stock_industry_Software, stock_industry_Utilities"
+    },
+    {
+        "timestamp": "2025-12-15 22:37:14",
+        "query": "How many rows have is_holiday set to true?",
+        "error": "Failed to generate SQL",
+        "schema_used": "transaction_id, timestamp, customer_id, stock_ticker, quantity, average_trade_size, day_name, is_weekend, is_holiday, stock_liquidity_tier, stock_price, total_trade_amount, transaction_type_BUY, transaction_type_SELL, customer_account_type_Institutional, customer_account_type_Retail, stock_sector_Consumer, stock_sector_Energy, stock_sector_Finance, stock_sector_Healthcare, stock_sector_Technology, stock_industry_Asset_Management, stock_industry_Hardware, stock_industry_Oil_&_Gas, stock_industry_Pharmaceuticals, stock_industry_Renewables, stock_industry_Retail, stock_industry_Software, stock_industry_Utilities"
+    },
+    {
+        "timestamp": "2025-12-15 22:39:15",
+        "query": "How many trades were made in 2024? ",
+        "error": "Failed to generate SQL",
+        "schema_used": "transaction_id, timestamp, customer_id, stock_ticker, quantity, average_trade_size, day_name, is_weekend, is_holiday, stock_liquidity_tier, stock_price, total_trade_amount, transaction_type_BUY, transaction_type_SELL, customer_account_type_Institutional, customer_account_type_Retail, stock_sector_Consumer, stock_sector_Energy, stock_sector_Finance, stock_sector_Healthcare, stock_sector_Technology, stock_industry_Asset_Management, stock_industry_Hardware, stock_industry_Oil_&_Gas, stock_industry_Pharmaceuticals, stock_industry_Renewables, stock_industry_Retail, stock_industry_Software, stock_industry_Utilities"
+    },
+    {
+        "timestamp": "2025-12-15 22:40:33",
+        "query": "How many trades were made in 2024?",
+        "error": "Failed to generate SQL",
+        "schema_used": "transaction_id, timestamp, customer_id, stock_ticker, quantity, average_trade_size, day_name, is_weekend, is_holiday, stock_liquidity_tier, stock_price, total_trade_amount, transaction_type_BUY, transaction_type_SELL, customer_account_type_Institutional, customer_account_type_Retail, stock_sector_Consumer, stock_sector_Energy, stock_sector_Finance, stock_sector_Healthcare, stock_sector_Technology, stock_industry_Asset_Management, stock_industry_Hardware, stock_industry_Oil_&_Gas, stock_industry_Pharmaceuticals, stock_industry_Renewables, stock_industry_Retail, stock_industry_Software, stock_industry_Utilities"
+    },
+    {
+        "timestamp": "2025-12-15 22:47:20",
+        "query": "How many rows have is_holiday set to true?",
+        "error": "Failed to generate SQL",
+        "schema_used": "transaction_id, timestamp, customer_id, stock_ticker, quantity, average_trade_size, day_name, is_weekend, is_holiday, stock_liquidity_tier, stock_price, total_trade_amount, transaction_type_BUY, transaction_type_SELL, customer_account_type_Institutional, customer_account_type_Retail, stock_sector_Consumer, stock_sector_Energy, stock_sector_Finance, stock_sector_Healthcare, stock_sector_Technology, stock_industry_Asset_Management, stock_industry_Hardware, stock_industry_Oil_&_Gas, stock_industry_Pharmaceuticals, stock_industry_Renewables, stock_industry_Retail, stock_industry_Software, stock_industry_Utilities"
+    },
+    {
+        "timestamp": "2025-12-15 22:47:47",
+        "query": "How many trades were made in 2024?",
+        "error": "Failed to generate SQL",
+        "schema_used": "transaction_id, timestamp, customer_id, stock_ticker, quantity, average_trade_size, day_name, is_weekend, is_holiday, stock_liquidity_tier, stock_price, total_trade_amount, transaction_type_BUY, transaction_type_SELL, customer_account_type_Institutional, customer_account_type_Retail, stock_sector_Consumer, stock_sector_Energy, stock_sector_Finance, stock_sector_Healthcare, stock_sector_Technology, stock_industry_Asset_Management, stock_industry_Hardware, stock_industry_Oil_&_Gas, stock_industry_Pharmaceuticals, stock_industry_Renewables, stock_industry_Retail, stock_industry_Software, stock_industry_Utilities"
+    },
+    {
+        "timestamp": "2025-12-15 22:50:56",
+        "query": "How many rows have is_holiday set to true?",
+        "error": "Failed to generate SQL",
+        "schema_used": "transaction_id, timestamp, customer_id, stock_ticker, quantity, average_trade_size, day_name, is_weekend, is_holiday, stock_liquidity_tier, stock_price, total_trade_amount, transaction_type_BUY, transaction_type_SELL, customer_account_type_Institutional, customer_account_type_Retail, stock_sector_Consumer, stock_sector_Energy, stock_sector_Finance, stock_sector_Healthcare, stock_sector_Technology, stock_industry_Asset_Management, stock_industry_Hardware, stock_industry_Oil_&_Gas, stock_industry_Pharmaceuticals, stock_industry_Renewables, stock_industry_Retail, stock_industry_Software, stock_industry_Utilities"
+    },
+    {
+        "timestamp": "2025-12-15 22:54:15",
+        "query": "How many rows have is_holiday set to true?",
+        "error": "Failed to generate SQL",
+        "schema_used": "transaction_id, timestamp, customer_id, stock_ticker, quantity, average_trade_size, day_name, is_weekend, is_holiday, stock_liquidity_tier, stock_price, total_trade_amount, transaction_type_BUY, transaction_type_SELL, customer_account_type_Institutional, customer_account_type_Retail, stock_sector_Consumer, stock_sector_Energy, stock_sector_Finance, stock_sector_Healthcare, stock_sector_Technology, stock_industry_Asset_Management, stock_industry_Hardware, stock_industry_Oil_&_Gas, stock_industry_Pharmaceuticals, stock_industry_Renewables, stock_industry_Retail, stock_industry_Software, stock_industry_Utilities"
+    },
+    {
+        "timestamp": "2025-12-15 22:55:22",
+        "query": "How many rows have is_holiday set to true?",
+        "error": "Failed to generate SQL",
+        "schema_used": "transaction_id, timestamp, customer_id, stock_ticker, quantity, average_trade_size, day_name, is_weekend, is_holiday, stock_liquidity_tier, stock_price, total_trade_amount, transaction_type_BUY, transaction_type_SELL, customer_account_type_Institutional, customer_account_type_Retail, stock_sector_Consumer, stock_sector_Energy, stock_sector_Finance, stock_sector_Healthcare, stock_sector_Technology, stock_industry_Asset_Management, stock_industry_Hardware, stock_industry_Oil_&_Gas, stock_industry_Pharmaceuticals, stock_industry_Renewables, stock_industry_Retail, stock_industry_Software, stock_industry_Utilities"
+    },
+    {
+        "timestamp": "2025-12-15 23:02:04",
+        "user_query": "How many rows have is_holiday set to true?",
+        "agent_response": "SELECT COUNT(*) FROM full_stocks WHERE is_holiday = 1",
+        "result_summary": "1 rows returned",
+        "saved_file": "/opt/airflow/agents/outputs/agent_output_20251215_230204.csv"
+    },
+    {
+        "timestamp": "2025-12-15 23:02:29",
+        "user_query": "How many rows have is_holiday set to true?",
+        "agent_response": "SELECT COUNT(*) FROM full_stocks WHERE is_holiday = 1",
+        "result_summary": "1 rows returned",
+        "saved_file": "/opt/airflow/agents/outputs/agent_output_20251215_230229.csv"
+    },
+    {
+        "timestamp": "2025-12-15 23:02:52",
+        "user_query": "How many rows have is_holiday set to true?",
+        "agent_response": "SELECT COUNT(*) FROM full_stocks WHERE is_holiday = 1",
+        "result_summary": "1 rows returned",
+        "saved_file": "/opt/airflow/agents/outputs/agent_output_20251215_230252.csv"
     }
 ]
