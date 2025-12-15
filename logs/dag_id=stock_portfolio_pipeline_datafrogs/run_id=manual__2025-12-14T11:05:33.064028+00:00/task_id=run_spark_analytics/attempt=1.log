@@ -1,0 +1,186 @@
+[2025-12-14T11:05:43.601+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-12-14T11:05:43.610+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.run_spark_analytics manual__2025-12-14T11:05:33.064028+00:00 [queued]>
+[2025-12-14T11:05:43.614+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.run_spark_analytics manual__2025-12-14T11:05:33.064028+00:00 [queued]>
+[2025-12-14T11:05:43.614+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2025-12-14T11:05:43.620+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): run_spark_analytics> on 2025-12-14 11:05:33.064028+00:00
+[2025-12-14T11:05:43.627+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=256) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-12-14T11:05:43.629+0000] {standard_task_runner.py:72} INFO - Started process 266 to run task
+[2025-12-14T11:05:43.631+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'stock_portfolio_pipeline_datafrogs', 'run_spark_analytics', 'manual__2025-12-14T11:05:33.064028+00:00', '--job-id', '197', '--raw', '--subdir', 'DAGS_FOLDER/***.py', '--cfg-path', '/tmp/tmp1fcwzo5t']
+[2025-12-14T11:05:43.638+0000] {standard_task_runner.py:105} INFO - Job 197: Subtask run_spark_analytics
+[2025-12-14T11:05:43.690+0000] {task_command.py:467} INFO - Running <TaskInstance: stock_portfolio_pipeline_datafrogs.run_spark_analytics manual__2025-12-14T11:05:33.064028+00:00 [running]> on host bfbbd4fc455d
+[2025-12-14T11:05:43.784+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data_engineering_team' AIRFLOW_CTX_DAG_ID='stock_portfolio_pipeline_datafrogs' AIRFLOW_CTX_TASK_ID='run_spark_analytics' AIRFLOW_CTX_EXECUTION_DATE='2025-12-14T11:05:33.064028+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-14T11:05:33.064028+00:00'
+[2025-12-14T11:05:43.789+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-12-14T11:05:43.808+0000] {logging_mixin.py:190} INFO - === Starting Spark Analytics Task ===
+[2025-12-14T11:05:43.809+0000] {logging_mixin.py:190} INFO - No existing SparkContext found, continuing.
+[2025-12-14T11:05:43.809+0000] {logging_mixin.py:190} INFO - Attempting to create SparkSession...
+[2025-12-14T11:05:45.762+0000] {logging_mixin.py:190} INFO - SparkSession created successfully.
+[2025-12-14T11:05:45.763+0000] {logging_mixin.py:190} INFO - Checking for file at: /opt/***/data/streaming_dataset/full_stocks.csv
+[2025-12-14T11:05:45.764+0000] {logging_mixin.py:190} INFO - SUCCESS: File found.
+[2025-12-14T11:05:50.404+0000] {logging_mixin.py:190} INFO - CSV loaded successfully, showing first 5 rows:
+[2025-12-14T11:05:50.947+0000] {logging_mixin.py:190} INFO - +--------------+----------+-----------+------------+--------+------------------+--------+----------+----------+--------------------+------------------+------------------+--------------------+---------------------+-----------------------------------+----------------------------+---------------------+-------------------+--------------------+-----------------------+-----------------------+-------------------------------+-----------------------+------------------------+------------------------------+-------------------------+---------------------+-----------------------+------------------------+
+|transaction_id| timestamp|customer_id|stock_ticker|quantity|average_trade_size|day_name|is_weekend|is_holiday|stock_liquidity_tier|       stock_price|total_trade_amount|transaction_type_BUY|transaction_type_SELL|customer_account_type_Institutional|customer_account_type_Retail|stock_sector_Consumer|stock_sector_Energy|stock_sector_Finance|stock_sector_Healthcare|stock_sector_Technology|stock_industry_Asset Management|stock_industry_Hardware|stock_industry_Oil & Gas|stock_industry_Pharmaceuticals|stock_industry_Renewables|stock_industry_Retail|stock_industry_Software|stock_industry_Utilities|
++--------------+----------+-----------+------------+--------+------------------+--------+----------+----------+--------------------+------------------+------------------+--------------------+---------------------+-----------------------------------+----------------------------+---------------------+-------------------+--------------------+-----------------------+-----------------------+-------------------------------+-----------------------+------------------------+------------------------------+-------------------------+---------------------+-----------------------+------------------------+
+|             1|2023-01-02|       4747|           1|      15|  2.70805020110221|       0|         0|         0|                 Low|143.73284741052294| 2155.992711157844|                true|                false|                              false|                        true|                 true|              false|               false|                  false|                  false|                          false|                  false|                   false|                         false|                    false|                 true|                  false|                   false|
+|             2|2023-01-02|       4747|           3|      68| 3.725693427236653|       0|         0|         0|                 Low| 41.72108686196776| 2837.033906613808|                true|                false|                              false|                        true|                false|              false|                true|                  false|                  false|                           true|                  false|                   false|                         false|                    false|                false|                  false|                   false|
+|             3|2023-01-02|        227|           5|      49|3.8918202981106265|       0|         0|         0|                High|136.61322857985922| 6694.048200413102|                true|                false|                              false|                        true|                false|               true|               false|                  false|                  false|                          false|                  false|                    true|                         false|                    false|                false|                  false|                   false|
+|             5|2023-01-02|       3938|           5|     203| 5.313205979041787|       0|         0|         0|                High|136.61322857985922|27732.485401711423|                true|                false|                              false|                        true|                false|               true|               false|                  false|                  false|                          false|                  false|                    true|                         false|                    false|                false|                  false|                   false|
+|             6|2023-01-02|       1513|           5|     114| 4.736198448394496|       0|         0|         0|                High|136.61322857985922|15573.908058103952|                true|                false|                              false|                        true|                false|               true|               false|                  false|                  false|                          false|                  false|                    true|                         false|                    false|                false|                  false|                   false|
++--------------+----------+-----------+------------+--------+------------------+--------+----------+----------+--------------------+------------------+------------------+--------------------+---------------------+-----------------------------------+----------------------------+---------------------+-------------------+--------------------+-----------------------+-----------------------+-------------------------------+-----------------------+------------------------+------------------------------+-------------------------+---------------------+-----------------------+------------------------+
+only showing top 5 rows
+[2025-12-14T11:05:52.496+0000] {logging_mixin.py:190} INFO - +------------+--------------------+
+|stock_ticker|total_trading_volume|
++------------+--------------------+
+|      STK001|                3505|
+|      STK002|                4254|
+|      STK003|                8339|
+|      STK004|                2680|
+|      STK005|                6590|
+|      STK006|              580139|
+|      STK007|               27106|
+|      STK008|              100328|
+|      STK009|              295361|
+|      STK010|              119891|
+|      STK011|               30871|
+|      STK012|              405355|
+|      STK013|              142507|
+|      STK014|                1384|
+|      STK015|                3242|
+|      STK016|                3028|
+|      STK017|               34021|
+|      STK018|              149273|
+|      STK019|               32347|
+|      STK020|               48237|
++------------+--------------------+
+[2025-12-14T11:05:52.497+0000] {logging_mixin.py:190} INFO - Saving 'spark_analytics_1' to Postgres...
+[2025-12-14T11:05:54.188+0000] {logging_mixin.py:190} INFO - Error saving 'spark_analytics_1' to Postgres: (psycopg2.OperationalError) could not translate host name "pgdatabase" to address: Name or service not known
+
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+[2025-12-14T11:05:55.257+0000] {logging_mixin.py:190} INFO - +------------+------------------+
+|stock_sector|     average_price|
++------------+------------------+
+|      Energy|100.62256005331076|
+|  Healthcare|152.36014652219362|
+|     Finance| 79.78100894741678|
+|    Consumer| 214.0935026041121|
+|  Technology|   153.32374229729|
++------------+------------------+
+[2025-12-14T11:05:55.259+0000] {logging_mixin.py:190} INFO - Saving 'spark_analytics_2' to Postgres...
+[2025-12-14T11:05:56.110+0000] {logging_mixin.py:190} INFO - Error saving 'spark_analytics_2' to Postgres: (psycopg2.OperationalError) could not translate host name "pgdatabase" to address: Name or service not known
+
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+[2025-12-14T11:05:56.394+0000] {logging_mixin.py:190} INFO - +----------------+-----+
+|transaction_type|count|
++----------------+-----+
++----------------+-----+
+[2025-12-14T11:05:56.395+0000] {logging_mixin.py:190} INFO - Saving 'spark_analytics_3' to Postgres...
+[2025-12-14T11:05:56.515+0000] {logging_mixin.py:190} INFO - Error saving 'spark_analytics_3' to Postgres: (psycopg2.OperationalError) could not translate host name "pgdatabase" to address: Name or service not known
+
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+[2025-12-14T11:05:56.779+0000] {logging_mixin.py:190} INFO - +-----------+-----------------+
+|customer_id|transaction_count|
++-----------+-----------------+
+|       4519|              276|
+|       1157|              215|
+|       4697|               17|
+|       3087|               11|
+|        193|              394|
+|       1243|               13|
+|       1816|               81|
+|       4700|               60|
+|       2871|               27|
+|       2750|               13|
+|        192|               40|
+|       4354|               14|
+|        336|               20|
+|       2920|               18|
+|        319|               17|
+|       3498|               38|
+|       4987|               12|
+|        363|               14|
+|        182|              152|
+|        280|               14|
++-----------+-----------------+
+only showing top 20 rows
+[2025-12-14T11:05:56.779+0000] {logging_mixin.py:190} INFO - Saving 'spark_analytics_4' to Postgres...
+[2025-12-14T11:05:56.953+0000] {logging_mixin.py:190} INFO - Error saving 'spark_analytics_4' to Postgres: (psycopg2.OperationalError) could not translate host name "pgdatabase" to address: Name or service not known
+
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+[2025-12-14T11:05:57.157+0000] {logging_mixin.py:190} INFO - +--------+-------------------+
+|day_name|       total_amount|
++--------+-------------------+
+|       3|5.829796875008588E7|
+|       2|5.612063536688559E7|
+|       4|5.495004356551078E7|
+|       0|5.448965043763535E7|
+|       1|4.964633063004339E7|
++--------+-------------------+
+[2025-12-14T11:05:57.158+0000] {logging_mixin.py:190} INFO - Saving 'spark_analytics_5' to Postgres...
+[2025-12-14T11:05:57.338+0000] {logging_mixin.py:190} INFO - Error saving 'spark_analytics_5' to Postgres: (psycopg2.OperationalError) could not translate host name "pgdatabase" to address: Name or service not known
+
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+[2025-12-14T11:05:57.548+0000] {logging_mixin.py:190} INFO - +------------+--------------+
+|stock_ticker|total_quantity|
++------------+--------------+
+|      STK006|        580139|
+|      STK012|        405355|
+|      STK009|        295361|
+|      STK018|        149273|
+|      STK013|        142507|
++------------+--------------+
+[2025-12-14T11:05:57.549+0000] {logging_mixin.py:190} INFO - Saving 'spark_sql_1' to Postgres...
+[2025-12-14T11:05:57.674+0000] {logging_mixin.py:190} INFO - Error saving 'spark_sql_1' to Postgres: (psycopg2.OperationalError) could not translate host name "pgdatabase" to address: Name or service not known
+
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+[2025-12-14T11:05:57.830+0000] {logging_mixin.py:190} INFO - +---------------------+-----------------+
+|customer_account_type| avg_trade_amount|
++---------------------+-----------------+
+|        Institutional| 26059.4641001178|
+|               Retail|29058.96916476181|
++---------------------+-----------------+
+[2025-12-14T11:05:57.831+0000] {logging_mixin.py:190} INFO - Saving 'spark_sql_2' to Postgres...
+[2025-12-14T11:05:57.985+0000] {logging_mixin.py:190} INFO - Error saving 'spark_sql_2' to Postgres: (psycopg2.OperationalError) could not translate host name "pgdatabase" to address: Name or service not known
+
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+[2025-12-14T11:05:58.177+0000] {logging_mixin.py:190} INFO - +----------+-----------------+
+|is_holiday|transaction_count|
++----------+-----------------+
+|         1|              169|
+|         0|             9331|
++----------+-----------------+
+[2025-12-14T11:05:58.178+0000] {logging_mixin.py:190} INFO - Saving 'spark_sql_3' to Postgres...
+[2025-12-14T11:05:58.333+0000] {logging_mixin.py:190} INFO - Error saving 'spark_sql_3' to Postgres: (psycopg2.OperationalError) could not translate host name "pgdatabase" to address: Name or service not known
+
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+[2025-12-14T11:05:58.449+0000] {logging_mixin.py:190} INFO - +------------+------------+
+|stock_sector|total_volume|
++------------+------------+
++------------+------------+
+[2025-12-14T11:05:58.450+0000] {logging_mixin.py:190} INFO - Saving 'spark_sql_4' to Postgres...
+[2025-12-14T11:05:58.563+0000] {logging_mixin.py:190} INFO - Error saving 'spark_sql_4' to Postgres: (psycopg2.OperationalError) could not translate host name "pgdatabase" to address: Name or service not known
+
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+[2025-12-14T11:05:58.775+0000] {logging_mixin.py:190} INFO - +--------------------+----------------+------------+
+|stock_liquidity_tier|transaction_type|total_amount|
++--------------------+----------------+------------+
+|                High|             BUY|154051314.70|
+|                High|            SELL| 58703182.52|
+|                 Low|             BUY|  2210329.86|
+|                 Low|            SELL|   363063.56|
+|                 Mid|             BUY| 43203939.67|
+|                 Mid|            SELL| 14972798.43|
++--------------------+----------------+------------+
+[2025-12-14T11:05:58.775+0000] {logging_mixin.py:190} INFO - Saving 'spark_sql_5' to Postgres...
+[2025-12-14T11:05:58.939+0000] {logging_mixin.py:190} INFO - Error saving 'spark_sql_5' to Postgres: (psycopg2.OperationalError) could not translate host name "pgdatabase" to address: Name or service not known
+
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+[2025-12-14T11:05:58.940+0000] {logging_mixin.py:190} INFO - === Spark Analytics Task Completed ===
+[2025-12-14T11:05:58.940+0000] {logging_mixin.py:190} INFO - Stopping SparkSession...
+[2025-12-14T11:05:59.160+0000] {logging_mixin.py:190} INFO - SparkSession stopped successfully.
+[2025-12-14T11:05:59.161+0000] {python.py:240} INFO - Done. Returned value was: None
+[2025-12-14T11:05:59.183+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-12-14T11:05:59.183+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=stock_portfolio_pipeline_datafrogs, task_id=run_spark_analytics, run_id=manual__2025-12-14T11:05:33.064028+00:00, execution_date=20251214T110533, start_date=20251214T110543, end_date=20251214T110559
+[2025-12-14T11:05:59.215+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2025-12-14T11:05:59.238+0000] {taskinstance.py:3895} INFO - 2 downstream tasks scheduled from follow-on schedule check
+[2025-12-14T11:05:59.239+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

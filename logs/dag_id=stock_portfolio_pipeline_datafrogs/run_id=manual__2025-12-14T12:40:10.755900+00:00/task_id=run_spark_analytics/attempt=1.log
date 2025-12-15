@@ -1,0 +1,139 @@
+[2025-12-14T12:40:17.467+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-12-14T12:40:17.478+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.run_spark_analytics manual__2025-12-14T12:40:10.755900+00:00 [queued]>
+[2025-12-14T12:40:17.482+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.run_spark_analytics manual__2025-12-14T12:40:10.755900+00:00 [queued]>
+[2025-12-14T12:40:17.482+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2025-12-14T12:40:17.488+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): run_spark_analytics> on 2025-12-14 12:40:10.755900+00:00
+[2025-12-14T12:40:17.494+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=9955) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-12-14T12:40:17.495+0000] {standard_task_runner.py:72} INFO - Started process 9967 to run task
+[2025-12-14T12:40:17.497+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'stock_portfolio_pipeline_datafrogs', 'run_spark_analytics', 'manual__2025-12-14T12:40:10.755900+00:00', '--job-id', '408', '--raw', '--subdir', 'DAGS_FOLDER/***.py', '--cfg-path', '/tmp/tmpllkafw37']
+[2025-12-14T12:40:17.500+0000] {standard_task_runner.py:105} INFO - Job 408: Subtask run_spark_analytics
+[2025-12-14T12:40:17.531+0000] {task_command.py:467} INFO - Running <TaskInstance: stock_portfolio_pipeline_datafrogs.run_spark_analytics manual__2025-12-14T12:40:10.755900+00:00 [running]> on host 79a4b2d0a09e
+[2025-12-14T12:40:17.579+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data_engineering_team' AIRFLOW_CTX_DAG_ID='stock_portfolio_pipeline_datafrogs' AIRFLOW_CTX_TASK_ID='run_spark_analytics' AIRFLOW_CTX_EXECUTION_DATE='2025-12-14T12:40:10.755900+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-14T12:40:10.755900+00:00'
+[2025-12-14T12:40:17.580+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-12-14T12:40:17.588+0000] {logging_mixin.py:190} INFO - === Starting Spark Analytics Task ===
+[2025-12-14T12:40:20.458+0000] {logging_mixin.py:190} INFO - Stopped existing SparkContext.
+[2025-12-14T12:40:20.459+0000] {logging_mixin.py:190} INFO - Creating SparkSession...
+[2025-12-14T12:40:20.698+0000] {logging_mixin.py:190} INFO - SparkSession created successfully.
+[2025-12-14T12:40:20.698+0000] {logging_mixin.py:190} INFO - Checking for file at: /opt/***/data/streaming_dataset/full_stocks.csv
+[2025-12-14T12:40:20.699+0000] {logging_mixin.py:190} INFO - SUCCESS: File found.
+[2025-12-14T12:40:24.865+0000] {logging_mixin.py:190} INFO - CSV loaded successfully, showing first 5 rows:
+[2025-12-14T12:40:25.173+0000] {logging_mixin.py:190} INFO - +--------------+----------+-----------+------------+--------+------------------+--------+----------+----------+--------------------+------------------+------------------+--------------------+---------------------+-----------------------------------+----------------------------+---------------------+-------------------+--------------------+-----------------------+-----------------------+-------------------------------+-----------------------+------------------------+------------------------------+-------------------------+---------------------+-----------------------+------------------------+
+|transaction_id| timestamp|customer_id|stock_ticker|quantity|average_trade_size|day_name|is_weekend|is_holiday|stock_liquidity_tier|       stock_price|total_trade_amount|transaction_type_BUY|transaction_type_SELL|customer_account_type_Institutional|customer_account_type_Retail|stock_sector_Consumer|stock_sector_Energy|stock_sector_Finance|stock_sector_Healthcare|stock_sector_Technology|stock_industry_Asset Management|stock_industry_Hardware|stock_industry_Oil & Gas|stock_industry_Pharmaceuticals|stock_industry_Renewables|stock_industry_Retail|stock_industry_Software|stock_industry_Utilities|
++--------------+----------+-----------+------------+--------+------------------+--------+----------+----------+--------------------+------------------+------------------+--------------------+---------------------+-----------------------------------+----------------------------+---------------------+-------------------+--------------------+-----------------------+-----------------------+-------------------------------+-----------------------+------------------------+------------------------------+-------------------------+---------------------+-----------------------+------------------------+
+|             1|2023-01-02|       4747|           1|      15|  2.70805020110221|       0|         0|         0|                 Low|143.73284741052294| 2155.992711157844|                true|                false|                              false|                        true|                 true|              false|               false|                  false|                  false|                          false|                  false|                   false|                         false|                    false|                 true|                  false|                   false|
+|             2|2023-01-02|       4747|           3|      68| 3.725693427236653|       0|         0|         0|                 Low| 41.72108686196776| 2837.033906613808|                true|                false|                              false|                        true|                false|              false|                true|                  false|                  false|                           true|                  false|                   false|                         false|                    false|                false|                  false|                   false|
+|             3|2023-01-02|        227|           5|      49|3.8918202981106265|       0|         0|         0|                High|136.61322857985922| 6694.048200413102|                true|                false|                              false|                        true|                false|               true|               false|                  false|                  false|                          false|                  false|                    true|                         false|                    false|                false|                  false|                   false|
+|             5|2023-01-02|       3938|           5|     203| 5.313205979041787|       0|         0|         0|                High|136.61322857985922|27732.485401711423|                true|                false|                              false|                        true|                false|               true|               false|                  false|                  false|                          false|                  false|                    true|                         false|                    false|                false|                  false|                   false|
+|             6|2023-01-02|       1513|           5|     114| 4.736198448394496|       0|         0|         0|                High|136.61322857985922|15573.908058103952|                true|                false|                              false|                        true|                false|               true|               false|                  false|                  false|                          false|                  false|                    true|                         false|                    false|                false|                  false|                   false|
++--------------+----------+-----------+------------+--------+------------------+--------+----------+----------+--------------------+------------------+------------------+--------------------+---------------------+-----------------------------------+----------------------------+---------------------+-------------------+--------------------+-----------------------+-----------------------+-------------------------------+-----------------------+------------------------+------------------------------+-------------------------+---------------------+-----------------------+------------------------+
+only showing top 5 rows
+[2025-12-14T12:40:26.132+0000] {logging_mixin.py:190} INFO - +------------+--------------------+
+|stock_ticker|total_trading_volume|
++------------+--------------------+
+|      STK002|                  15|
+|      STK004|                  68|
+|      STK006|                4900|
+|      STK008|                 281|
+|      STK009|                 799|
+|      STK010|                 470|
+|      STK012|                 845|
+|      STK013|                 374|
+|      STK018|                1016|
+|      STK020|                 291|
++------------+--------------------+
+[2025-12-14T12:40:26.132+0000] {logging_mixin.py:190} INFO - Saving 'spark_analytics_1' to Postgres...
+[2025-12-14T12:40:26.141+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:40:26.659+0000] {logging_mixin.py:190} INFO - Saved 'spark_analytics_1' successfully.
+[2025-12-14T12:40:26.954+0000] {logging_mixin.py:190} INFO - +------------+------------------+
+|stock_sector|     average_price|
++------------+------------------+
+|      Energy|133.91559774815522|
+|     Finance| 41.72108686196776|
+|    Consumer|143.56607933124985|
+|  Technology| 93.56049901380793|
++------------+------------------+
+[2025-12-14T12:40:26.955+0000] {logging_mixin.py:190} INFO - Saving 'spark_analytics_2' to Postgres...
+[2025-12-14T12:40:26.960+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:40:27.291+0000] {logging_mixin.py:190} INFO - Saved 'spark_analytics_2' successfully.
+[2025-12-14T12:40:27.484+0000] {logging_mixin.py:190} INFO - +----------------+-----+
+|transaction_type|count|
++----------------+-----+
++----------------+-----+
+[2025-12-14T12:40:27.485+0000] {logging_mixin.py:190} INFO - Saving 'spark_analytics_3' to Postgres...
+[2025-12-14T12:40:27.490+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:40:27.632+0000] {logging_mixin.py:190} INFO - Saved 'spark_analytics_3' successfully.
+[2025-12-14T12:40:28.076+0000] {logging_mixin.py:190} INFO - +-----------+-----------------+
+|customer_id|transaction_count|
++-----------+-----------------+
++-----------+-----------------+
+[2025-12-14T12:40:28.077+0000] {logging_mixin.py:190} INFO - Saving 'spark_analytics_4' to Postgres...
+[2025-12-14T12:40:28.086+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:40:28.220+0000] {logging_mixin.py:190} INFO - Saved 'spark_analytics_4' successfully.
+[2025-12-14T12:40:28.438+0000] {logging_mixin.py:190} INFO - +--------+------------------+
+|day_name|      total_amount|
++--------+------------------+
+|       0|493553.21333979827|
+|       2|330454.40655147296|
+|       1| 303606.4819539439|
++--------+------------------+
+[2025-12-14T12:40:28.438+0000] {logging_mixin.py:190} INFO - Saving 'spark_analytics_5' to Postgres...
+[2025-12-14T12:40:28.443+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:40:28.626+0000] {logging_mixin.py:190} INFO - Saved 'spark_analytics_5' successfully.
+[2025-12-14T12:40:28.807+0000] {logging_mixin.py:190} INFO - +------------+--------------+
+|stock_ticker|total_quantity|
++------------+--------------+
+|      STK006|          4900|
+|      STK018|          1016|
+|      STK012|           845|
+|      STK009|           799|
+|      STK010|           470|
++------------+--------------+
+[2025-12-14T12:40:28.808+0000] {logging_mixin.py:190} INFO - Saving 'spark_sql_1' to Postgres...
+[2025-12-14T12:40:28.814+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:40:28.944+0000] {logging_mixin.py:190} INFO - Saved 'spark_sql_1' successfully.
+[2025-12-14T12:40:29.064+0000] {logging_mixin.py:190} INFO - +---------------------+------------------+
+|customer_account_type|  avg_trade_amount|
++---------------------+------------------+
+|        Institutional|22165.860890253978|
+|               Retail| 27480.67019983636|
++---------------------+------------------+
+[2025-12-14T12:40:29.065+0000] {logging_mixin.py:190} INFO - Saving 'spark_sql_2' to Postgres...
+[2025-12-14T12:40:29.070+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:40:29.206+0000] {logging_mixin.py:190} INFO - Saved 'spark_sql_2' successfully.
+[2025-12-14T12:40:29.340+0000] {logging_mixin.py:190} INFO - +----------+-----------------+
+|is_holiday|transaction_count|
++----------+-----------------+
+|         0|               42|
++----------+-----------------+
+[2025-12-14T12:40:29.341+0000] {logging_mixin.py:190} INFO - Saving 'spark_sql_3' to Postgres...
+[2025-12-14T12:40:29.346+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:40:29.470+0000] {logging_mixin.py:190} INFO - Saved 'spark_sql_3' successfully.
+[2025-12-14T12:40:29.574+0000] {logging_mixin.py:190} INFO - +------------+------------+
+|stock_sector|total_volume|
++------------+------------+
++------------+------------+
+[2025-12-14T12:40:29.580+0000] {logging_mixin.py:190} INFO - Saving 'spark_sql_4' to Postgres...
+[2025-12-14T12:40:29.592+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:40:29.727+0000] {logging_mixin.py:190} INFO - Saved 'spark_sql_4' successfully.
+[2025-12-14T12:40:29.974+0000] {logging_mixin.py:190} INFO - +--------------------+----------------+------------+
+|stock_liquidity_tier|transaction_type|total_amount|
++--------------------+----------------+------------+
+|                High|             BUY|   866906.54|
+|                High|            SELL|    71443.75|
+|                 Low|             BUY|     4993.03|
+|                 Mid|             BUY|   184270.79|
++--------------------+----------------+------------+
+[2025-12-14T12:40:29.975+0000] {logging_mixin.py:190} INFO - Saving 'spark_sql_5' to Postgres...
+[2025-12-14T12:40:29.988+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:40:30.173+0000] {logging_mixin.py:190} INFO - Saved 'spark_sql_5' successfully.
+[2025-12-14T12:40:30.175+0000] {logging_mixin.py:190} INFO - === Spark Analytics Task Completed ===
+[2025-12-14T12:40:30.175+0000] {logging_mixin.py:190} INFO - Stopping SparkSession...
+[2025-12-14T12:40:30.648+0000] {logging_mixin.py:190} INFO - SparkSession stopped successfully.
+[2025-12-14T12:40:30.649+0000] {python.py:240} INFO - Done. Returned value was: None
+[2025-12-14T12:40:30.661+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-12-14T12:40:30.662+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=stock_portfolio_pipeline_datafrogs, task_id=run_spark_analytics, run_id=manual__2025-12-14T12:40:10.755900+00:00, execution_date=20251214T124010, start_date=20251214T124017, end_date=20251214T124030
+[2025-12-14T12:40:30.708+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2025-12-14T12:40:30.745+0000] {taskinstance.py:3895} INFO - 2 downstream tasks scheduled from follow-on schedule check
+[2025-12-14T12:40:30.746+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

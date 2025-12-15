@@ -1,0 +1,347 @@
+[2025-12-14T12:00:27.334+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-12-14T12:00:27.342+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.run_spark_analytics manual__2025-12-14T11:55:16.981349+00:00 [queued]>
+[2025-12-14T12:00:27.346+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.run_spark_analytics manual__2025-12-14T11:55:16.981349+00:00 [queued]>
+[2025-12-14T12:00:27.347+0000] {taskinstance.py:2866} INFO - Starting attempt 2 of 2
+[2025-12-14T12:00:27.352+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): run_spark_analytics> on 2025-12-14 11:55:16.981349+00:00
+[2025-12-14T12:00:27.358+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=3526) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-12-14T12:00:27.359+0000] {standard_task_runner.py:72} INFO - Started process 3531 to run task
+[2025-12-14T12:00:27.360+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'stock_portfolio_pipeline_datafrogs', 'run_spark_analytics', 'manual__2025-12-14T11:55:16.981349+00:00', '--job-id', '283', '--raw', '--subdir', 'DAGS_FOLDER/***.py', '--cfg-path', '/tmp/tmpsikkc72u']
+[2025-12-14T12:00:27.362+0000] {standard_task_runner.py:105} INFO - Job 283: Subtask run_spark_analytics
+[2025-12-14T12:00:27.390+0000] {task_command.py:467} INFO - Running <TaskInstance: stock_portfolio_pipeline_datafrogs.run_spark_analytics manual__2025-12-14T11:55:16.981349+00:00 [running]> on host 79a4b2d0a09e
+[2025-12-14T12:00:27.433+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data_engineering_team' AIRFLOW_CTX_DAG_ID='stock_portfolio_pipeline_datafrogs' AIRFLOW_CTX_TASK_ID='run_spark_analytics' AIRFLOW_CTX_EXECUTION_DATE='2025-12-14T11:55:16.981349+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-14T11:55:16.981349+00:00'
+[2025-12-14T12:00:27.434+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-12-14T12:00:27.441+0000] {logging_mixin.py:190} INFO - === Starting Spark Analytics Task ===
+[2025-12-14T12:00:30.777+0000] {logging_mixin.py:190} INFO - Stopped existing SparkContext.
+[2025-12-14T12:00:30.779+0000] {logging_mixin.py:190} INFO - Creating SparkSession...
+[2025-12-14T12:00:31.125+0000] {logging_mixin.py:190} INFO - SparkSession created successfully.
+[2025-12-14T12:00:31.125+0000] {logging_mixin.py:190} INFO - Checking for file at: /opt/***/data/streaming_dataset/full_stocks.csv
+[2025-12-14T12:00:31.126+0000] {logging_mixin.py:190} INFO - SUCCESS: File found.
+[2025-12-14T12:00:35.940+0000] {logging_mixin.py:190} INFO - CSV loaded successfully, showing first 5 rows:
+[2025-12-14T12:00:36.246+0000] {logging_mixin.py:190} INFO - +--------------+----------+-----------+------------+--------+------------------+--------+----------+----------+--------------------+------------------+------------------+--------------------+---------------------+-----------------------------------+----------------------------+---------------------+-------------------+--------------------+-----------------------+-----------------------+-------------------------------+-----------------------+------------------------+------------------------------+-------------------------+---------------------+-----------------------+------------------------+
+|transaction_id| timestamp|customer_id|stock_ticker|quantity|average_trade_size|day_name|is_weekend|is_holiday|stock_liquidity_tier|       stock_price|total_trade_amount|transaction_type_BUY|transaction_type_SELL|customer_account_type_Institutional|customer_account_type_Retail|stock_sector_Consumer|stock_sector_Energy|stock_sector_Finance|stock_sector_Healthcare|stock_sector_Technology|stock_industry_Asset Management|stock_industry_Hardware|stock_industry_Oil & Gas|stock_industry_Pharmaceuticals|stock_industry_Renewables|stock_industry_Retail|stock_industry_Software|stock_industry_Utilities|
++--------------+----------+-----------+------------+--------+------------------+--------+----------+----------+--------------------+------------------+------------------+--------------------+---------------------+-----------------------------------+----------------------------+---------------------+-------------------+--------------------+-----------------------+-----------------------+-------------------------------+-----------------------+------------------------+------------------------------+-------------------------+---------------------+-----------------------+------------------------+
+|             1|2023-01-02|       4747|           1|      15|  2.70805020110221|       0|         0|         0|                 Low|143.73284741052294| 2155.992711157844|                true|                false|                              false|                        true|                 true|              false|               false|                  false|                  false|                          false|                  false|                   false|                         false|                    false|                 true|                  false|                   false|
+|             2|2023-01-02|       4747|           3|      68| 3.725693427236653|       0|         0|         0|                 Low| 41.72108686196776| 2837.033906613808|                true|                false|                              false|                        true|                false|              false|                true|                  false|                  false|                           true|                  false|                   false|                         false|                    false|                false|                  false|                   false|
+|             3|2023-01-02|        227|           5|      49|3.8918202981106265|       0|         0|         0|                High|136.61322857985922| 6694.048200413102|                true|                false|                              false|                        true|                false|               true|               false|                  false|                  false|                          false|                  false|                    true|                         false|                    false|                false|                  false|                   false|
+|             5|2023-01-02|       3938|           5|     203| 5.313205979041787|       0|         0|         0|                High|136.61322857985922|27732.485401711423|                true|                false|                              false|                        true|                false|               true|               false|                  false|                  false|                          false|                  false|                    true|                         false|                    false|                false|                  false|                   false|
+|             6|2023-01-02|       1513|           5|     114| 4.736198448394496|       0|         0|         0|                High|136.61322857985922|15573.908058103952|                true|                false|                              false|                        true|                false|               true|               false|                  false|                  false|                          false|                  false|                    true|                         false|                    false|                false|                  false|                   false|
++--------------+----------+-----------+------------+--------+------------------+--------+----------+----------+--------------------+------------------+------------------+--------------------+---------------------+-----------------------------------+----------------------------+---------------------+-------------------+--------------------+-----------------------+-----------------------+-------------------------------+-----------------------+------------------------+------------------------------+-------------------------+---------------------+-----------------------+------------------------+
+only showing top 5 rows
+[2025-12-14T12:00:37.628+0000] {logging_mixin.py:190} INFO - +------------+--------------------+
+|stock_ticker|total_trading_volume|
++------------+--------------------+
+|      STK001|                1866|
+|      STK002|                1596|
+|      STK003|                3611|
+|      STK004|                 544|
+|      STK005|                2740|
+|      STK006|              192165|
+|      STK007|                8858|
+|      STK008|               33758|
+|      STK009|               96442|
+|      STK010|               42869|
+|      STK011|                8573|
+|      STK012|              130798|
+|      STK013|               45701|
+|      STK014|                 402|
+|      STK015|                1474|
+|      STK016|                1061|
+|      STK017|               10801|
+|      STK018|               48726|
+|      STK019|               12059|
+|      STK020|               13480|
++------------+--------------------+
+[2025-12-14T12:00:37.628+0000] {logging_mixin.py:190} INFO - Saving 'spark_analytics_1' to Postgres...
+[2025-12-14T12:00:37.644+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:00:42.250+0000] {logging_mixin.py:190} INFO - Connected to Database
+[2025-12-14T12:00:42.255+0000] {logging_mixin.py:190} INFO - Dropping table spark_analytics_1 if exists...
+[2025-12-14T12:00:42.270+0000] {logging_mixin.py:190} INFO - Error: 'Connection' object has no attribute 'commit'
+[2025-12-14T12:00:55.617+0000] {job.py:229} INFO - Heartbeat recovered after 13.11 seconds
+[2025-12-14T12:01:16.313+0000] {job.py:229} INFO - Heartbeat recovered after 20.72 seconds
+[2025-12-14T12:01:17.310+0000] {logging_mixin.py:190} INFO - +------------+------------------+
+|stock_sector|     average_price|
++------------+------------------+
+|      Energy|115.71995104555862|
+|  Healthcare|142.95081806667318|
+|     Finance| 78.28384670303501|
+|    Consumer| 164.8301867550405|
+|  Technology|147.26070312477498|
++------------+------------------+
+[2025-12-14T12:01:17.320+0000] {logging_mixin.py:190} INFO - Saving 'spark_analytics_2' to Postgres...
+[2025-12-14T12:01:27.395+0000] {logging_mixin.py:190} INFO - Error creating database: could not translate host name "pgdatabase" to address: Temporary failure in name resolution
+[2025-12-14T12:01:26.588+0000] {job.py:239} ERROR - Job heartbeat failed with error
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3371, in _wrap_pool_connect
+    return fn()
+           ^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 327, in connect
+    return _ConnectionFairy._checkout(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 894, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 493, in checkout
+    rec = pool._do_get()
+          ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 256, in _do_get
+    return self._create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 273, in _create_connection
+    return _ConnectionRecord(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 388, in __init__
+    self.__connect()
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 690, in __connect
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 686, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 574, in connect
+    return dialect.connect(*cargs, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 598, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: could not translate host name "postgres" to address: Temporary failure in name resolution
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/jobs/job.py", line 233, in heartbeat
+    heartbeat_callback(session)
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/session.py", line 94, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/jobs/local_task_job_runner.py", line 284, in heartbeat_callback
+    self.task_instance.refresh_from_db()
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/session.py", line 97, in wrapper
+    return func(*args, session=session, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 2359, in refresh_from_db
+    _refresh_from_db(task_instance=self, session=session, lock_for_update=lock_for_update)
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 872, in _refresh_from_db
+    ti = TaskInstance.get_task_instance(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/api_internal/internal_api_call.py", line 166, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/session.py", line 94, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 2345, in get_task_instance
+    return query.one_or_none()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2850, in one_or_none
+    return self._iter().one_or_none()
+           ^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/orm/query.py", line 2916, in _iter
+    result = self.session.execute(
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1716, in execute
+    conn = self._connection_for_bind(bind)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1555, in _connection_for_bind
+    return self._transaction._connection_for_bind(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 750, in _connection_for_bind
+    conn = bind.connect()
+           ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/future/engine.py", line 412, in connect
+    return super(Engine, self).connect()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3325, in connect
+    return self._connection_cls(self, close_with_result=close_with_result)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 96, in __init__
+    else engine.raw_connection()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3404, in raw_connection
+    return self._wrap_pool_connect(self.pool.connect, _connection)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3374, in _wrap_pool_connect
+    Connection._handle_dbapi_exception_noconnection(
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2208, in _handle_dbapi_exception_noconnection
+    util.raise_(
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3371, in _wrap_pool_connect
+    return fn()
+           ^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 327, in connect
+    return _ConnectionFairy._checkout(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 894, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 493, in checkout
+    rec = pool._do_get()
+          ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 256, in _do_get
+    return self._create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 273, in _create_connection
+    return _ConnectionRecord(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 388, in __init__
+    self.__connect()
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 690, in __connect
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 686, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 574, in connect
+    return dialect.connect(*cargs, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 598, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) could not translate host name "postgres" to address: Temporary failure in name resolution
+
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+[2025-12-14T12:02:34.312+0000] {job.py:254} ERROR - Job heartbeat failed with error. Scheduler is in unhealthy state
+[2025-12-14T12:03:15.184+0000] {job.py:229} INFO - Heartbeat recovered after 118.91 seconds
+[2025-12-14T12:03:27.717+0000] {logging_mixin.py:190} INFO - Error: (psycopg2.OperationalError) could not translate host name "pgdatabase" to address: Temporary failure in name resolution
+
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+[2025-12-14T12:03:43.811+0000] {job.py:229} INFO - Heartbeat recovered after 28.81 seconds
+[2025-12-14T12:03:45.245+0000] {logging_mixin.py:190} INFO - +----------------+-----+
+|transaction_type|count|
++----------------+-----+
++----------------+-----+
+[2025-12-14T12:03:45.247+0000] {logging_mixin.py:190} INFO - Saving 'spark_analytics_3' to Postgres...
+[2025-12-14T12:03:45.280+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:03:48.135+0000] {logging_mixin.py:190} INFO - Connected to Database
+[2025-12-14T12:03:48.175+0000] {logging_mixin.py:190} INFO - Dropping table spark_analytics_3 if exists...
+[2025-12-14T12:03:48.178+0000] {logging_mixin.py:190} INFO - Error: 'Connection' object has no attribute 'commit'
+[2025-12-14T12:03:55.883+0000] {logging_mixin.py:190} INFO - +-----------+-----------------+
+|customer_id|transaction_count|
++-----------+-----------------+
+|       4519|              237|
+|       1157|              184|
+|       4697|               12|
+|        193|              335|
+|       1243|               12|
+|       1816|               67|
+|       4700|               52|
+|       2871|               26|
+|        192|               34|
+|       4354|               13|
+|        336|               18|
+|       2920|               16|
+|        319|               13|
+|       3498|               34|
+|        363|               11|
+|        182|              135|
+|        280|               13|
+|        474|               53|
+|       3813|               11|
+|       3699|               13|
++-----------+-----------------+
+only showing top 20 rows
+[2025-12-14T12:03:55.936+0000] {logging_mixin.py:190} INFO - Saving 'spark_analytics_4' to Postgres...
+[2025-12-14T12:03:56.021+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:03:57.715+0000] {logging_mixin.py:190} INFO - Connected to Database
+[2025-12-14T12:03:57.716+0000] {logging_mixin.py:190} INFO - Dropping table spark_analytics_4 if exists...
+[2025-12-14T12:03:57.717+0000] {logging_mixin.py:190} INFO - Error: 'Connection' object has no attribute 'commit'
+[2025-12-14T12:03:58.224+0000] {logging_mixin.py:190} INFO - +--------+--------------------+
+|day_name|        total_amount|
++--------+--------------------+
+|       3| 5.534509072396591E7|
+|       2|5.4125155092293225E7|
+|       4|5.2845207726554684E7|
+|       0| 5.263348516257654E7|
+|       1|4.7808270284857936E7|
++--------+--------------------+
+[2025-12-14T12:03:58.226+0000] {logging_mixin.py:190} INFO - Saving 'spark_analytics_5' to Postgres...
+[2025-12-14T12:03:58.237+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:03:58.937+0000] {logging_mixin.py:190} INFO - Connected to Database
+[2025-12-14T12:03:58.938+0000] {logging_mixin.py:190} INFO - Dropping table spark_analytics_5 if exists...
+[2025-12-14T12:03:58.939+0000] {logging_mixin.py:190} INFO - Error: 'Connection' object has no attribute 'commit'
+[2025-12-14T12:03:59.332+0000] {logging_mixin.py:190} INFO - +------------+--------------+
+|stock_ticker|total_quantity|
++------------+--------------+
+|      STK006|        291193|
+|      STK012|        200453|
+|      STK009|        150243|
+|      STK018|         74075|
+|      STK013|         72228|
++------------+--------------+
+[2025-12-14T12:03:59.333+0000] {logging_mixin.py:190} INFO - Saving 'spark_sql_1' to Postgres...
+[2025-12-14T12:03:59.340+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:03:59.868+0000] {logging_mixin.py:190} INFO - Connected to Database
+[2025-12-14T12:03:59.869+0000] {logging_mixin.py:190} INFO - Dropping table spark_sql_1 if exists...
+[2025-12-14T12:03:59.870+0000] {logging_mixin.py:190} INFO - Error: 'Connection' object has no attribute 'commit'
+[2025-12-14T12:04:00.444+0000] {logging_mixin.py:190} INFO - +---------------------+------------------+
+|customer_account_type|  avg_trade_amount|
++---------------------+------------------+
+|        Institutional|25947.627520839327|
+|               Retail|29210.774323879294|
++---------------------+------------------+
+[2025-12-14T12:04:00.448+0000] {logging_mixin.py:190} INFO - Saving 'spark_sql_2' to Postgres...
+[2025-12-14T12:04:00.516+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:04:01.056+0000] {logging_mixin.py:190} INFO - Connected to Database
+[2025-12-14T12:04:01.057+0000] {logging_mixin.py:190} INFO - Dropping table spark_sql_2 if exists...
+[2025-12-14T12:04:01.058+0000] {logging_mixin.py:190} INFO - Error: 'Connection' object has no attribute 'commit'
+[2025-12-14T12:04:01.530+0000] {logging_mixin.py:190} INFO - +----------+-----------------+
+|is_holiday|transaction_count|
++----------+-----------------+
+|         1|               72|
+|         0|             4057|
++----------+-----------------+
+[2025-12-14T12:04:01.532+0000] {logging_mixin.py:190} INFO - Saving 'spark_sql_3' to Postgres...
+[2025-12-14T12:04:01.570+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:04:01.929+0000] {logging_mixin.py:190} INFO - Connected to Database
+[2025-12-14T12:04:01.929+0000] {logging_mixin.py:190} INFO - Dropping table spark_sql_3 if exists...
+[2025-12-14T12:04:01.931+0000] {logging_mixin.py:190} INFO - Error: 'Connection' object has no attribute 'commit'
+[2025-12-14T12:04:02.227+0000] {logging_mixin.py:190} INFO - +------------+------------+
+|stock_sector|total_volume|
++------------+------------+
++------------+------------+
+[2025-12-14T12:04:02.229+0000] {logging_mixin.py:190} INFO - Saving 'spark_sql_4' to Postgres...
+[2025-12-14T12:04:02.241+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:04:02.387+0000] {logging_mixin.py:190} INFO - Connected to Database
+[2025-12-14T12:04:02.387+0000] {logging_mixin.py:190} INFO - Dropping table spark_sql_4 if exists...
+[2025-12-14T12:04:02.388+0000] {logging_mixin.py:190} INFO - Error: 'Connection' object has no attribute 'commit'
+[2025-12-14T12:04:02.764+0000] {logging_mixin.py:190} INFO - +--------------------+----------------+------------+
+|stock_liquidity_tier|transaction_type|total_amount|
++--------------------+----------------+------------+
+|                High|             BUY|161470371.68|
+|                High|            SELL| 60663567.14|
+|                 Low|             BUY|  2299357.73|
+|                 Low|            SELL|   370291.25|
+|                 Mid|             BUY| 44910726.02|
+|                 Mid|            SELL| 15461562.59|
++--------------------+----------------+------------+
+[2025-12-14T12:04:02.764+0000] {logging_mixin.py:190} INFO - Saving 'spark_sql_5' to Postgres...
+[2025-12-14T12:04:02.770+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:04:03.094+0000] {logging_mixin.py:190} INFO - Connected to Database
+[2025-12-14T12:04:03.094+0000] {logging_mixin.py:190} INFO - Dropping table spark_sql_5 if exists...
+[2025-12-14T12:04:03.096+0000] {logging_mixin.py:190} INFO - Error: 'Connection' object has no attribute 'commit'
+[2025-12-14T12:04:03.096+0000] {logging_mixin.py:190} INFO - === Spark Analytics Task Completed ===
+[2025-12-14T12:04:03.097+0000] {logging_mixin.py:190} INFO - Stopping SparkSession...
+[2025-12-14T12:04:03.237+0000] {logging_mixin.py:190} INFO - SparkSession stopped successfully.
+[2025-12-14T12:04:03.238+0000] {python.py:240} INFO - Done. Returned value was: None
+[2025-12-14T12:04:03.279+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-12-14T12:04:03.280+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=stock_portfolio_pipeline_datafrogs, task_id=run_spark_analytics, run_id=manual__2025-12-14T11:55:16.981349+00:00, execution_date=20251214T115516, start_date=20251214T120027, end_date=20251214T120403
+[2025-12-14T12:04:03.370+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2025-12-14T12:04:03.398+0000] {taskinstance.py:3895} INFO - 2 downstream tasks scheduled from follow-on schedule check
+[2025-12-14T12:04:03.399+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

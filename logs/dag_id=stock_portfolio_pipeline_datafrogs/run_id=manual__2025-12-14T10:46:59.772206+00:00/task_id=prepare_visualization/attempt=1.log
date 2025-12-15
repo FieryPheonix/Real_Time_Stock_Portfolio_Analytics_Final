@@ -1,0 +1,29 @@
+[2025-12-14T10:50:30.968+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-12-14T10:50:30.980+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.prepare_visualization manual__2025-12-14T10:46:59.772206+00:00 [queued]>
+[2025-12-14T10:50:30.999+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.prepare_visualization manual__2025-12-14T10:46:59.772206+00:00 [queued]>
+[2025-12-14T10:50:30.999+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2025-12-14T10:50:31.008+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): prepare_visualization> on 2025-12-14 10:46:59.772206+00:00
+[2025-12-14T10:50:31.020+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=1510) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-12-14T10:50:31.022+0000] {standard_task_runner.py:72} INFO - Started process 1520 to run task
+[2025-12-14T10:50:31.021+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'stock_portfolio_pipeline_datafrogs', 'prepare_visualization', 'manual__2025-12-14T10:46:59.772206+00:00', '--job-id', '182', '--raw', '--subdir', 'DAGS_FOLDER/***.py', '--cfg-path', '/tmp/tmpjacyhv4z']
+[2025-12-14T10:50:31.032+0000] {standard_task_runner.py:105} INFO - Job 182: Subtask prepare_visualization
+[2025-12-14T10:50:31.079+0000] {task_command.py:467} INFO - Running <TaskInstance: stock_portfolio_pipeline_datafrogs.prepare_visualization manual__2025-12-14T10:46:59.772206+00:00 [running]> on host 2c07a78d0b27
+[2025-12-14T10:50:31.126+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data_engineering_team' AIRFLOW_CTX_DAG_ID='stock_portfolio_pipeline_datafrogs' AIRFLOW_CTX_TASK_ID='prepare_visualization' AIRFLOW_CTX_EXECUTION_DATE='2025-12-14T10:46:59.772206+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-14T10:46:59.772206+00:00'
+[2025-12-14T10:50:31.127+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-12-14T10:50:31.139+0000] {logging_mixin.py:190} INFO - === Starting Prepare Visualization Task ===
+[2025-12-14T10:50:31.139+0000] {logging_mixin.py:190} INFO - Reading from: /opt/***/data/streaming_dataset/full_stocks.csv
+[2025-12-14T10:50:31.165+0000] {logging_mixin.py:190} INFO - Loaded 9500 rows from /opt/***/data/streaming_dataset/full_stocks.csv
+[2025-12-14T10:50:31.171+0000] {logging_mixin.py:190} INFO - Reversed label encoding successfully.
+[2025-12-14T10:50:31.176+0000] {logging_mixin.py:190} INFO - Reversed one-hot encoding for transaction_type
+[2025-12-14T10:50:31.180+0000] {logging_mixin.py:190} INFO - Reversed one-hot encoding for customer_account_type
+[2025-12-14T10:50:31.183+0000] {logging_mixin.py:190} INFO - Reversed one-hot encoding for stock_sector
+[2025-12-14T10:50:31.187+0000] {logging_mixin.py:190} INFO - Reversed one-hot encoding for stock_industry
+[2025-12-14T10:50:31.251+0000] {logging_mixin.py:190} INFO - Saved prepared data to /opt/***/data/visualization/dashboard_data.csv
+[2025-12-14T10:50:31.252+0000] {python.py:240} INFO - Done. Returned value was: None
+[2025-12-14T10:50:31.260+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-12-14T10:50:31.260+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=stock_portfolio_pipeline_datafrogs, task_id=prepare_visualization, run_id=manual__2025-12-14T10:46:59.772206+00:00, execution_date=20251214T104659, start_date=20251214T105030, end_date=20251214T105031
+[2025-12-14T10:50:31.284+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2025-12-14T10:50:31.305+0000] {taskinstance.py:3895} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-12-14T10:50:31.306+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

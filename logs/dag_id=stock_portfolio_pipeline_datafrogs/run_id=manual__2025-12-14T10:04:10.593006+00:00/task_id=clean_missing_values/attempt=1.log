@@ -1,0 +1,168 @@
+[2025-12-14T10:04:36.632+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-12-14T10:04:36.645+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.clean_missing_values manual__2025-12-14T10:04:10.593006+00:00 [queued]>
+[2025-12-14T10:04:36.667+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.clean_missing_values manual__2025-12-14T10:04:10.593006+00:00 [queued]>
+[2025-12-14T10:04:36.668+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2025-12-14T10:04:36.688+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): clean_missing_values> on 2025-12-14 10:04:10.593006+00:00
+[2025-12-14T10:04:36.719+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=5959) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-12-14T10:04:36.729+0000] {standard_task_runner.py:72} INFO - Started process 6045 to run task
+[2025-12-14T10:04:36.725+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'stock_portfolio_pipeline_datafrogs', 'clean_missing_values', 'manual__2025-12-14T10:04:10.593006+00:00', '--job-id', '140', '--raw', '--subdir', 'DAGS_FOLDER/***.py', '--cfg-path', '/tmp/tmp56npjkjc']
+[2025-12-14T10:04:36.735+0000] {standard_task_runner.py:105} INFO - Job 140: Subtask clean_missing_values
+[2025-12-14T10:04:36.877+0000] {task_command.py:467} INFO - Running <TaskInstance: stock_portfolio_pipeline_datafrogs.clean_missing_values manual__2025-12-14T10:04:10.593006+00:00 [running]> on host 179bab7085b3
+[2025-12-14T10:04:36.987+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data_engineering_team' AIRFLOW_CTX_DAG_ID='stock_portfolio_pipeline_datafrogs' AIRFLOW_CTX_TASK_ID='clean_missing_values' AIRFLOW_CTX_EXECUTION_DATE='2025-12-14T10:04:10.593006+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-14T10:04:10.593006+00:00'
+[2025-12-14T10:04:36.988+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-12-14T10:04:37.091+0000] {logging_mixin.py:190} INFO - ['STK001', 'STK004', 'STK009', 'STK012', 'STK019', 'STK020']
+[2025-12-14T10:04:37.092+0000] {logging_mixin.py:190} INFO - 
+--- 1. Cleaning Daily Trade Prices (Median Imputation) ---
+[2025-12-14T10:04:37.133+0000] {logging_mixin.py:190} INFO - before: 0      130.215257
+1      127.931982
+2      126.531338
+3      127.837687
+4      127.140842
+          ...    
+499     69.335735
+500     68.121566
+501           NaN
+502     65.273747
+503     64.339639
+Name: STK001, Length: 504, dtype: float64
+[2025-12-14T10:04:37.160+0000] {logging_mixin.py:190} INFO - after: 0      130.215257
+1      127.931982
+2      126.531338
+3      127.837687
+4      127.140842
+          ...    
+499     69.335735
+500     68.121566
+501     59.600556
+502     65.273747
+503     64.339639
+Name: STK001, Length: 504, dtype: float64
+[2025-12-14T10:04:37.164+0000] {logging_mixin.py:190} INFO - before: 0       41.721087
+1       42.372205
+2       43.273956
+3       43.307331
+4       46.389494
+          ...    
+499    128.916005
+500    130.281550
+501    140.893661
+502    139.516773
+503    127.306615
+Name: STK004, Length: 504, dtype: float64
+[2025-12-14T10:04:37.167+0000] {logging_mixin.py:190} INFO - after: 0       41.721087
+1       42.372205
+2       43.273956
+3       43.307331
+4       46.389494
+          ...    
+499    128.916005
+500    130.281550
+501    140.893661
+502    139.516773
+503    127.306615
+Name: STK004, Length: 504, dtype: float64
+[2025-12-14T10:04:37.173+0000] {logging_mixin.py:190} INFO - before: 0      190.646814
+1      188.642260
+2      199.054913
+3             NaN
+4      203.068155
+          ...    
+499    470.879578
+500    461.878269
+501    468.931740
+502    496.564161
+503    481.856328
+Name: STK009, Length: 504, dtype: float64
+[2025-12-14T10:04:37.175+0000] {logging_mixin.py:190} INFO - after: 0      190.646814
+1      188.642260
+2      199.054913
+3      377.454388
+4      203.068155
+          ...    
+499    470.879578
+500    461.878269
+501    468.931740
+502    496.564161
+503    481.856328
+Name: STK009, Length: 504, dtype: float64
+[2025-12-14T10:04:37.178+0000] {logging_mixin.py:190} INFO - before: 0      30.019335
+1            NaN
+2      28.336211
+3      27.706730
+4      27.283299
+         ...    
+499     6.487325
+500     6.159503
+501     6.250882
+502     6.332681
+503     6.292752
+Name: STK012, Length: 504, dtype: float64
+[2025-12-14T10:04:37.185+0000] {logging_mixin.py:190} INFO - after: 0      30.019335
+1      12.273066
+2      28.336211
+3      27.706730
+4      27.283299
+         ...    
+499     6.487325
+500     6.159503
+501     6.250882
+502     6.332681
+503     6.292752
+Name: STK012, Length: 504, dtype: float64
+[2025-12-14T10:04:37.190+0000] {logging_mixin.py:190} INFO - before: 0      92.218536
+1      93.324523
+2      93.996184
+3      92.687024
+4      88.463448
+         ...    
+499    44.001697
+500    42.214965
+501          NaN
+502    44.198919
+503    44.721075
+Name: STK019, Length: 504, dtype: float64
+[2025-12-14T10:04:37.195+0000] {logging_mixin.py:190} INFO - after: 0      92.218536
+1      93.324523
+2      93.996184
+3      92.687024
+4      88.463448
+         ...    
+499    44.001697
+500    42.214965
+501    45.974139
+502    44.198919
+503    44.721075
+Name: STK019, Length: 504, dtype: float64
+[2025-12-14T10:04:37.197+0000] {logging_mixin.py:190} INFO - before: 0      96.962925
+1            NaN
+2      96.034921
+3      96.281810
+4      97.103757
+         ...    
+499    62.094238
+500    61.431741
+501    60.360109
+502    60.752276
+503    60.821082
+Name: STK020, Length: 504, dtype: float64
+[2025-12-14T10:04:37.201+0000] {logging_mixin.py:190} INFO - after: 0      96.962925
+1      58.308000
+2      96.034921
+3      96.281810
+4      97.103757
+         ...    
+499    62.094238
+500    61.431741
+501    60.360109
+502    60.752276
+503    60.821082
+Name: STK020, Length: 504, dtype: float64
+[2025-12-14T10:04:37.204+0000] {logging_mixin.py:190} INFO - All specified missing values have been successfully imputed.
+[2025-12-14T10:04:37.274+0000] {python.py:240} INFO - Done. Returned value was: None
+[2025-12-14T10:04:37.297+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-12-14T10:04:37.298+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=stock_portfolio_pipeline_datafrogs, task_id=clean_missing_values, run_id=manual__2025-12-14T10:04:10.593006+00:00, execution_date=20251214T100410, start_date=20251214T100436, end_date=20251214T100437
+[2025-12-14T10:04:37.364+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2025-12-14T10:04:37.427+0000] {taskinstance.py:3895} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-12-14T10:04:37.432+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

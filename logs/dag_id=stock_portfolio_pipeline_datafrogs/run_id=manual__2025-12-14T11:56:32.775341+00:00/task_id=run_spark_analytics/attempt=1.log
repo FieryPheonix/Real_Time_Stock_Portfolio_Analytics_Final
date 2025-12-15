@@ -1,0 +1,313 @@
+[2025-12-14T12:04:06.403+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-12-14T12:04:06.412+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.run_spark_analytics manual__2025-12-14T11:56:32.775341+00:00 [queued]>
+[2025-12-14T12:04:06.416+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.run_spark_analytics manual__2025-12-14T11:56:32.775341+00:00 [queued]>
+[2025-12-14T12:04:06.416+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2025-12-14T12:04:06.422+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): run_spark_analytics> on 2025-12-14 11:56:32.775341+00:00
+[2025-12-14T12:04:06.428+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=4303) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-12-14T12:04:06.429+0000] {standard_task_runner.py:72} INFO - Started process 4312 to run task
+[2025-12-14T12:04:06.430+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'stock_portfolio_pipeline_datafrogs', 'run_spark_analytics', 'manual__2025-12-14T11:56:32.775341+00:00', '--job-id', '290', '--raw', '--subdir', 'DAGS_FOLDER/***.py', '--cfg-path', '/tmp/tmpg6veyjyr']
+[2025-12-14T12:04:06.432+0000] {standard_task_runner.py:105} INFO - Job 290: Subtask run_spark_analytics
+[2025-12-14T12:04:06.460+0000] {task_command.py:467} INFO - Running <TaskInstance: stock_portfolio_pipeline_datafrogs.run_spark_analytics manual__2025-12-14T11:56:32.775341+00:00 [running]> on host 79a4b2d0a09e
+[2025-12-14T12:04:06.505+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data_engineering_team' AIRFLOW_CTX_DAG_ID='stock_portfolio_pipeline_datafrogs' AIRFLOW_CTX_TASK_ID='run_spark_analytics' AIRFLOW_CTX_EXECUTION_DATE='2025-12-14T11:56:32.775341+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-14T11:56:32.775341+00:00'
+[2025-12-14T12:04:06.506+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-12-14T12:04:06.522+0000] {logging_mixin.py:190} INFO - === Starting Spark Analytics Task ===
+[2025-12-14T12:04:08.866+0000] {logging_mixin.py:190} INFO - Stopped existing SparkContext.
+[2025-12-14T12:04:08.867+0000] {logging_mixin.py:190} INFO - Creating SparkSession...
+[2025-12-14T12:04:09.176+0000] {logging_mixin.py:190} INFO - SparkSession created successfully.
+[2025-12-14T12:04:09.176+0000] {logging_mixin.py:190} INFO - Checking for file at: /opt/***/data/streaming_dataset/full_stocks.csv
+[2025-12-14T12:04:09.177+0000] {logging_mixin.py:190} INFO - SUCCESS: File found.
+[2025-12-14T12:04:15.439+0000] {logging_mixin.py:190} INFO - CSV loaded successfully, showing first 5 rows:
+[2025-12-14T12:04:16.376+0000] {logging_mixin.py:190} INFO - +--------------+----------+-----------+------------+--------+------------------+--------+----------+----------+--------------------+------------------+------------------+--------------------+---------------------+-----------------------------------+----------------------------+---------------------+-------------------+--------------------+-----------------------+-----------------------+-------------------------------+-----------------------+------------------------+------------------------------+-------------------------+---------------------+-----------------------+------------------------+
+|transaction_id| timestamp|customer_id|stock_ticker|quantity|average_trade_size|day_name|is_weekend|is_holiday|stock_liquidity_tier|       stock_price|total_trade_amount|transaction_type_BUY|transaction_type_SELL|customer_account_type_Institutional|customer_account_type_Retail|stock_sector_Consumer|stock_sector_Energy|stock_sector_Finance|stock_sector_Healthcare|stock_sector_Technology|stock_industry_Asset Management|stock_industry_Hardware|stock_industry_Oil & Gas|stock_industry_Pharmaceuticals|stock_industry_Renewables|stock_industry_Retail|stock_industry_Software|stock_industry_Utilities|
++--------------+----------+-----------+------------+--------+------------------+--------+----------+----------+--------------------+------------------+------------------+--------------------+---------------------+-----------------------------------+----------------------------+---------------------+-------------------+--------------------+-----------------------+-----------------------+-------------------------------+-----------------------+------------------------+------------------------------+-------------------------+---------------------+-----------------------+------------------------+
+|           1.0|2023-01-02|       4747|           1|      15|  2.70805020110221|       0|         0|         0|                 Low|143.73284741052294| 2155.992711157844|                true|                false|                              false|                        true|                 true|              false|               false|                  false|                  false|                          false|                  false|                   false|                         false|                    false|                 true|                  false|                   false|
+|           2.0|2023-01-02|       4747|           3|      68| 3.725693427236653|       0|         0|         0|                 Low| 41.72108686196776| 2837.033906613808|                true|                false|                              false|                        true|                false|              false|                true|                  false|                  false|                           true|                  false|                   false|                         false|                    false|                false|                  false|                   false|
+|           3.0|2023-01-02|        227|           5|      49|3.8918202981106265|       0|         0|         0|                High|136.61322857985922| 6694.048200413102|                true|                false|                              false|                        true|                false|               true|               false|                  false|                  false|                          false|                  false|                    true|                         false|                    false|                false|                  false|                   false|
+|           5.0|2023-01-02|       3938|           5|     203| 5.313205979041787|       0|         0|         0|                High|136.61322857985922|27732.485401711423|                true|                false|                              false|                        true|                false|               true|               false|                  false|                  false|                          false|                  false|                    true|                         false|                    false|                false|                  false|                   false|
+|           6.0|2023-01-02|       1513|           5|     114| 4.736198448394496|       0|         0|         0|                High|136.61322857985922|15573.908058103952|                true|                false|                              false|                        true|                false|               true|               false|                  false|                  false|                          false|                  false|                    true|                         false|                    false|                false|                  false|                   false|
++--------------+----------+-----------+------------+--------+------------------+--------+----------+----------+--------------------+------------------+------------------+--------------------+---------------------+-----------------------------------+----------------------------+---------------------+-------------------+--------------------+-----------------------+-----------------------+-------------------------------+-----------------------+------------------------+------------------------------+-------------------------+---------------------+-----------------------+------------------------+
+only showing top 5 rows
+[2025-12-14T12:04:18.091+0000] {logging_mixin.py:190} INFO - +------------+--------------------+
+|stock_ticker|total_trading_volume|
++------------+--------------------+
+|        NULL|                NULL|
+|      STK001|                3174|
+|      STK002|                4014|
+|      STK003|                9245|
+|      STK004|                3328|
+|      STK005|                6337|
+|      STK006|              560952|
+|      STK007|               26493|
+|      STK008|               94439|
+|      STK009|              286637|
+|      STK010|              122866|
+|      STK011|               28553|
+|      STK012|              372458|
+|      STK013|              135328|
+|      STK014|                 929|
+|      STK015|                3353|
+|      STK016|                3448|
+|      STK017|               32650|
+|      STK018|              134638|
+|      STK019|               30768|
++------------+--------------------+
+only showing top 20 rows
+[2025-12-14T12:04:18.094+0000] {logging_mixin.py:190} INFO - Saving 'spark_analytics_1' to Postgres...
+[2025-12-14T12:04:18.113+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:04:19.410+0000] {logging_mixin.py:190} INFO - Connected to Database
+[2025-12-14T12:04:19.418+0000] {logging_mixin.py:190} INFO - Dropping table spark_analytics_1 if exists...
+[2025-12-14T12:04:19.470+0000] {logging_mixin.py:190} INFO - Writing spark_analytics_1 to database
+[2025-12-14T12:04:19.553+0000] {logging_mixin.py:190} INFO - Error: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "pg_type_typname_nsp_index"
+DETAIL:  Key (typname, typnamespace)=(spark_analytics_1, 2200) already exists.
+
+[SQL: 
+CREATE TABLE spark_analytics_1 (
+	stock_ticker TEXT, 
+	total_trading_volume FLOAT(53)
+)
+
+]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+[2025-12-14T12:04:20.355+0000] {logging_mixin.py:190} INFO - +------------+------------------+
+|stock_sector|     average_price|
++------------+------------------+
+|      Energy| 93.79051219131536|
+|  Healthcare|168.80515636469835|
+|     Finance| 80.61979246122802|
+|    Consumer| 235.4893232395622|
+|       Other|              NULL|
+|  Technology|152.68547736235948|
++------------+------------------+
+[2025-12-14T12:04:20.356+0000] {logging_mixin.py:190} INFO - Saving 'spark_analytics_2' to Postgres...
+[2025-12-14T12:04:20.366+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:04:20.979+0000] {logging_mixin.py:190} INFO - Connected to Database
+[2025-12-14T12:04:20.980+0000] {logging_mixin.py:190} INFO - Dropping table spark_analytics_2 if exists...
+[2025-12-14T12:04:20.981+0000] {logging_mixin.py:190} INFO - Writing spark_analytics_2 to database
+[2025-12-14T12:04:20.985+0000] {logging_mixin.py:190} INFO - Error: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "pg_type_typname_nsp_index"
+DETAIL:  Key (typname, typnamespace)=(spark_analytics_2, 2200) already exists.
+
+[SQL: 
+CREATE TABLE spark_analytics_2 (
+	stock_sector TEXT, 
+	average_price FLOAT(53)
+)
+
+]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+[2025-12-14T12:04:21.232+0000] {logging_mixin.py:190} INFO - +----------------+-----+
+|transaction_type|count|
++----------------+-----+
++----------------+-----+
+[2025-12-14T12:04:21.232+0000] {logging_mixin.py:190} INFO - Saving 'spark_analytics_3' to Postgres...
+[2025-12-14T12:04:21.241+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:04:21.446+0000] {logging_mixin.py:190} INFO - Connected to Database
+[2025-12-14T12:04:21.447+0000] {logging_mixin.py:190} INFO - Dropping table spark_analytics_3 if exists...
+[2025-12-14T12:04:21.449+0000] {logging_mixin.py:190} INFO - Writing spark_analytics_3 to database
+[2025-12-14T12:04:21.456+0000] {logging_mixin.py:190} INFO - Error: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "pg_type_typname_nsp_index"
+DETAIL:  Key (typname, typnamespace)=(spark_analytics_3, 2200) already exists.
+
+[SQL: 
+CREATE TABLE spark_analytics_3 (
+	transaction_type TEXT, 
+	count BIGINT
+)
+
+]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+[2025-12-14T12:04:22.144+0000] {logging_mixin.py:190} INFO - +-----------+-----------------+
+|customer_id|transaction_count|
++-----------+-----------------+
+|       4519|              258|
+|       1903|               14|
+|       1157|              210|
+|       4697|               21|
+|       3087|               13|
+|        193|              410|
+|       1816|               91|
+|       4700|               63|
+|       2871|               25|
+|        192|               40|
+|        336|               19|
+|       2920|               13|
+|        319|               14|
+|       3498|               25|
+|       4987|               15|
+|        363|               16|
+|        182|              139|
+|       4757|               12|
+|        280|               11|
+|        474|               54|
++-----------+-----------------+
+only showing top 20 rows
+[2025-12-14T12:04:22.145+0000] {logging_mixin.py:190} INFO - Saving 'spark_analytics_4' to Postgres...
+[2025-12-14T12:04:22.154+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:04:22.404+0000] {logging_mixin.py:190} INFO - Connected to Database
+[2025-12-14T12:04:22.404+0000] {logging_mixin.py:190} INFO - Dropping table spark_analytics_4 if exists...
+[2025-12-14T12:04:22.405+0000] {logging_mixin.py:190} INFO - Writing spark_analytics_4 to database
+[2025-12-14T12:04:22.410+0000] {logging_mixin.py:190} INFO - Error: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "pg_type_typname_nsp_index"
+DETAIL:  Key (typname, typnamespace)=(spark_analytics_4, 2200) already exists.
+
+[SQL: 
+CREATE TABLE spark_analytics_4 (
+	customer_id INTEGER, 
+	transaction_count BIGINT
+)
+
+]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+[2025-12-14T12:04:22.785+0000] {logging_mixin.py:190} INFO - +--------+--------------------+
+|day_name|        total_amount|
++--------+--------------------+
+|       3| 5.872605702025743E7|
+|       0| 5.311627168040464E7|
+|       2| 5.232773680652437E7|
+|       4|5.2202042963278644E7|
+|       1|  4.56468562097418E7|
+|    NULL|                NULL|
++--------+--------------------+
+[2025-12-14T12:04:22.790+0000] {logging_mixin.py:190} INFO - Saving 'spark_analytics_5' to Postgres...
+[2025-12-14T12:04:22.851+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:04:23.691+0000] {logging_mixin.py:190} INFO - Connected to Database
+[2025-12-14T12:04:23.694+0000] {logging_mixin.py:190} INFO - Dropping table spark_analytics_5 if exists...
+[2025-12-14T12:04:23.696+0000] {logging_mixin.py:190} INFO - Writing spark_analytics_5 to database
+[2025-12-14T12:04:23.706+0000] {logging_mixin.py:190} INFO - Error: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "pg_type_typname_nsp_index"
+DETAIL:  Key (typname, typnamespace)=(spark_analytics_5, 2200) already exists.
+
+[SQL: 
+CREATE TABLE spark_analytics_5 (
+	day_name FLOAT(53), 
+	total_amount FLOAT(53)
+)
+
+]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+[2025-12-14T12:04:24.359+0000] {logging_mixin.py:190} INFO - +------------+--------------+
+|stock_ticker|total_quantity|
++------------+--------------+
+|      STK006|        560952|
+|      STK012|        372458|
+|      STK009|        286637|
+|      STK013|        135328|
+|      STK018|        134638|
++------------+--------------+
+[2025-12-14T12:04:24.360+0000] {logging_mixin.py:190} INFO - Saving 'spark_sql_1' to Postgres...
+[2025-12-14T12:04:24.371+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:04:24.505+0000] {logging_mixin.py:190} INFO - Connected to Database
+[2025-12-14T12:04:24.505+0000] {logging_mixin.py:190} INFO - Dropping table spark_sql_1 if exists...
+[2025-12-14T12:04:24.506+0000] {logging_mixin.py:190} INFO - Writing spark_sql_1 to database
+[2025-12-14T12:04:24.511+0000] {logging_mixin.py:190} INFO - Error: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "pg_type_typname_nsp_index"
+DETAIL:  Key (typname, typnamespace)=(spark_sql_1, 2200) already exists.
+
+[SQL: 
+CREATE TABLE spark_sql_1 (
+	stock_ticker TEXT, 
+	total_quantity BIGINT
+)
+
+]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+[2025-12-14T12:04:24.655+0000] {logging_mixin.py:190} INFO - +---------------------+------------------+
+|customer_account_type|  avg_trade_amount|
++---------------------+------------------+
+|        Institutional|26276.897380371694|
+|              Unknown|              NULL|
+|               Retail|29149.206287544173|
++---------------------+------------------+
+[2025-12-14T12:04:24.655+0000] {logging_mixin.py:190} INFO - Saving 'spark_sql_2' to Postgres...
+[2025-12-14T12:04:24.661+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:04:24.776+0000] {logging_mixin.py:190} INFO - Connected to Database
+[2025-12-14T12:04:24.777+0000] {logging_mixin.py:190} INFO - Dropping table spark_sql_2 if exists...
+[2025-12-14T12:04:24.777+0000] {logging_mixin.py:190} INFO - Writing spark_sql_2 to database
+[2025-12-14T12:04:24.782+0000] {logging_mixin.py:190} INFO - Error: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "pg_type_typname_nsp_index"
+DETAIL:  Key (typname, typnamespace)=(spark_sql_2, 2200) already exists.
+
+[SQL: 
+CREATE TABLE spark_sql_2 (
+	customer_account_type TEXT, 
+	avg_trade_amount FLOAT(53)
+)
+
+]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+[2025-12-14T12:04:24.906+0000] {logging_mixin.py:190} INFO - +----------+-----------------+
+|is_holiday|transaction_count|
++----------+-----------------+
+|      NULL|                1|
+|         1|              192|
+|         0|             8877|
++----------+-----------------+
+[2025-12-14T12:04:24.906+0000] {logging_mixin.py:190} INFO - Saving 'spark_sql_3' to Postgres...
+[2025-12-14T12:04:24.911+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:04:25.031+0000] {logging_mixin.py:190} INFO - Connected to Database
+[2025-12-14T12:04:25.031+0000] {logging_mixin.py:190} INFO - Dropping table spark_sql_3 if exists...
+[2025-12-14T12:04:25.031+0000] {logging_mixin.py:190} INFO - Writing spark_sql_3 to database
+[2025-12-14T12:04:25.035+0000] {logging_mixin.py:190} INFO - Error: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "pg_type_typname_nsp_index"
+DETAIL:  Key (typname, typnamespace)=(spark_sql_3, 2200) already exists.
+
+[SQL: 
+CREATE TABLE spark_sql_3 (
+	is_holiday FLOAT(53), 
+	transaction_count BIGINT
+)
+
+]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+[2025-12-14T12:04:25.125+0000] {logging_mixin.py:190} INFO - +------------+------------+
+|stock_sector|total_volume|
++------------+------------+
++------------+------------+
+[2025-12-14T12:04:25.125+0000] {logging_mixin.py:190} INFO - Saving 'spark_sql_4' to Postgres...
+[2025-12-14T12:04:25.130+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:04:25.191+0000] {logging_mixin.py:190} INFO - Connected to Database
+[2025-12-14T12:04:25.191+0000] {logging_mixin.py:190} INFO - Dropping table spark_sql_4 if exists...
+[2025-12-14T12:04:25.192+0000] {logging_mixin.py:190} INFO - Writing spark_sql_4 to database
+[2025-12-14T12:04:25.196+0000] {logging_mixin.py:190} INFO - Error: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "pg_type_typname_nsp_index"
+DETAIL:  Key (typname, typnamespace)=(spark_sql_4, 2200) already exists.
+
+[SQL: 
+CREATE TABLE spark_sql_4 (
+	stock_sector TEXT, 
+	total_volume BIGINT
+)
+
+]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+[2025-12-14T12:04:25.374+0000] {logging_mixin.py:190} INFO - +--------------------+----------------+------------+
+|stock_liquidity_tier|transaction_type|total_amount|
++--------------------+----------------+------------+
+|               False|         Unknown|        NULL|
+|                High|             BUY|149888739.17|
+|                High|            SELL| 57663260.44|
+|                 Low|             BUY|  2309805.44|
+|                 Low|            SELL|   383298.10|
+|                 Mid|             BUY| 38303719.99|
+|                 Mid|            SELL| 13470141.55|
++--------------------+----------------+------------+
+[2025-12-14T12:04:25.375+0000] {logging_mixin.py:190} INFO - Saving 'spark_sql_5' to Postgres...
+[2025-12-14T12:04:25.380+0000] {logging_mixin.py:190} INFO - Database 'stockanalytics' already exists
+[2025-12-14T12:04:25.546+0000] {logging_mixin.py:190} INFO - Connected to Database
+[2025-12-14T12:04:25.546+0000] {logging_mixin.py:190} INFO - Dropping table spark_sql_5 if exists...
+[2025-12-14T12:04:25.547+0000] {logging_mixin.py:190} INFO - Writing spark_sql_5 to database
+[2025-12-14T12:04:25.551+0000] {logging_mixin.py:190} INFO - Error: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "pg_type_typname_nsp_index"
+DETAIL:  Key (typname, typnamespace)=(spark_sql_5, 2200) already exists.
+
+[SQL: 
+CREATE TABLE spark_sql_5 (
+	stock_liquidity_tier TEXT, 
+	transaction_type TEXT, 
+	total_amount TEXT
+)
+
+]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+[2025-12-14T12:04:25.552+0000] {logging_mixin.py:190} INFO - === Spark Analytics Task Completed ===
+[2025-12-14T12:04:25.552+0000] {logging_mixin.py:190} INFO - Stopping SparkSession...
+[2025-12-14T12:04:26.108+0000] {logging_mixin.py:190} INFO - SparkSession stopped successfully.
+[2025-12-14T12:04:26.109+0000] {python.py:240} INFO - Done. Returned value was: None
+[2025-12-14T12:04:26.135+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-12-14T12:04:26.135+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=stock_portfolio_pipeline_datafrogs, task_id=run_spark_analytics, run_id=manual__2025-12-14T11:56:32.775341+00:00, execution_date=20251214T115632, start_date=20251214T120406, end_date=20251214T120426
+[2025-12-14T12:04:26.194+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2025-12-14T12:04:26.239+0000] {taskinstance.py:3895} INFO - 2 downstream tasks scheduled from follow-on schedule check
+[2025-12-14T12:04:26.241+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

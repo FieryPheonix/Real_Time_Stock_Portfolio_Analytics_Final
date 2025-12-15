@@ -1,0 +1,499 @@
+[2025-12-14T10:00:13.733+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-12-14T10:00:13.741+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.consume_and_process_stream manual__2025-12-14T09:56:35.564918+00:00 [queued]>
+[2025-12-14T10:00:13.746+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.consume_and_process_stream manual__2025-12-14T09:56:35.564918+00:00 [queued]>
+[2025-12-14T10:00:13.746+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2025-12-14T10:00:13.752+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): consume_and_process_stream> on 2025-12-14 09:56:35.564918+00:00
+[2025-12-14T10:00:13.764+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=5387) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-12-14T10:00:13.765+0000] {standard_task_runner.py:72} INFO - Started process 5392 to run task
+[2025-12-14T10:00:13.766+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'stock_portfolio_pipeline_datafrogs', 'consume_and_process_stream', 'manual__2025-12-14T09:56:35.564918+00:00', '--job-id', '125', '--raw', '--subdir', 'DAGS_FOLDER/***.py', '--cfg-path', '/tmp/tmp57magptx']
+[2025-12-14T10:00:13.768+0000] {standard_task_runner.py:105} INFO - Job 125: Subtask consume_and_process_stream
+[2025-12-14T10:00:13.800+0000] {task_command.py:467} INFO - Running <TaskInstance: stock_portfolio_pipeline_datafrogs.consume_and_process_stream manual__2025-12-14T09:56:35.564918+00:00 [running]> on host 179bab7085b3
+[2025-12-14T10:00:13.843+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data_engineering_team' AIRFLOW_CTX_DAG_ID='stock_portfolio_pipeline_datafrogs' AIRFLOW_CTX_TASK_ID='consume_and_process_stream' AIRFLOW_CTX_EXECUTION_DATE='2025-12-14T09:56:35.564918+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-14T09:56:35.564918+00:00'
+[2025-12-14T10:00:13.843+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-12-14T10:00:13.852+0000] {conn.py:400} INFO - <BrokerConnection client_id=kafka-python-2.3.0, node_id=bootstrap-0 host=kafka:9092 <connecting> [IPv4 ('172.18.0.7', 9092)]>: connecting to kafka:9092 [('172.18.0.7', 9092) IPv4]
+[2025-12-14T10:00:13.861+0000] {conn.py:622} INFO - <BrokerConnection client_id=kafka-python-2.3.0, node_id=bootstrap-0 host=kafka:9092 <checking_api_versions_recv> [IPv4 ('172.18.0.7', 9092)]>: Broker version identified as 2.6
+[2025-12-14T10:00:13.861+0000] {conn.py:461} INFO - <BrokerConnection client_id=kafka-python-2.3.0, node_id=bootstrap-0 host=kafka:9092 <connected> [IPv4 ('172.18.0.7', 9092)]>: Connection complete.
+[2025-12-14T10:00:13.862+0000] {consumer.py:131} WARNING - group_id is None: disabling auto-commit.
+[2025-12-14T10:00:13.863+0000] {subscription_state.py:181} INFO - Updating subscribed topics to: ('55_0593_Topic',)
+[2025-12-14T10:00:13.864+0000] {logging_mixin.py:190} INFO - Listening for messages in '55_0593_Topic'...
+[2025-12-14T10:00:13.870+0000] {subscription_state.py:254} INFO - Updated partition assignment: [('55_0593_Topic', 0)]
+[2025-12-14T10:00:13.871+0000] {conn.py:400} INFO - <BrokerConnection client_id=kafka-python-2.3.0, node_id=1 host=kafka:9092 <connecting> [IPv4 ('172.18.0.7', 9092)]>: connecting to kafka:9092 [('172.18.0.7', 9092) IPv4]
+[2025-12-14T10:00:13.871+0000] {conn.py:461} INFO - <BrokerConnection client_id=kafka-python-2.3.0, node_id=1 host=kafka:9092 <connected> [IPv4 ('172.18.0.7', 9092)]>: Connection complete.
+[2025-12-14T10:00:13.871+0000] {conn.py:951} INFO - <BrokerConnection client_id=kafka-python-2.3.0, node_id=bootstrap-0 host=kafka:9092 <connected> [IPv4 ('172.18.0.7', 9092)]>: Closing connection. 
+[2025-12-14T10:00:13.873+0000] {fetcher.py:418} INFO - Resetting offset for partition ('55_0593_Topic', 0) to offset 0.
+[2025-12-14T10:00:13.916+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 6253, 'timestamp': '2024-03-14', 'customer_id': 1006, 'stock_ticker': 'STK006', 'transaction_type': 'BUY', 'quantity': 477, 'average_trade_size': 5.820082930352362, 'customer_account_type': 'Retail', 'day_name': 'Thursday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'High', 'stock_sector': 'Energy', 'stock_industry': 'Oil & Gas', 'stock_price': 71.65242981011856, 'total_trade_amount': 34178.209019426555}
+[2025-12-14T10:00:13.916+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:13.922+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:13.924+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:13.956+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10171
+[2025-12-14T10:00:13.957+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:14.079+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id  ... stock_industry_Utilities
+0            6253  ...                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:14.079+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:14.079+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 6253, 'timestamp': '2024-03-14', 'customer_id': 1006, 'stock_ticker': 'STK006', 'transaction_type': 'BUY', 'quantity': 477, 'average_trade_size': 5.820082930352362, 'customer_account_type': 'Retail', 'day_name': 'Thursday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'High', 'stock_sector': 'Energy', 'stock_industry': 'Oil & Gas', 'stock_price': 71.65242981011856, 'total_trade_amount': 34178.209019426555}
+[2025-12-14T10:00:14.079+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:14.081+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:14.082+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:14.104+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10172
+[2025-12-14T10:00:14.104+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:14.203+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id  ... stock_industry_Utilities
+0            6253  ...                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:14.204+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:14.204+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 4685, 'timestamp': '2023-12-04', 'customer_id': 4955, 'stock_ticker': 'STK006', 'transaction_type': 'SELL', 'quantity': 137, 'average_trade_size': 5.336527954311789, 'customer_account_type': 'Retail', 'day_name': 'Monday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'High', 'stock_sector': 'Energy', 'stock_industry': 'Oil & Gas', 'stock_price': 94.43958142789144, 'total_trade_amount': 12938.222655621128}
+[2025-12-14T10:00:14.205+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:14.207+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:14.208+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:14.228+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10173
+[2025-12-14T10:00:14.228+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:14.331+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id  ... stock_industry_Utilities
+0            4685  ...                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:14.332+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:14.332+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 4685, 'timestamp': '2023-12-04', 'customer_id': 4955, 'stock_ticker': 'STK006', 'transaction_type': 'SELL', 'quantity': 137, 'average_trade_size': 5.336527954311789, 'customer_account_type': 'Retail', 'day_name': 'Monday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'High', 'stock_sector': 'Energy', 'stock_industry': 'Oil & Gas', 'stock_price': 94.43958142789144, 'total_trade_amount': 12938.222655621128}
+[2025-12-14T10:00:14.332+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:14.334+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:14.335+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:14.354+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10174
+[2025-12-14T10:00:14.355+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:14.451+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id  ... stock_industry_Utilities
+0            4685  ...                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:14.451+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:14.452+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 1732, 'timestamp': '2023-05-04', 'customer_id': 696, 'stock_ticker': 'STK012', 'transaction_type': 'BUY', 'quantity': 155, 'average_trade_size': 5.043425116919247, 'customer_account_type': 'Retail', 'day_name': 'Thursday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'High', 'stock_sector': 'Technology', 'stock_industry': 'Hardware', 'stock_price': 20.69213814906549, 'total_trade_amount': 3207.281413105151}
+[2025-12-14T10:00:14.452+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:14.455+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:14.457+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:14.490+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10175
+[2025-12-14T10:00:14.490+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:14.590+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id  ... stock_industry_Utilities
+0            1732  ...                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:14.591+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:14.591+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 1732, 'timestamp': '2023-05-04', 'customer_id': 696, 'stock_ticker': 'STK012', 'transaction_type': 'BUY', 'quantity': 155, 'average_trade_size': 5.043425116919247, 'customer_account_type': 'Retail', 'day_name': 'Thursday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'High', 'stock_sector': 'Technology', 'stock_industry': 'Hardware', 'stock_price': 20.69213814906549, 'total_trade_amount': 3207.281413105151}
+[2025-12-14T10:00:14.591+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:14.593+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:14.594+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:14.611+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10176
+[2025-12-14T10:00:14.612+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:14.710+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id  ... stock_industry_Utilities
+0            1732  ...                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:14.710+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:14.710+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 4743, 'timestamp': '2023-12-06', 'customer_id': 4955, 'stock_ticker': 'STK013', 'transaction_type': 'SELL', 'quantity': 12, 'average_trade_size': 5.339459309879212, 'customer_account_type': 'Retail', 'day_name': 'Wednesday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'Mid', 'stock_sector': 'Energy', 'stock_industry': 'Utilities', 'stock_price': 128.35260245942936, 'total_trade_amount': 1540.2312295131524}
+[2025-12-14T10:00:14.711+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:14.713+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:14.714+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:14.735+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10177
+[2025-12-14T10:00:14.736+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:14.832+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id   timestamp  ...  stock_industry_Retail  stock_industry_Software
+0            4743  2023-12-06  ...                  False                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:14.833+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:14.833+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 4743, 'timestamp': '2023-12-06', 'customer_id': 4955, 'stock_ticker': 'STK013', 'transaction_type': 'SELL', 'quantity': 12, 'average_trade_size': 5.339459309879212, 'customer_account_type': 'Retail', 'day_name': 'Wednesday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'Mid', 'stock_sector': 'Energy', 'stock_industry': 'Utilities', 'stock_price': 128.35260245942936, 'total_trade_amount': 1540.2312295131524}
+[2025-12-14T10:00:14.833+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:14.834+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:14.835+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:14.853+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10178
+[2025-12-14T10:00:14.853+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:14.952+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id   timestamp  ...  stock_industry_Retail  stock_industry_Software
+0            4743  2023-12-06  ...                  False                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:14.953+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:14.954+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 4522, 'timestamp': '2023-11-22', 'customer_id': 1816, 'stock_ticker': 'STK018', 'transaction_type': 'SELL', 'quantity': 91, 'average_trade_size': 5.153984995658116, 'customer_account_type': 'Retail', 'day_name': 'Wednesday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'Mid', 'stock_sector': 'Technology', 'stock_industry': 'Software', 'stock_price': 232.5033292857061, 'total_trade_amount': 21157.802964999253}
+[2025-12-14T10:00:14.954+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:14.958+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:14.960+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:14.979+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10179
+[2025-12-14T10:00:14.979+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:15.080+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id   timestamp  ...  stock_industry_Retail  stock_industry_Utilities
+0            4522  2023-11-22  ...                  False                     False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:15.080+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:15.081+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 4522, 'timestamp': '2023-11-22', 'customer_id': 1816, 'stock_ticker': 'STK018', 'transaction_type': 'SELL', 'quantity': 91, 'average_trade_size': 5.153984995658116, 'customer_account_type': 'Retail', 'day_name': 'Wednesday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'Mid', 'stock_sector': 'Technology', 'stock_industry': 'Software', 'stock_price': 232.5033292857061, 'total_trade_amount': 21157.802964999253}
+[2025-12-14T10:00:15.081+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:15.082+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:15.084+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:15.101+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10180
+[2025-12-14T10:00:15.101+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:15.195+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id   timestamp  ...  stock_industry_Retail  stock_industry_Utilities
+0            4522  2023-11-22  ...                  False                     False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:15.195+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:15.196+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 6341, 'timestamp': '2024-03-20', 'customer_id': 1899, 'stock_ticker': 'STK009', 'transaction_type': 'BUY', 'quantity': 1509, 'average_trade_size': 7.319202458767849, 'customer_account_type': 'Retail', 'day_name': 'Wednesday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'High', 'stock_sector': 'Technology', 'stock_industry': 'Hardware', 'stock_price': 453.0888018696642, 'total_trade_amount': 683711.0020213233}
+[2025-12-14T10:00:15.196+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:15.197+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:15.198+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:15.217+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10181
+[2025-12-14T10:00:15.218+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:15.317+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id  ... stock_industry_Utilities
+0            6341  ...                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:15.317+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:15.318+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 6341, 'timestamp': '2024-03-20', 'customer_id': 1899, 'stock_ticker': 'STK009', 'transaction_type': 'BUY', 'quantity': 1509, 'average_trade_size': 7.319202458767849, 'customer_account_type': 'Retail', 'day_name': 'Wednesday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'High', 'stock_sector': 'Technology', 'stock_industry': 'Hardware', 'stock_price': 453.0888018696642, 'total_trade_amount': 683711.0020213233}
+[2025-12-14T10:00:15.318+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:15.319+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:15.321+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:15.338+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10182
+[2025-12-14T10:00:15.338+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:15.438+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id  ... stock_industry_Utilities
+0            6341  ...                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:15.438+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:15.439+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 577, 'timestamp': '2023-02-08', 'customer_id': 3588, 'stock_ticker': 'STK005', 'transaction_type': 'BUY', 'quantity': 106, 'average_trade_size': 5.133029902309862, 'customer_account_type': 'Retail', 'day_name': 'Wednesday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'Low', 'stock_sector': 'Energy', 'stock_industry': 'Renewables', 'stock_price': 188.04131337039905, 'total_trade_amount': 19932.3792172623}
+[2025-12-14T10:00:15.439+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:15.441+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:15.442+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:15.460+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10183
+[2025-12-14T10:00:15.461+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:15.562+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id  ... stock_industry_Utilities
+0             577  ...                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:15.562+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:15.562+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 577, 'timestamp': '2023-02-08', 'customer_id': 3588, 'stock_ticker': 'STK005', 'transaction_type': 'BUY', 'quantity': 106, 'average_trade_size': 5.133029902309862, 'customer_account_type': 'Retail', 'day_name': 'Wednesday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'Low', 'stock_sector': 'Energy', 'stock_industry': 'Renewables', 'stock_price': 188.04131337039905, 'total_trade_amount': 19932.3792172623}
+[2025-12-14T10:00:15.563+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:15.564+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:15.565+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:15.583+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10184
+[2025-12-14T10:00:15.583+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:15.682+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id  ... stock_industry_Utilities
+0             577  ...                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:15.682+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:15.682+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 5203, 'timestamp': '2024-01-03', 'customer_id': 1513, 'stock_ticker': 'STK010', 'transaction_type': 'SELL', 'quantity': 372, 'average_trade_size': 5.1891161515042725, 'customer_account_type': 'Retail', 'day_name': 'Wednesday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'High', 'stock_sector': 'Consumer', 'stock_industry': 'Retail', 'stock_price': 169.25554709012007, 'total_trade_amount': 62963.06351752466}
+[2025-12-14T10:00:15.682+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:15.684+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:15.685+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:15.712+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10186
+[2025-12-14T10:00:15.714+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:15.862+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id  ... stock_industry_Utilities
+0            5203  ...                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:15.862+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:15.862+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 5203, 'timestamp': '2024-01-03', 'customer_id': 1513, 'stock_ticker': 'STK010', 'transaction_type': 'SELL', 'quantity': 372, 'average_trade_size': 5.1891161515042725, 'customer_account_type': 'Retail', 'day_name': 'Wednesday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'High', 'stock_sector': 'Consumer', 'stock_industry': 'Retail', 'stock_price': 169.25554709012007, 'total_trade_amount': 62963.06351752466}
+[2025-12-14T10:00:15.863+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:15.864+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:15.866+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:15.898+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10188
+[2025-12-14T10:00:15.899+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:16.063+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id  ... stock_industry_Utilities
+0            5203  ...                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:16.064+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:16.064+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 6364, 'timestamp': '2024-03-21', 'customer_id': 3588, 'stock_ticker': 'STK019', 'transaction_type': 'BUY', 'quantity': 79, 'average_trade_size': 5.185204657916392, 'customer_account_type': 'Retail', 'day_name': 'Thursday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'Mid', 'stock_sector': 'Energy', 'stock_industry': 'Oil & Gas', 'stock_price': 51.01282731782194, 'total_trade_amount': 4030.013358107933}
+[2025-12-14T10:00:16.064+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:16.066+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:16.067+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:16.092+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10190
+[2025-12-14T10:00:16.092+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:16.207+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id  ... stock_industry_Utilities
+0            6364  ...                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:16.208+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:16.208+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 6364, 'timestamp': '2024-03-21', 'customer_id': 3588, 'stock_ticker': 'STK019', 'transaction_type': 'BUY', 'quantity': 79, 'average_trade_size': 5.185204657916392, 'customer_account_type': 'Retail', 'day_name': 'Thursday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'Mid', 'stock_sector': 'Energy', 'stock_industry': 'Oil & Gas', 'stock_price': 51.01282731782194, 'total_trade_amount': 4030.013358107933}
+[2025-12-14T10:00:16.208+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:16.210+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:16.211+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:16.239+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10191
+[2025-12-14T10:00:16.240+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:16.360+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id  ... stock_industry_Utilities
+0            6364  ...                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:16.361+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:16.361+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 440, 'timestamp': '2023-01-30', 'customer_id': 182, 'stock_ticker': 'STK009', 'transaction_type': 'BUY', 'quantity': 19, 'average_trade_size': 5.906886570632684, 'customer_account_type': 'Retail', 'day_name': 'Monday', 'is_weekend': False, 'is_holiday': True, 'stock_liquidity_tier': 'High', 'stock_sector': 'Technology', 'stock_industry': 'Hardware', 'stock_price': 377.4543883637391, 'total_trade_amount': 7171.633378911043}
+[2025-12-14T10:00:16.361+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:16.363+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:16.364+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:16.388+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10192
+[2025-12-14T10:00:16.389+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:16.504+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id  ... stock_industry_Utilities
+0             440  ...                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:16.504+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:16.504+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 440, 'timestamp': '2023-01-30', 'customer_id': 182, 'stock_ticker': 'STK009', 'transaction_type': 'BUY', 'quantity': 19, 'average_trade_size': 5.906886570632684, 'customer_account_type': 'Retail', 'day_name': 'Monday', 'is_weekend': False, 'is_holiday': True, 'stock_liquidity_tier': 'High', 'stock_sector': 'Technology', 'stock_industry': 'Hardware', 'stock_price': 377.4543883637391, 'total_trade_amount': 7171.633378911043}
+[2025-12-14T10:00:16.505+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:16.507+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:16.508+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:16.534+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10194
+[2025-12-14T10:00:16.535+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:16.653+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id  ... stock_industry_Utilities
+0             440  ...                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:16.653+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:16.654+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 2751, 'timestamp': '2023-07-20', 'customer_id': 3588, 'stock_ticker': 'STK012', 'transaction_type': 'BUY', 'quantity': 514, 'average_trade_size': 5.106672482293198, 'customer_account_type': 'Retail', 'day_name': 'Thursday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'High', 'stock_sector': 'Technology', 'stock_industry': 'Hardware', 'stock_price': 17.408084947597036, 'total_trade_amount': 8947.755663064876}
+[2025-12-14T10:00:16.654+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:16.656+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:16.657+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:16.681+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10196
+[2025-12-14T10:00:16.682+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:16.800+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id  ... stock_industry_Utilities
+0            2751  ...                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:16.801+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:16.801+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 2751, 'timestamp': '2023-07-20', 'customer_id': 3588, 'stock_ticker': 'STK012', 'transaction_type': 'BUY', 'quantity': 514, 'average_trade_size': 5.106672482293198, 'customer_account_type': 'Retail', 'day_name': 'Thursday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'High', 'stock_sector': 'Technology', 'stock_industry': 'Hardware', 'stock_price': 17.408084947597036, 'total_trade_amount': 8947.755663064876}
+[2025-12-14T10:00:16.801+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:16.803+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:16.804+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:16.828+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10197
+[2025-12-14T10:00:16.829+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:16.943+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id  ... stock_industry_Utilities
+0            2751  ...                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:16.944+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:16.944+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 7488, 'timestamp': '2024-06-11', 'customer_id': 4747, 'stock_ticker': 'STK007', 'transaction_type': 'SELL', 'quantity': 13, 'average_trade_size': 5.309603438565004, 'customer_account_type': 'Retail', 'day_name': 'Tuesday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'Mid', 'stock_sector': 'Energy', 'stock_industry': 'Oil & Gas', 'stock_price': 127.73111023729344, 'total_trade_amount': 1660.5044330848148}
+[2025-12-14T10:00:16.944+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:16.946+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:16.947+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:16.972+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10198
+[2025-12-14T10:00:16.973+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:17.090+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id  ... stock_industry_Utilities
+0            7488  ...                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:17.091+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:17.091+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 7488, 'timestamp': '2024-06-11', 'customer_id': 4747, 'stock_ticker': 'STK007', 'transaction_type': 'SELL', 'quantity': 13, 'average_trade_size': 5.309603438565004, 'customer_account_type': 'Retail', 'day_name': 'Tuesday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'Mid', 'stock_sector': 'Energy', 'stock_industry': 'Oil & Gas', 'stock_price': 127.73111023729344, 'total_trade_amount': 1660.5044330848148}
+[2025-12-14T10:00:17.091+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:17.093+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:17.094+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:17.118+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10199
+[2025-12-14T10:00:17.118+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:17.225+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id  ... stock_industry_Utilities
+0            7488  ...                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:17.225+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:17.225+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 5273, 'timestamp': '2024-01-08', 'customer_id': 845, 'stock_ticker': 'STK006', 'transaction_type': 'BUY', 'quantity': 689, 'average_trade_size': 5.219652875364354, 'customer_account_type': 'Retail', 'day_name': 'Monday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'High', 'stock_sector': 'Energy', 'stock_industry': 'Oil & Gas', 'stock_price': 126.1116831165163, 'total_trade_amount': 86890.94966727974}
+[2025-12-14T10:00:17.226+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:17.227+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:17.228+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:17.254+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10201
+[2025-12-14T10:00:17.255+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:17.367+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id  ... stock_industry_Utilities
+0            5273  ...                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:17.367+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:17.367+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 5273, 'timestamp': '2024-01-08', 'customer_id': 845, 'stock_ticker': 'STK006', 'transaction_type': 'BUY', 'quantity': 689, 'average_trade_size': 5.219652875364354, 'customer_account_type': 'Retail', 'day_name': 'Monday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'High', 'stock_sector': 'Energy', 'stock_industry': 'Oil & Gas', 'stock_price': 126.1116831165163, 'total_trade_amount': 86890.94966727974}
+[2025-12-14T10:00:17.368+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:17.369+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:17.371+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:17.395+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10203
+[2025-12-14T10:00:17.395+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:17.507+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id  ... stock_industry_Utilities
+0            5273  ...                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:17.507+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:17.508+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 5654, 'timestamp': '2024-01-31', 'customer_id': 4955, 'stock_ticker': 'STK001', 'transaction_type': 'SELL', 'quantity': 52, 'average_trade_size': 5.351952915713946, 'customer_account_type': 'Retail', 'day_name': 'Wednesday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'Low', 'stock_sector': 'Energy', 'stock_industry': 'Utilities', 'stock_price': 4.129180032642896, 'total_trade_amount': 214.7173616974306}
+[2025-12-14T10:00:17.508+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:17.509+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:17.510+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:17.534+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10204
+[2025-12-14T10:00:17.534+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:17.647+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id   timestamp  ...  stock_industry_Retail  stock_industry_Software
+0            5654  2024-01-31  ...                  False                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:17.647+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:17.647+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 5654, 'timestamp': '2024-01-31', 'customer_id': 4955, 'stock_ticker': 'STK001', 'transaction_type': 'SELL', 'quantity': 52, 'average_trade_size': 5.351952915713946, 'customer_account_type': 'Retail', 'day_name': 'Wednesday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'Low', 'stock_sector': 'Energy', 'stock_industry': 'Utilities', 'stock_price': 4.129180032642896, 'total_trade_amount': 214.7173616974306}
+[2025-12-14T10:00:17.647+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:17.649+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:17.650+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:17.673+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10205
+[2025-12-14T10:00:17.674+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:17.799+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id   timestamp  ...  stock_industry_Retail  stock_industry_Software
+0            5654  2024-01-31  ...                  False                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:17.799+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:17.800+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 4000, 'timestamp': '2023-10-18', 'customer_id': 979, 'stock_ticker': 'STK013', 'transaction_type': 'BUY', 'quantity': 146, 'average_trade_size': 4.983606621708336, 'customer_account_type': 'Institutional', 'day_name': 'Wednesday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'Mid', 'stock_sector': 'Energy', 'stock_industry': 'Utilities', 'stock_price': 127.33323715453704, 'total_trade_amount': 18590.652624562408}
+[2025-12-14T10:00:17.800+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:17.802+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:17.803+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:17.830+0000] {logging_mixin.py:190} INFO - DEBUG inside:  10206
+[2025-12-14T10:00:17.830+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:18.291+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id   timestamp  ...  stock_industry_Retail  stock_industry_Software
+0            4000  2023-10-18  ...                  False                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:18.292+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:18.292+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 4000, 'timestamp': '2023-10-18', 'customer_id': 979, 'stock_ticker': 'STK013', 'transaction_type': 'BUY', 'quantity': 146, 'average_trade_size': 4.983606621708336, 'customer_account_type': 'Institutional', 'day_name': 'Wednesday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'Mid', 'stock_sector': 'Energy', 'stock_industry': 'Utilities', 'stock_price': 127.33323715453704, 'total_trade_amount': 18590.652624562408}
+[2025-12-14T10:00:18.292+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:18.294+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:18.295+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:18.328+0000] {logging_mixin.py:190} INFO - DEBUG inside:  8443
+[2025-12-14T10:00:18.329+0000] {logging_mixin.py:190} INFO - DEBUG inside:  False
+[2025-12-14T10:00:18.429+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id   timestamp  ...  stock_industry_Retail  stock_industry_Software
+0            4000  2023-10-18  ...                  False                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:18.430+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:18.430+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 6034, 'timestamp': '2024-02-28', 'customer_id': 4519, 'stock_ticker': 'STK006', 'transaction_type': 'SELL', 'quantity': 128, 'average_trade_size': 5.319246809729067, 'customer_account_type': 'Institutional', 'day_name': 'Wednesday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'High', 'stock_sector': 'Energy', 'stock_industry': 'Oil & Gas', 'stock_price': 86.79467454235154, 'total_trade_amount': 11109.718341420998}
+[2025-12-14T10:00:18.430+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:18.432+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:18.433+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:18.445+0000] {logging_mixin.py:190} INFO - DEBUG inside:  5000
+[2025-12-14T10:00:18.446+0000] {logging_mixin.py:190} INFO - DEBUG inside:  True
+[2025-12-14T10:00:18.510+0000] {logging_mixin.py:190} INFO - Encoded it to:    transaction_id  ... stock_industry_Utilities
+0            6034  ...                    False
+
+[1 rows x 29 columns]
+[2025-12-14T10:00:18.510+0000] {logging_mixin.py:190} INFO - --------------------------------------------------
+[2025-12-14T10:00:18.511+0000] {logging_mixin.py:190} INFO - Received: {'transaction_id': 6034, 'timestamp': '2024-02-28', 'customer_id': 4519, 'stock_ticker': 'STK006', 'transaction_type': 'SELL', 'quantity': 128, 'average_trade_size': 5.319246809729067, 'customer_account_type': 'Institutional', 'day_name': 'Wednesday', 'is_weekend': False, 'is_holiday': False, 'stock_liquidity_tier': 'High', 'stock_sector': 'Energy', 'stock_industry': 'Oil & Gas', 'stock_price': 86.79467454235154, 'total_trade_amount': 11109.718341420998}
+[2025-12-14T10:00:18.511+0000] {logging_mixin.py:190} INFO - <class 'dict'>
+[2025-12-14T10:00:18.513+0000] {logging_mixin.py:190} INFO - [{'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4}, {'STK001': 0, 'STK002': 1, 'STK003': 2, 'STK004': 3, 'STK005': 4, 'STK006': 5, 'STK007': 6, 'STK008': 7, 'STK009': 8, 'STK010': 9, 'STK011': 10, 'STK012': 11, 'STK013': 12, 'STK014': 13, 'STK015': 14, 'STK016': 15, 'STK017': 16, 'STK018': 17, 'STK019': 18, 'STK020': 19}, {False: 0, True: 1}, {False: 0, True: 1}]
+[2025-12-14T10:00:18.528+0000] {logging_mixin.py:190} INFO - ['transaction_type_BUY', 'transaction_type_SELL', 'customer_account_type_Institutional', 'customer_account_type_Retail', 'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 'stock_sector_Healthcare', 'stock_sector_Technology', 'stock_industry_Asset Management', 'stock_industry_Hardware', 'stock_industry_Oil & Gas', 'stock_industry_Pharmaceuticals', 'stock_industry_Renewables', 'stock_industry_Retail', 'stock_industry_Software', 'stock_industry_Utilities']
+[2025-12-14T10:00:18.549+0000] {taskinstance.py:3311} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 767, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/airflow.py", line 515, in consume_and_process_stream
+    message_cleaned = process_stream(message.value)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/airflow.py", line 457, in process_stream
+    existing_df = pd.read_csv("/opt/airflow/data/streaming_dataset/full_stocks.csv")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 948, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 611, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 1448, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 1723, in _make_engine
+    return mapping[engine](f, **self.options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/parsers/c_parser_wrapper.py", line 93, in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "parsers.pyx", line 586, in pandas._libs.parsers.TextReader.__cinit__
+pandas.errors.EmptyDataError: No columns to parse from file
+[2025-12-14T10:00:18.572+0000] {taskinstance.py:1225} INFO - Marking task as UP_FOR_RETRY. dag_id=stock_portfolio_pipeline_datafrogs, task_id=consume_and_process_stream, run_id=manual__2025-12-14T09:56:35.564918+00:00, execution_date=20251214T095635, start_date=20251214T100013, end_date=20251214T100018
+[2025-12-14T10:00:18.586+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-12-14T10:00:18.587+0000] {standard_task_runner.py:124} ERROR - Failed to execute job 125 for task consume_and_process_stream (No columns to parse from file; 5392)
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py", line 117, in _start_by_fork
+    ret = args.func(args, dag=self.dag)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/cli_config.py", line 49, in command
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/cli.py", line 116, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 483, in task_run
+    task_return_code = _run_task_by_selected_method(args, _dag, ti)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 256, in _run_task_by_selected_method
+    return _run_raw_task(args, ti)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 341, in _run_raw_task
+    return ti._run_raw_task(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/session.py", line 97, in wrapper
+    return func(*args, session=session, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3005, in _run_raw_task
+    return _run_raw_task(
+           ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 273, in _run_raw_task
+    TaskInstance._execute_task_with_callbacks(
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3159, in _execute_task_with_callbacks
+    result = self._execute_task(context, task_orig)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3183, in _execute_task
+    return _execute_task(self, context, task_orig)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 767, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 733, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 417, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/airflow.py", line 515, in consume_and_process_stream
+    message_cleaned = process_stream(message.value)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/airflow.py", line 457, in process_stream
+    existing_df = pd.read_csv("/opt/airflow/data/streaming_dataset/full_stocks.csv")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 948, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 611, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 1448, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 1723, in _make_engine
+    return mapping[engine](f, **self.options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/parsers/c_parser_wrapper.py", line 93, in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "parsers.pyx", line 586, in pandas._libs.parsers.TextReader.__cinit__
+pandas.errors.EmptyDataError: No columns to parse from file
+[2025-12-14T10:00:18.617+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 1
+[2025-12-14T10:00:18.640+0000] {taskinstance.py:3895} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-12-14T10:00:18.641+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

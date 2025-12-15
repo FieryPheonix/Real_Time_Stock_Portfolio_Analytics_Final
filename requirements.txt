@@ -5,3 +5,6 @@ streamlit
 plotly
 sqlalchemy
 psycopg2-binary
+langchain
+langchain-community
+huggingface_hub

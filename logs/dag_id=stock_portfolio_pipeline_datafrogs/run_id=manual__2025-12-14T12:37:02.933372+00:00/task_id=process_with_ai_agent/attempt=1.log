@@ -1,0 +1,20 @@
+[2025-12-14T12:37:24.925+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-12-14T12:37:24.935+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.process_with_ai_agent manual__2025-12-14T12:37:02.933372+00:00 [queued]>
+[2025-12-14T12:37:24.946+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.process_with_ai_agent manual__2025-12-14T12:37:02.933372+00:00 [queued]>
+[2025-12-14T12:37:24.947+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2025-12-14T12:37:24.958+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): process_with_ai_agent> on 2025-12-14 12:37:02.933372+00:00
+[2025-12-14T12:37:24.968+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=9693) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-12-14T12:37:24.971+0000] {standard_task_runner.py:72} INFO - Started process 9716 to run task
+[2025-12-14T12:37:24.970+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'stock_portfolio_pipeline_datafrogs', 'process_with_ai_agent', 'manual__2025-12-14T12:37:02.933372+00:00', '--job-id', '397', '--raw', '--subdir', 'DAGS_FOLDER/***.py', '--cfg-path', '/tmp/tmpw1mu_0j0']
+[2025-12-14T12:37:24.972+0000] {standard_task_runner.py:105} INFO - Job 397: Subtask process_with_ai_agent
+[2025-12-14T12:37:25.006+0000] {task_command.py:467} INFO - Running <TaskInstance: stock_portfolio_pipeline_datafrogs.process_with_ai_agent manual__2025-12-14T12:37:02.933372+00:00 [running]> on host 79a4b2d0a09e
+[2025-12-14T12:37:25.054+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data_engineering_team' AIRFLOW_CTX_DAG_ID='stock_portfolio_pipeline_datafrogs' AIRFLOW_CTX_TASK_ID='process_with_ai_agent' AIRFLOW_CTX_EXECUTION_DATE='2025-12-14T12:37:02.933372+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-14T12:37:02.933372+00:00'
+[2025-12-14T12:37:25.055+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-12-14T12:37:25.066+0000] {python.py:240} INFO - Done. Returned value was: None
+[2025-12-14T12:37:25.074+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-12-14T12:37:25.074+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=stock_portfolio_pipeline_datafrogs, task_id=process_with_ai_agent, run_id=manual__2025-12-14T12:37:02.933372+00:00, execution_date=20251214T123702, start_date=20251214T123724, end_date=20251214T123725
+[2025-12-14T12:37:25.109+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2025-12-14T12:37:25.120+0000] {taskinstance.py:3895} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-12-14T12:37:25.121+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

@@ -564,32 +564,32 @@ def initialize_spark_session():
         .master("spark://spark-master:7077") \
         .getOrCreate()
 
-
 def run_spark_analytics(file_path: str):
 
     print("=== Starting Spark Analytics Task ===")
 
     # ==========================================
-    # SAFELY STOP ANY EXISTING SPARK CONTEXT
+    # INITIALIZE SPARK SESSION
     # ==========================================
     try:
-        sc = SparkContext.getOrCreate()
-        sc.stop()
-        print("Stopped existing SparkContext (if any).")
-    except Exception:
-        print("No existing SparkContext found, continuing.")
+        from pyspark import SparkContext
+        # Stop any existing SparkContext
+        try:
+            sc = SparkContext.getOrCreate()
+            if not sc._jsc.sc().isStopped():
+                sc.stop()
+                print("Stopped existing SparkContext.")
+        except:
+            pass
 
-    # ==========================================
-    # CREATE SPARK SESSION
-    # ==========================================
-    try:
-        print("Attempting to create SparkSession...")
-        spark = (
-            SparkSession.builder
-            .appName("M3_SPARK_APP_TEAM_NAME")
-            .master("spark://spark-master:7077")
+        # Create a fresh SparkSession
+        print("Creating SparkSession...")
+        spark = SparkSession.builder \
+            .appName("M3_SPARK_APP_TEAM_NAME") \
+            .master("spark://spark-master:7077") \
+            .config("spark.driver.host", "airflow-worker") \
             .getOrCreate()
-        )
+        
         print("SparkSession created successfully.")
     except Exception as e:
         print(f"ERROR: Failed to create SparkSession: {e}")
@@ -617,20 +617,46 @@ def run_spark_analytics(file_path: str):
             sys.exit(1)
 
         # ==========================================
-        # POSTGRES CONNECTION SETTINGS
+        # HELPER FUNCTION TO SAVE TO POSTGRES
         # ==========================================
         def save_spark_to_postgres(spark_df, table_name):
             print(f"Saving '{table_name}' to Postgres...")
-            pandas_df = spark_df.toPandas()  # convert Spark DataFrame to Pandas
-            engine = create_engine('postgresql://root:root@pgdatabase:5432/stockanalytics')
+
+            create_database()
+
+            pandas_df = spark_df.toPandas()
+
+            engine = create_engine(
+                "postgresql://root:root@pgdatabase:5432/stockanalytics",
+                future=True
+            )
+
             try:
+                # ---- DROP TABLE in AUTOCOMMIT (IMPORTANT)
                 with engine.connect() as conn:
-                    pandas_df.to_sql(table_name, con=conn, if_exists='replace', index=False)
-                    print(f"Saved '{table_name}' successfully!")
+                    conn.execution_options(isolation_level="AUTOCOMMIT")
+                    conn.execute(
+                        text(f'DROP TABLE IF EXISTS "{table_name}" CASCADE')
+                    )
+
+                # ---- CREATE TABLE in a NEW transaction
+                pandas_df.to_sql(
+                    table_name,
+                    con=engine,
+                    if_exists="replace",
+                    index=False,
+                    method="multi"
+                )
+
+                print(f"Saved '{table_name}' successfully.")
+
             except Exception as e:
-                print(f"Error saving '{table_name}' to Postgres: {e}")
+                print(f"Error saving '{table_name}': {e}")
+
             finally:
                 engine.dispose()
+
+
 
         # ==========================================
         # DATA CLEANING / TRANSFORMATION
@@ -817,7 +843,100 @@ def prepare_visualization(file_path):
 
 # 3) AI agent
 def process_with_ai_agent(filename):
-    print("\n")
+    print("=== Starting AI Agent Query Pipeline ===")
+    
+    # Paths
+    QUERY_FILE = '/opt/airflow/agents/user_query.txt'
+    LOG_FILE = '/opt/airflow/agents/AGENT_LOGS.JSON'
+    CSV_SCHEMA_FILE = '/opt/airflow/data/streaming_dataset/full_stocks.csv' # or filename source
+
+    # 1. Read User Query
+    try:
+        with open(QUERY_FILE, 'r') as f:
+            user_query = f.read().strip()
+        print(f"User Query: {user_query}")
+    except FileNotFoundError:
+        print(f"Error: {QUERY_FILE} not found.")
+        return
+
+    # 2. Get CSV Columns (Schema)
+    columns = "Unknown"
+    try:
+        if os.path.exists(CSV_SCHEMA_FILE):
+             df_schema = pd.read_csv(CSV_SCHEMA_FILE, nrows=1)
+             columns = ", ".join(df_schema.columns.tolist())
+             print(f"Schema Columns: {columns}")
+    except Exception as e:
+        print(f"Error reading schema: {e}")
+
+    # 3. AI Agent Logic (Generate SQL)
+    agent_response = ""
+    try:
+        # Try importing langchain
+        from langchain_community.llms import HuggingFaceEndpoint
+        from langchain_core.prompts import PromptTemplate
+        
+        # Check for API Key
+        api_key = os.getenv("HUGGINGFACEHUB_API_TOKEN")
+        if not api_key:
+            raise ValueError("HUGGINGFACEHUB_API_TOKEN not found in environment")
+
+        # Use a free open model suitable for SQL generation
+        repo_id = "mistralai/Mistral-7B-Instruct-v0.2"
+        
+        llm = HuggingFaceEndpoint(
+            repo_id=repo_id, 
+            temperature=0.1, 
+            huggingfacehub_api_token=api_key
+        )
+        
+        template = """
+        You are a SQL expert. Convert the following natural language question into a SQL query.
+        The table name is 'full_stocks'.
+        The columns are: {columns}
+        
+        Question: {question}
+        
+        Return ONLY the SQL query, no markdown or explanation.
+        SQL Query:
+        """
+        prompt = PromptTemplate.from_template(template)
+        # Using simple invoke for legacy/community compatibility
+        agent_response = llm.invoke(prompt.format(columns=columns, question=user_query))
+        agent_response = agent_response.strip()
+        print(f"Generated SQL: {agent_response}")
+
+    except Exception as e:
+        print(f"AI Agent Warning (using mock): {e}")
+        # Fallback/Mock response for demonstration if no key/library
+        agent_response = f"SELECT sum(total_trade_amount) FROM full_stocks WHERE stock_sector = 'Technology' AND date >= DATE('now', '-1 month'); -- (Mock generated because: {str(e)})"
+
+    # 4. Log to JSON
+    log_entry = {
+        "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "user_query": user_query,
+        "csv_columns": columns,
+        "agent_response_sql": agent_response
+    }
+    
+    current_logs = []
+    try:
+        if os.path.exists(LOG_FILE):
+            with open(LOG_FILE, 'r') as f:
+                content = f.read().strip()
+                if content:
+                    current_logs = json.loads(content)
+                    if not isinstance(current_logs, list): current_logs = []
+    except Exception as e:
+        print(f"Error reading log file: {e}")
+        current_logs = []
+
+    current_logs.append(log_entry)
+    
+    with open(LOG_FILE, 'w') as f:
+        json.dump(current_logs, f, indent=4)
+    
+    print(f"Logged response to {LOG_FILE}")
 
 ################################ 2) DAG ##################################################################################################
 # Define the DAG -> direced acyclic graph

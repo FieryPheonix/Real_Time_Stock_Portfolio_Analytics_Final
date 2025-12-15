@@ -1,0 +1,44 @@
+[2025-12-14T11:57:17.954+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-12-14T11:57:17.982+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.detect_outliers manual__2025-12-14T11:57:10.377726+00:00 [queued]>
+[2025-12-14T11:57:18.012+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stock_portfolio_pipeline_datafrogs.detect_outliers manual__2025-12-14T11:57:10.377726+00:00 [queued]>
+[2025-12-14T11:57:18.013+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 2
+[2025-12-14T11:57:18.038+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): detect_outliers> on 2025-12-14 11:57:10.377726+00:00
+[2025-12-14T11:57:18.049+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=2232) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-12-14T11:57:18.051+0000] {standard_task_runner.py:72} INFO - Started process 2299 to run task
+[2025-12-14T11:57:18.065+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'stock_portfolio_pipeline_datafrogs', 'detect_outliers', 'manual__2025-12-14T11:57:10.377726+00:00', '--job-id', '260', '--raw', '--subdir', 'DAGS_FOLDER/***.py', '--cfg-path', '/tmp/tmpyix8045z']
+[2025-12-14T11:57:18.069+0000] {standard_task_runner.py:105} INFO - Job 260: Subtask detect_outliers
+[2025-12-14T11:57:18.148+0000] {task_command.py:467} INFO - Running <TaskInstance: stock_portfolio_pipeline_datafrogs.detect_outliers manual__2025-12-14T11:57:10.377726+00:00 [running]> on host 79a4b2d0a09e
+[2025-12-14T11:57:18.300+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='data_engineering_team' AIRFLOW_CTX_DAG_ID='stock_portfolio_pipeline_datafrogs' AIRFLOW_CTX_TASK_ID='detect_outliers' AIRFLOW_CTX_EXECUTION_DATE='2025-12-14T11:57:10.377726+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-12-14T11:57:10.377726+00:00'
+[2025-12-14T11:57:18.302+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-12-14T11:57:18.318+0000] {logging_mixin.py:190} INFO - 
+--- 2. Handling Outliers ---
+[2025-12-14T11:57:18.350+0000] {logging_mixin.py:190} INFO - STK001: 15.476% outliers
+[2025-12-14T11:57:18.353+0000] {logging_mixin.py:190} INFO - STK002: 0.000% outliers
+[2025-12-14T11:57:18.354+0000] {logging_mixin.py:190} INFO - STK003: 3.770% outliers
+[2025-12-14T11:57:18.355+0000] {logging_mixin.py:190} INFO - STK004: 2.778% outliers
+[2025-12-14T11:57:18.356+0000] {logging_mixin.py:190} INFO - STK005: 0.000% outliers
+[2025-12-14T11:57:18.357+0000] {logging_mixin.py:190} INFO - STK006: 0.000% outliers
+[2025-12-14T11:57:18.358+0000] {logging_mixin.py:190} INFO - STK007: 6.349% outliers
+[2025-12-14T11:57:18.359+0000] {logging_mixin.py:190} INFO - STK008: 0.000% outliers
+[2025-12-14T11:57:18.363+0000] {logging_mixin.py:190} INFO - STK009: 1.190% outliers
+[2025-12-14T11:57:18.364+0000] {logging_mixin.py:190} INFO - STK010: 0.000% outliers
+[2025-12-14T11:57:18.369+0000] {logging_mixin.py:190} INFO - STK011: 0.198% outliers
+[2025-12-14T11:57:18.370+0000] {logging_mixin.py:190} INFO - STK012: 0.000% outliers
+[2025-12-14T11:57:18.371+0000] {logging_mixin.py:190} INFO - STK013: 0.000% outliers
+[2025-12-14T11:57:18.372+0000] {logging_mixin.py:190} INFO - STK014: 0.198% outliers
+[2025-12-14T11:57:18.373+0000] {logging_mixin.py:190} INFO - STK015: 0.000% outliers
+[2025-12-14T11:57:18.375+0000] {logging_mixin.py:190} INFO - STK016: 0.000% outliers
+[2025-12-14T11:57:18.379+0000] {logging_mixin.py:190} INFO - STK017: 0.000% outliers
+[2025-12-14T11:57:18.380+0000] {logging_mixin.py:190} INFO - STK018: 0.000% outliers
+[2025-12-14T11:57:18.381+0000] {logging_mixin.py:190} INFO - STK019: 7.341% outliers
+[2025-12-14T11:57:18.382+0000] {logging_mixin.py:190} INFO - STK020: 0.397% outliers
+[2025-12-14T11:57:18.384+0000] {logging_mixin.py:190} INFO - quantity: 7.650% outliers
+[2025-12-14T11:57:18.385+0000] {logging_mixin.py:190} INFO - average_trade_size: 25.250% outliers
+[2025-12-14T11:57:18.386+0000] {logging_mixin.py:190} INFO - cumulative_portfolio_value: 10.370% outliers
+[2025-12-14T11:57:18.539+0000] {python.py:240} INFO - Done. Returned value was: None
+[2025-12-14T11:57:18.560+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-12-14T11:57:18.561+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=stock_portfolio_pipeline_datafrogs, task_id=detect_outliers, run_id=manual__2025-12-14T11:57:10.377726+00:00, execution_date=20251214T115710, start_date=20251214T115717, end_date=20251214T115718
+[2025-12-14T11:57:18.667+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2025-12-14T11:57:18.678+0000] {local_task_job_runner.py:245} INFO - ::endgroup::
