@@ -1,0 +1,11 @@
+.env
+.DS_Store
+__pycache__/
+*.pyc
+logs/
+plugins/
+data/
+db_data/
+# Ignore Spark/Airflow temp files
+airflow-worker.pid
+airflow-webserver.pid

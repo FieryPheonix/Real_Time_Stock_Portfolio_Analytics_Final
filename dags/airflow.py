@@ -869,54 +869,120 @@ def process_with_ai_agent(filename):
     except Exception as e:
         print(f"Error reading schema: {e}")
 
-    # 3. AI Agent Logic (Generate SQL)
-    agent_response = ""
+    # 3. AI Agent Logic (Generate SQL & Execute)
+    agent_response_sql = ""
+    agent_execution_result = "Not Executed"
+    
+    # A. GENERATE SQL
     try:
-        # Try importing langchain
-        from langchain_community.llms import HuggingFaceEndpoint
-        from langchain_core.prompts import PromptTemplate
+        from huggingface_hub import InferenceClient
         
         # Check for API Key
         api_key = os.getenv("HUGGINGFACEHUB_API_TOKEN")
         if not api_key:
             raise ValueError("HUGGINGFACEHUB_API_TOKEN not found in environment")
 
-        # Use a free open model suitable for SQL generation
-        repo_id = "mistralai/Mistral-7B-Instruct-v0.2"
+        # List of models to try (Qwen and Llama are often widely available)
+        models_to_try = [
+            "Qwen/Qwen2.5-Coder-32B-Instruct",
+            "meta-llama/Meta-Llama-3-8B-Instruct",
+            "HuggingFaceH4/zephyr-7b-beta"
+        ]
+
+        client = InferenceClient(token=api_key)
         
-        llm = HuggingFaceEndpoint(
-            repo_id=repo_id, 
-            temperature=0.1, 
-            huggingfacehub_api_token=api_key
-        )
+        # Inject Current Date for context
+        from datetime import datetime
+        current_date = datetime.now().strftime('%Y-%m-%d')
+
+        prompt_text = f"""
+        You are a SQL expert. I will give you a table schema and a question.
+        You must write a valid SQL query to answer the question.
         
-        template = """
-        You are a SQL expert. Convert the following natural language question into a SQL query.
-        The table name is 'full_stocks'.
-        The columns are: {columns}
+        Table Name: full_stocks
+        Columns: {columns}
+        Current System Date: {current_date}
         
-        Question: {question}
+        Question: {user_query}
         
-        Return ONLY the SQL query, no markdown or explanation.
+        CRITICAL RULES:
+        1. Return ONLY the SQL query. 
+        2. Do not include markdown formatting (like ```sql).
+        3. Do not include explanations.
+        4. Use SQLite compatible syntax.
+        5. HANDLE ONE-HOT ENCODING: The schema uses One-Hot Encoding for categories.
+           - There is NO 'stock_sector' column. instead use 'stock_sector_Technology', 'stock_sector_Finance', etc.
+           - Example: To filter for Technology sector, write: WHERE "stock_sector_Technology" = 1 OR "stock_sector_Technology" = 'True'
+           - Example: To filter for BUY transactions, write: WHERE "transaction_type_BUY" = 1
+           - Do NOT write: WHERE stock_sector = 'Technology' (This column does not exist).
+        6. DATE HANDLING: Use the 'Current System Date' provided above to calculate relative dates (e.g. 'last month').
+        
         SQL Query:
         """
-        prompt = PromptTemplate.from_template(template)
-        # Using simple invoke for legacy/community compatibility
-        agent_response = llm.invoke(prompt.format(columns=columns, question=user_query))
-        agent_response = agent_response.strip()
-        print(f"Generated SQL: {agent_response}")
+
+        messages = [{"role": "user", "content": prompt_text}]
+        success_model = None
+        
+        # Try each model until one works
+        for model_id in models_to_try:
+            try:
+                print(f"Attempting model: {model_id}...")
+                response = client.chat_completion(messages, model=model_id, max_tokens=200, temperature=0.1)
+                agent_response_sql = response.choices[0].message.content
+                success_model = model_id
+                print(f"Success with model: {model_id}")
+                break
+            except Exception as model_err:
+                print(f"Model {model_id} failed: {model_err}")
+                continue
+        
+        if not success_model:
+            raise Exception("All fallback models failed.")
+
+        # Clean response
+        agent_response_sql = agent_response_sql.replace("```sql", "").replace("```", "").strip()
+        print(f"Generated SQL: {agent_response_sql}")
 
     except Exception as e:
-        print(f"AI Agent Warning (using mock): {e}")
-        # Fallback/Mock response for demonstration if no key/library
-        agent_response = f"SELECT sum(total_trade_amount) FROM full_stocks WHERE stock_sector = 'Technology' AND date >= DATE('now', '-1 month'); -- (Mock generated because: {str(e)})"
+        print(f"AI Generation Failed: {e}")
+        # Fallback to a safe default query so we still prove execution works
+        agent_response_sql = "SELECT stock_sector, count(*) as count FROM full_stocks GROUP BY stock_sector"
+        print(f"Using Fallback Query: {agent_response_sql}")
+
+    # B. EXECUTE SQL (Runs for both AI-generated and Fallback requests)
+    try:
+        print("Executing SQL on DataFrame...")
+        import sqlite3
+        conn = sqlite3.connect(':memory:')
+        
+        # Load CSV to SQLite
+        if os.path.exists(CSV_SCHEMA_FILE):
+             # Read full CSV
+             df_data = pd.read_csv(CSV_SCHEMA_FILE)
+             df_data.to_sql('full_stocks', conn, index=False, if_exists='replace')
+             
+             # Execute
+             try:
+                 result_df = pd.read_sql_query(agent_response_sql, conn)
+                 agent_execution_result = result_df.to_dict(orient='records')
+                 print(f"Execution Result: {agent_execution_result}")
+             except Exception as sql_err:
+                 agent_execution_result = f"SQL Execution Error: {sql_err}"
+                 print(agent_execution_result)
+        else:
+             agent_execution_result = "CSV file not found, cannot execute."
+             
+    except Exception as ex:
+        agent_execution_result = f"Execution Infrastructure Error: {ex}"
+        print(agent_execution_result)
 
     # 4. Log to JSON
     log_entry = {
         "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
         "user_query": user_query,
         "csv_columns": columns,
-        "agent_response_sql": agent_response
+        "agent_response_sql": agent_response_sql,
+        "agent_execution_result": agent_execution_result
     }
     
     current_logs = []

@@ -76,7 +76,7 @@ view_mode = st.sidebar.radio("Select View", [
 ])
 
 # Helper function to filter data
-def filter_dataframe(df, col_ticker=None, col_sector=None, col_cust_type=None):
+def filter_dataframe(df, col_ticker=None, col_sector=None, col_cust_type=None, date_col=None):
     if df.empty: return df
     if col_ticker and col_ticker in df.columns and selected_tickers:
         df = df[df[col_ticker].isin(selected_tickers)]
@@ -84,6 +84,25 @@ def filter_dataframe(df, col_ticker=None, col_sector=None, col_cust_type=None):
         df = df[df[col_sector].isin(selected_sectors)]
     if col_cust_type and col_cust_type in df.columns and selected_cust_types:
         df = df[df[col_cust_type].isin(selected_cust_types)]
+    
+    # Apply Date Filter
+    if date_col and date_col in df.columns and date_range:
+        try:
+            # Ensure it's datetime
+            if not pd.api.types.is_datetime64_any_dtype(df[date_col]):
+                df[date_col] = pd.to_datetime(df[date_col], errors='coerce')
+            
+            # Handle Single Date vs Range
+            start_date = pd.to_datetime(date_range[0])
+            end_date = pd.to_datetime(date_range[1]) if len(date_range) > 1 else start_date
+            
+            df = df[
+                (df[date_col].dt.date >= start_date.date()) & 
+                (df[date_col].dt.date <= end_date.date())
+            ]
+        except Exception:
+            pass # Ignore date filter errors
+            
     return df
 
 # ==========================================
@@ -96,7 +115,7 @@ def load_and_process_full_data():
         # Load ALL needed columns at once to handle filters and charts
         # Note: stock_sector is one-hot encoded in this CSV
         cols = [
-            'stock_ticker', 'total_trade_amount', 'day_name', 'customer_id',
+            'stock_ticker', 'total_trade_amount', 'day_name', 'customer_id', 'timestamp', 'stock_price',
             'transaction_type_BUY', 'transaction_type_SELL',
             'customer_account_type_Institutional', 'customer_account_type_Retail',
             'stock_sector_Consumer', 'stock_sector_Energy', 'stock_sector_Finance', 
@@ -157,7 +176,7 @@ def load_and_process_full_data():
 
 # Load and Filter Global Data ONCE
 df_full_raw = load_and_process_full_data()
-df_full_filtered = filter_dataframe(df_full_raw, col_ticker='stock_ticker', col_sector='stock_sector', col_cust_type='customer_account_type')
+df_full_filtered = filter_dataframe(df_full_raw.copy(), col_ticker='stock_ticker', col_sector='stock_sector', col_cust_type='customer_account_type', date_col='timestamp')
 
 
 # ==========================================
@@ -167,9 +186,21 @@ if view_mode == "Core Visualizations":
     st.title("📉 Core Visualizations")
     st.markdown("---")
     
-    # Load & Filter SQL Data (Legacy logic for Charts 1, 2)
-    df_vol_ticker = filter_dataframe(load_data("spark_analytics_1"), col_ticker='stock_ticker')
-    df_price_sector = filter_dataframe(load_data("spark_analytics_2"), col_sector='stock_sector')
+    # Calculated Metrics from Filtered Data (Replaces Static SQL)
+    
+    # 1. Trading Volume by Stock Ticker
+    if not df_full_filtered.empty:
+        df_vol_ticker = df_full_filtered.groupby('stock_ticker')['total_trade_amount'].sum().reset_index()
+        df_vol_ticker.columns = ['stock_ticker', 'total_trading_volume']
+    else:
+        df_vol_ticker = pd.DataFrame()
+
+    # 2. Stock Price Trends by Sector (Average Price)
+    if not df_full_filtered.empty:
+        df_price_sector = df_full_filtered.groupby('stock_sector')['stock_price'].mean().reset_index()
+        df_price_sector.columns = ['stock_sector', 'average_price']
+    else:
+        df_price_sector = pd.DataFrame()
     
     col1, col2 = st.columns(2)
     
@@ -285,6 +316,24 @@ elif view_mode == "Real-time Streaming Monitor":
                 df_raw = df_raw[df_raw['stock_ticker'].isin(selected_tickers)]
             if selected_sectors:
                 df_raw = df_raw[df_raw['stock_sector'].isin(selected_sectors)]
+            if selected_cust_types:
+                df_raw = df_raw[df_raw['customer_account_type'].isin(selected_cust_types)]
+            
+            # Apply Date Filter
+            if date_range:
+                try:
+                    df_raw['timestamp_dt'] = pd.to_datetime(df_raw['timestamp'])
+                    start_date = pd.to_datetime(date_range[0])
+                    # Handle case where user picks one day or a range
+                    end_date = pd.to_datetime(date_range[1]) if len(date_range) > 1 else start_date
+                    
+                    df_raw = df_raw[
+                        (df_raw['timestamp_dt'].dt.date >= start_date.date()) & 
+                        (df_raw['timestamp_dt'].dt.date <= end_date.date())
+                    ]
+                except Exception as e:
+                    # If date parsing fails, just ignore date filter to avoid crashing
+                    pass
 
             col_mon, col_liq = st.columns([2, 1])
             
@@ -322,7 +371,12 @@ elif view_mode == "Sector Comparison Dashboard":
     st.header("🏢 Sector Comparison Dashboard")
     st.markdown("---")
     
-    df_price_sector = filter_dataframe(load_data("spark_analytics_2"), col_sector='stock_sector')
+    # Calculate Sector Metrics from Filtered Global Data
+    if not df_full_filtered.empty:
+        df_price_sector = df_full_filtered.groupby('stock_sector')['stock_price'].mean().reset_index()
+        df_price_sector.columns = ['stock_sector', 'average_price']
+    else:
+        df_price_sector = pd.DataFrame()
     
     if not df_price_sector.empty:
         col1, col2 = st.columns(2)

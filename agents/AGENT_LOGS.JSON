@@ -1,14 +1,35 @@
 [
     {
-        "timestamp": "2025-12-14 14:11:47",
+        "timestamp": "2025-12-15 17:32:34",
         "user_query": "What was the total trading volume for technology stocks last month?",
         "csv_columns": "transaction_id, timestamp, customer_id, stock_ticker, quantity, average_trade_size, day_name, is_weekend, is_holiday, stock_liquidity_tier, stock_price, total_trade_amount, transaction_type_BUY, transaction_type_SELL, customer_account_type_Institutional, customer_account_type_Retail, stock_sector_Consumer, stock_sector_Energy, stock_sector_Finance, stock_sector_Healthcare, stock_sector_Technology, stock_industry_Asset Management, stock_industry_Hardware, stock_industry_Oil & Gas, stock_industry_Pharmaceuticals, stock_industry_Renewables, stock_industry_Retail, stock_industry_Software, stock_industry_Utilities",
-        "agent_response_sql": "SELECT sum(total_trade_amount) FROM full_stocks WHERE stock_sector = 'Technology' AND date >= DATE('now', '-1 month'); -- (Mock generated because: No module named 'langchain_community')"
+        "agent_response_sql": "SELECT SUM(quantity) AS total_trading_volume\nFROM full_stocks\nWHERE stock_sector_Technology = 1 AND timestamp >= DATE('now', '-1 month') AND timestamp < DATE('now')",
+        "agent_execution_result": [
+            {
+                "total_trading_volume": null
+            }
+        ]
     },
     {
-        "timestamp": "2025-12-14 14:40:30",
+        "timestamp": "2025-12-15 17:37:16",
         "user_query": "What was the total trading volume for technology stocks last month?",
         "csv_columns": "transaction_id, timestamp, customer_id, stock_ticker, quantity, average_trade_size, day_name, is_weekend, is_holiday, stock_liquidity_tier, stock_price, total_trade_amount, transaction_type_BUY, transaction_type_SELL, customer_account_type_Institutional, customer_account_type_Retail, stock_sector_Consumer, stock_sector_Energy, stock_sector_Finance, stock_sector_Healthcare, stock_sector_Technology, stock_industry_Asset Management, stock_industry_Hardware, stock_industry_Oil & Gas, stock_industry_Pharmaceuticals, stock_industry_Renewables, stock_industry_Retail, stock_industry_Software, stock_industry_Utilities",
-        "agent_response_sql": "SELECT sum(total_trade_amount) FROM full_stocks WHERE stock_sector = 'Technology' AND date >= DATE('now', '-1 month'); -- (Mock generated because: 'InferenceClient' object has no attribute 'post')"
+        "agent_response_sql": "SELECT SUM(quantity) AS total_trading_volume\nFROM full_stocks\nWHERE \"stock_sector_Technology\" = 1 AND timestamp >= DATE('now', '-1 month') AND timestamp < DATE('now')",
+        "agent_execution_result": [
+            {
+                "total_trading_volume": null
+            }
+        ]
+    },
+    {
+        "timestamp": "2025-12-15 17:42:54",
+        "user_query": "What was the total trading volume for technology stocks last month?",
+        "csv_columns": "transaction_id, timestamp, customer_id, stock_ticker, quantity, average_trade_size, day_name, is_weekend, is_holiday, stock_liquidity_tier, stock_price, total_trade_amount, transaction_type_BUY, transaction_type_SELL, customer_account_type_Institutional, customer_account_type_Retail, stock_sector_Consumer, stock_sector_Energy, stock_sector_Finance, stock_sector_Healthcare, stock_sector_Technology, stock_industry_Asset Management, stock_industry_Hardware, stock_industry_Oil & Gas, stock_industry_Pharmaceuticals, stock_industry_Renewables, stock_industry_Retail, stock_industry_Software, stock_industry_Utilities",
+        "agent_response_sql": "SELECT SUM(quantity) AS total_trading_volume\nFROM full_stocks\nWHERE \"stock_sector_Technology\" = 1 AND timestamp >= '2025-11-01' AND timestamp < '2025-12-01'",
+        "agent_execution_result": [
+            {
+                "total_trading_volume": null
+            }
+        ]
     }
 ]
